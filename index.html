@@ -3365,33 +3365,7 @@ function loadAdminData() {
   if (d) { try { var o = JSON.parse(d); ADMIN_PW = o.ADMIN_PW || ADMIN_PW; teamPw = o.teamPw || teamPw; teamActive = o.teamActive !== undefined ? o.teamActive : true; } catch(e){} }
 }
 
-function showTab(tab) {
-  var tt = document.getElementById("tab-team");
-  var at = document.getElementById("tab-admin");
-  if (!tt || !at) return;
-  tt.style.display = tab === "team" ? "flex" : "none";
-  at.style.display = tab === "admin" ? "flex" : "none";
-  var btns = document.querySelectorAll("#pw-tabs button");
-  btns.forEach(function(b){ b.classList.remove("active"); });
-  if (tab === "team" && btns[0]) btns[0].classList.add("active");
-  if (tab === "admin" && btns[1]) btns[1].classList.add("active");
-}
 
-function loginTeam() {
-  var el = document.getElementById("pw-team");
-  if (!el) return;
-  var v = el.value;
-  if (!teamActive) {
-    var err = document.getElementById("err-team");
-    if (err) { err.textContent = "当前团队权限已被管理员取消"; err.style.display = "block"; }
-    return;
-  }
-  if (v === teamPw) {
-    sessionStorage.setItem("daogou_role", "team");
-    var ov = document.getElementById("pw-overlay");
-    if (ov) ov.style.display = "none";
-  } else {
-    var err = document.getElementById("err-team");
     if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
   }
 }
