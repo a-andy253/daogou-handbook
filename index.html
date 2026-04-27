@@ -4,11 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>达人售后团队完整服务流程执行方案 v2.0</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabase = supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8Ja176nauxRR93A8_syYg_xa191aTN');
-let sectionsCache = null;
-</script>
 <style>
   :root {
     --primary: #2E74B5;
@@ -684,7 +679,7 @@ let sectionsCache = null;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #1A36A4 0%, #2B5BE8 33%, #2B5BE8 50%, #E8F0FE 80%);
+  background: linear-gradient(90deg, #1A36A4 0%, #2B5BE8 50%, #E8F0FE 100%);
   border-radius: 2px;
   transform: translateY(-50%);
 }
@@ -790,33 +785,6 @@ let sectionsCache = null;
   font-size: 13px;
   color: #444;
   line-height: 1.7;
-}
-
-/* ====== TRAINING TIMING NOTE ====== */
-.train-timing-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: linear-gradient(135deg, #FFF8E6 0%, #FFF3CC 100%);
-  border: 1px solid #FFD966;
-  border-radius: 12px;
-  padding: 14px 18px;
-  margin: 20px 0 8px;
-  max-width: 800px;
-}
-.note-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-  line-height: 1;
-  margin-top: 2px;
-}
-.note-text {
-  font-size: 13px;
-  color: #6B5200;
-  line-height: 1.7;
-}
-.note-text strong {
-  color: #8B6914;
 }
 
 /* ====== TRAINING TIMING NOTE ====== */
@@ -1126,530 +1094,69 @@ let sectionsCache = null;
 #pw-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
-  z-index: 99999;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 99999; flex-direction: column; gap: 16px;
 }
-#pw-overlay .pw-inner {
-  width: 100%; max-width: 400px;
-  margin: 0 auto;
-  padding: 60px 24px;
-  display: block;
-  text-align: center;
-  box-sizing: border-box;
-}
-#pw-overlay .pw-lock { font-size: 56px; margin-bottom: 6px; line-height: 1; }
-#pw-overlay .pw-title { color: #fff; font-size: 22px; margin: 0 0 4px 0; font-weight: 700; }
-#pw-overlay .pw-subtitle { color: rgba(255,255,255,0.7); margin: 0 0 16px 0; font-size: 14px; }
-#pw-overlay .pw-tabs {
-  display: flex; gap: 8px; margin-bottom: 16px;
-}
-#pw-overlay .pw-tab {
-  flex: 1; padding: 8px 0; font-size: 13px; font-weight: 600; cursor: pointer;
+#pw-overlay .lock-icon { font-size: 56px; margin-bottom: 6px; }
+#pw-overlay h2 { color: #fff; font-size: 22px; margin: 0; font-weight: 700; }
+#pw-overlay p { color: rgba(255,255,255,0.7); margin: 0; font-size: 14px; }
+#pw-tabs { display: flex; gap: 8px; margin-top: 4px; }
+#pw-tabs button {
+  padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
   border: 2px solid rgba(255,255,255,0.4); background: transparent; color: rgba(255,255,255,0.7);
-  border-radius: 20px; transition: all 0.2s; text-align: center;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  user-select: none;
+  border-radius: 20px; transition: all 0.2s;
 }
-#pw-overlay .pw-tab.active,
-#pw-overlay .pw-tab:active {
+#pw-tabs button.active, #pw-tabs button:hover {
   background: rgba(255,255,255,0.2); color: #fff; border-color: #fff;
 }
-#pw-overlay .pw-form-wrap { text-align: center; }
-#pw-overlay .pw-tab-content { text-align: center; }
-#pw-overlay .pw-input {
-  display: block; width: 100%; max-width: 280px; margin: 0 auto 8px auto;
-  padding: 12px 16px; font-size: 16px; border: 2px solid rgba(255,255,255,0.3);
+#pw-form-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 4px; }
+#pw-form-wrap input {
+  padding: 12px 20px; font-size: 16px; border: 2px solid rgba(255,255,255,0.3);
   border-radius: 12px; background: rgba(255,255,255,0.1); color: #fff;
-  text-align: center; outline: none; transition: border 0.2s; box-sizing: border-box;
-  -webkit-appearance: none;
+  text-align: center; width: 240px; outline: none; transition: border 0.2s;
 }
-#pw-overlay .pw-input::placeholder { color: rgba(255,255,255,0.5); }
-#pw-overlay .pw-input:focus { border-color: #F7C948; }
-#pw-overlay .pw-submit {
-  display: block; width: 100%; max-width: 280px; margin: 4px auto 0 auto;
-  padding: 13px 0; font-size: 16px; font-weight: 700; background: #F7C948;
-  color: #1A36A4; border: none; border-radius: 12px; cursor: pointer;
-  transition: transform 0.1s; box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+#pw-form-wrap input::placeholder { color: rgba(255,255,255,0.5); }
+#pw-form-wrap input:focus { border-color: #F7C948; }
+#pw-form-wrap button {
+  padding: 12px 40px; font-size: 16px; font-weight: 700; background: #F7C948;
+  color: #1A36A4; border: none; border-radius: 12px; cursor: pointer; transition: transform 0.2s;
 }
-#pw-overlay .pw-submit:active { transform: scale(0.97); }
-#pw-overlay .pw-error { color: #ff6b6b; font-size: 13px; min-height: 18px; margin-bottom: 4px; }
-#pw-overlay .pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 8px; }
+#pw-form-wrap button:hover { transform: scale(1.05); }
+.pw-error { color: #ff6b6b; font-size: 13px; display: none; }
+.pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
 
-/* ====== SCENARIOS SECTION ====== */
-.scenarios-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 24px;
-}
-.scenarios-grid {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 24px;
-  align-items: start;
-}
-.scenarios-list {
-  position: sticky;
-  top: 90px;
-}
-.scenario-nav {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid #E8F0FE;
-  box-shadow: 0 2px 8px rgba(26,54,164,0.06);
-}
-.scenario-nav-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: #1A36A4;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #E8F0FE;
-}
-.scenario-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #444;
-  font-size: 13px;
-  line-height: 1.4;
-  transition: all 0.2s;
-}
-.scenario-link:hover {
-  background: #F0F4FF;
-  color: #1A36A4;
-}
-.scenario-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.scenarios-cases {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.case-card {
-  background: #fff;
-  border-radius: 16px;
-  border: 1px solid #E8F0FE;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
-  transition: box-shadow 0.2s;
-}
-.case-card:hover {
-  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
-}
-.case-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 100%);
-  border-bottom: 1px solid #E8F0FE;
-}
-.case-num {
-  background: #1A36A4;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 20px;
-  flex-shrink: 0;
-}
-.case-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1A1A2E;
-  flex: 1;
-}
-.case-level {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  flex-shrink: 0;
-}
-.case-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.case-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #1A36A4;
-  background: #EEF2FF;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-.case-summary p {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.7;
-  margin: 0;
-}
-.case-dialogue pre {
-  background: #F8F9FA;
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.8;
-  color: #333;
-  white-space: pre-wrap;
-  margin: 0;
-  border-left: 3px solid #1A36A4;
-}
-.case-tag-danger {
-  font-size: 12px;
-  font-weight: 700;
-  color: #C00000;
-  background: #FFF2F2;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  display: inline-block;
-}
-.case-tag-success {
-  font-size: 12px;
-  font-weight: 700;
-  color: #375E10;
-  background: #EAF2E3;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  display: inline-block;
-}
-.script-box {
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-size: 13px;
-  line-height: 1.7;
-}
-.danger-script {
-  background: #FFF5F5;
-  border: 1px solid #FFD0D0;
-  color: #8B0000;
-}
-.success-script {
-  background: #F4FAF0;
-  border: 1px solid #C8E6B8;
-  color: #2D5016;
-}
-.case-lesson-box p {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1A36A4;
-  background: linear-gradient(135deg, #EEF2FF 0%, #F0F4FF 100%);
-  padding: 14px 16px;
-  border-radius: 10px;
-  margin: 0;
-  line-height: 1.7;
-  border-left: 4px solid #1A36A4;
-}
+r: #999; width: auto; padding: 0; }
 
-/* ====== TRAINING SECTION ====== */
-.training-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 24px;
-}
-.training-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  position: relative;
-}
-.training-track {
-  position: relative;
-  margin-bottom: 20px;
-}
-.track-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #1A36A4 0%, #2B5BE8 50%, #E8F0FE 100%);
-  border-radius: 2px;
-  transform: translateY(-50%);
-}
-.track-dots {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
-}
-.track-dot {
-  background: #fff;
-  border: 3px solid #1A36A4;
-  color: #1A36A4;
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 800;
-  text-align: center;
-  line-height: 1.3;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.track-dot.active {
-  background: #1A36A4;
-  color: #fff;
-  box-shadow: 0 0 0 4px rgba(26,54,164,0.2);
-}
-.track-dot small {
-  font-size: 9px;
-  font-weight: 600;
-  opacity: 0.8;
-}
-.train-card {
-  background: #fff;
-  border-radius: 16px;
-  border: 1px solid #E8F0FE;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
-  transition: box-shadow 0.2s;
-}
-.train-card:hover {
-  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
-}
-.train-card-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
-  color: #fff;
-}
-.train-icon {
-  font-size: 32px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.train-meta {
-  flex: 1;
-}
-.train-day {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.8;
-  margin-bottom: 2px;
-}
-.train-title {
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 2px;
-}
-.train-subtitle {
-  font-size: 12px;
-  opacity: 0.85;
-}
-.train-items {
-  padding: 16px 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
-}
-.train-item {
-  background: #F8FAFF;
-  border-radius: 10px;
-  padding: 14px;
-  border: 1px solid #E8F0FE;
-}
-.train-label {
-  font-size: 11px;
-  font-weight: 800;
-  color: #1A36A4;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-}
-.train-text {
-  font-size: 13px;
-  color: #444;
-  line-height: 1.7;
-}
+.tool-card-add:hover { background: #E8F0FF !important; transform: scale(1.02); transition: all 0.2s; }
 
-/* ====== RESPONSIVE ====== */
-@media (max-width: 768px) {
-  .scenarios-grid {
-    grid-template-columns: 1fr;
-  }
-  .scenarios-list {
-    position: static;
-  }
-  .scenario-nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-  }
-  .scenario-nav-title {
-    grid-column: 1 / -1;
-  }
-  .scenario-link {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-  .train-items {
-    grid-template-columns: 1fr;
-  }
-  .track-dot {
-    width: 48px;
-    height: 48px;
-    font-size: 9px;
-  }
-  .track-dot small {
-  font-size: 8px;
-}
-}
-
-/* ====== 编辑面板样式 ====== */
-.section-edit-panel {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #E8F0FE;
-  border-radius: 8px;
-  background: #FAFBFF;
-}
-.edit-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #E8F0FE;
-}
-.edit-panel-header h4 {
-  margin: 0;
-  color: #1A36A4;
-}
-.edit-panel-body .form-group {
-  margin-bottom: 16px;
-}
-.edit-panel-body label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #1A36A4;
-}
-.edit-panel-body input,
-.edit-panel-body textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #E8F0FE;
-  border-radius: 4px;
-  font-size: 14px;
-}
-.edit-panel-body textarea {
-  min-height: 200px;
-  resize: vertical;
-}
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid #E8F0FE;
-}
-.btn-sm {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  cursor: pointer;
-}
-.btn-sm.btn-blue {
-  background: #2B5BE8;
-  color: white;
-}
-.btn-sm.btn-blue:hover {
-  background: #1A36A4;
-}
-.btn-sm.btn-gray {
-  background: #E8F0FE;
-  color: #1A36A4;
-}
-.btn-sm.btn-gray:hover {
-  background: #D4E0FF;
-}
-.btn-sm.btn-red {
-  background: #FF4D4F;
-  color: white;
-}
-.btn-sm.btn-red:hover {
-  background: #D9363E;
-}
-
-/* ====== 板块列表样式调整 ====== */
-#ap-content .section-item {
-  justify-content: space-between;
-}
-#ap-content .section-item > div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-#ap-content .section-item .section-actions {
-  display: flex;
-  gap: 8px;
-}
 </style>
 
 </head>
 <body>
 
 <div id="pw-overlay">
-  <div class="pw-inner">
-    <div class="pw-lock">&#x1F512;</div>
-    <h2 class="pw-title">导购客服工作手册</h2>
-    <p class="pw-subtitle">请选择登录身份</p>
-    <div id="pw-tabs" class="pw-tabs">
-      <button class="pw-tab active" data-tab="team">&#x1F465; 团队成员</button>
-      <button class="pw-tab" data-tab="admin">&#x1F4BC; 管理员</button>
+<div class="lock-icon">&#x1F512;</div>
+  <h2>导购客服工作手册</h2>
+  <p>请选择登录身份</p>
+  <div id="pw-tabs">
+    <button class="active" onclick="showTab('team')">团队成员</button>
+    <button onclick="showTab('admin')">管理员</button>
+  </div>
+  <div id="pw-form-wrap">
+    <div id="tab-team">
+      <input type="password" id="pw-team" placeholder="请输入团队密码" autocomplete="off">
+      <div class="pw-error" id="err-team">密码错误，请重试</div>
+      <button onclick="loginTeam()">进入手册</button>
     </div>
-    <div id="pw-form-wrap" class="pw-form-wrap">
-      <div id="tab-team" class="pw-tab-content">
-        <input type="password" id="pw-team" class="pw-input" placeholder="请输入团队密码" autocomplete="off">
-        <div class="pw-error" id="err-team">密码错误，请重试</div>
-        <button id="btn-team" class="pw-submit">&#x1F6AA; 进入手册</button>
-      </div>
-      <div id="tab-admin" class="pw-tab-content" style="display:none;">
-        <input type="password" id="pw-admin" class="pw-input" placeholder="请输入管理员密码" autocomplete="off">
-        <div class="pw-error" id="err-admin">密码错误，请重试</div>
-        <button id="btn-admin" class="pw-submit">&#x2699; 登录管理后台</button>
-        <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
-      </div>
+    <div id="tab-admin" style="display:none;">
+      <input type="password" id="pw-admin" placeholder="请输入管理员密码" autocomplete="off">
+      <div class="pw-error" id="err-admin">密码错误，请重试</div>
+      <button onclick="loginAdmin()">登录管理后台</button>
+      <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
     </div>
   </div>
 </div>
-
-<div id="admin-page">
+id="admin-page">
   <div class="admin-container">
 
     <!-- Top bar -->
@@ -1667,7 +1174,6 @@ let sectionsCache = null;
       <button class="admin-tab" onclick="apTab(this, 'ap-cards')">&#x1F4CB; 表格卡片</button>
       <button class="admin-tab" onclick="apTab(this, 'ap-content')">&#x270F; 板块内容</button>
       <button class="admin-tab" onclick="apTab(this, 'ap-nav')">&#x1F5D1; 导航菜单</button>
-      <button class="admin-tab" onclick="apTab(this, 'ap-main')">&#x1F5A8; 主页面内容</button>
     </div>
 
     <!-- ========== Team Password Panel ========== -->
@@ -1798,35 +1304,9 @@ let sectionsCache = null;
       </div>
     </div>
 
-    <!-- ========== Main Page Content Panel ========== -->
-    <div id="ap-main" class="admin-panel">
-      <div class="admin-card">
-        <h3><span>&#x1F5A8;</span> 主页面内容编辑</h3>
-        <p style="margin:0 0 16px 0;font-size:13px;color:#666;">编辑主页面的标题、描述和其他文字内容。</p>
-        
-        <div class="admin-form full">
-          <div><label>页面标题</label><input type="text" id="main-title" placeholder="达人售后团队完整服务流程执行方案"></div>
-          <div><label>页面描述</label><input type="text" id="main-desc" placeholder="融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制"></div>
-          <div><label>版本标签</label><input type="text" id="main-tag" placeholder="v2.0 · 2026年修订版"></div>
-          <div><label>元数据 1</label><input type="text" id="main-meta1" placeholder="📋 共10种客户类型"></div>
-          <div><label>元数据 2</label><input type="text" id="main-meta2" placeholder="⚡ CARP标准处理模型"></div>
-          <div><label>元数据 3</label><input type="text" id="main-meta3" placeholder="🛡️ 四大黄金原则"></div>
-          <div><label>工具表格标题</label><input type="text" id="tools-title" placeholder="配套工作表格"></div>
-          <div><label>工具表格描述</label><input type="text" id="tools-desc" placeholder="日常工作留痕 · 问题跟进记录 · 专业知识填补"></div>
-          <div><label>工具表格介绍</label><textarea id="tools-intro" class="editor-area" placeholder="以下表格均为团队内部工作留痕工具，点击名称即可跳转至金山文档填写使用。使用时请遵守信息安全规范，勿泄露粉丝个人信息。"></textarea></div>
-        </div>
-        
-        <div class="admin-form-btns">
-          <button class="btn-primary" onclick="apSaveMainContent()">✅; 保存主页面内容</button>
-          <button class="btn-gray" onclick="apLoadMainContent()">↺; 重新加载</button>
-        </div>
-        <div id="ap-main-status" style="margin-top:12px;font-size:13px;color:#27ae60;display:none;">✅; 内容已更新</div>
-      </div>
-    </div>
-
   </div>
-</div>
 
+>
 <div class="header">
   <div class="header-tag">v2.0 · 2026年修订版</div>
   <h1>达人售后团队完整服务流程执行方案</h1>
@@ -2958,7 +2438,7 @@ let sectionsCache = null;
   <section class="training-section" id="training">
     <div class="section-header">
       <h2>📚 新人培训计划</h2>
-      <p>7天系统学习，从入门到独立上岗（含Alra品牌话术）</p>
+      <p>5天系统学习，从入门到独立上岗（含Alra品牌话术）</p>
     </div>
     <div class="training-timeline">
       <div class="training-track">
@@ -2977,7 +2457,6 @@ let sectionsCache = null;
     <div class="note-text">本培训计划整合自团队<strong>售后场景拆解</strong>与<strong>Alra品牌售后询盘话术模板 v1.1</strong>，涵盖8大高频场景、标准话术、红线禁区与特殊场景处理。时间紧凑但内容完整，建议集中学习+当天实操演练。</div>
   </div>
       
-
 
   <div class="train-card" id="train01">
     <div class="train-card-header">
@@ -3267,7 +2746,7 @@ let sectionsCache = null;
       </div>
       <div class="train-item">
         <div class="train-label">威胁曝光型</div>
-        <div class="train-text">特征：「我要发帖曝光」 / 「我要投诉平台」<br>&#x2705; 话术：「我理解您希望问题得到重视的心情，我们会认真对待每一位顾客的反馈」<br>&#x274C; 避坑：不因威胁而让步，但态度不能变硬</div>
+        <div class="train-text">特征：「我要发帖曝光」「我要投诉平台」<br>&#x2705; 话术：「我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。」<br>&#x274C; 避坑：不因威胁而让步，但态度不能变硬</div>
       </div>
       <div class="train-item">
         <div class="train-label">无理取闹型</div>
@@ -3314,14 +2793,486 @@ let sectionsCache = null;
   </div>
     </div>
   </section>
-
-
 <div class="footer">
   <p>达人售后团队完整服务流程执行方案 v2.0 · 专为 Andy 团队定制</p>
 </div>
 
 <script>
-// 初始化默认值
+  // Smooth scroll + active nav
+  const navLinks = document.querySelectorAll('.nav a');
+  const sections = document.querySelectorAll('.section');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 100;
+      if (scrollY >= top) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.getAttribute('href').substring(1);
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+
+
+<script>
+// ========== Content Editor System ==========
+var EDITOR_PW = "admin2026";
+
+function initEditor() {
+  if (sessionStorage.getItem("daogou_role") !== "admin") return;
+  // Load saved content
+  var saved = localStorage.getItem("daogou_content_v2");
+  if (saved) applyContent(JSON.parse(saved));
+  showEditorBar();
+}
+
+function showEditorBar() {
+  var bar = document.createElement("div");
+  bar.id = "editor-bar";
+  bar.innerHTML = '<span>&#x270F; 管理模式</span>'
+    + '<button onclick="enterEditMode()">&#x1F4DD; 编辑内容</button>'
+    + '<button onclick="apGotoAddCard();">&#x2795; 添加卡片</button>'
+    + '<button onclick="openAddSection()">&#x1F4C1; 添加板块</button>'
+    + '<button class="btn-save" onclick="saveAll()">&#x1F4BE; 保存修改</button>'
+    + '<button class="btn-exit" onclick="exitEditMode()">&#x274C; 退出编辑</button>';
+  document.body.appendChild(bar);
+}
+
+
+
+
+
+
+
+
+
+
+// ========== Init ==========
+document.addEventListener("DOMContentLoaded", initEditor);
+
+// Style for editor bar
+var editorStyle = document.createElement("style");
+editorStyle.textContent = `
+#editor-bar {
+  position: fixed; bottom: 20px; right: 20px; z-index: 99998;
+  background: #1A36A4; color: #fff; padding: 12px 16px; border-radius: 16px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap; max-width: 600px;
+  box-shadow: 0 4px 20px rgba(26,54,164,0.4);
+  font-size: 13px;
+}
+#editor-bar span { font-weight: 700; margin-right: 4px; }
+#editor-bar button {
+  background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 6px 12px;
+  border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
+  transition: background 0.2s; white-space: nowrap;
+}
+#editor-bar button:hover { background: rgba(255,255,255,0.4); }
+#editor-bar .btn-save { background: #F7C948; color: #1A36A4; }
+#editor-bar .btn-exit { background: #e74c3c; }
+#add-overlay { font-family: inherit; }
+#add-panel {
+  background: #fff; border-radius: 16px; padding: 28px; width: 420px;
+  max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+#add-panel h3 { margin: 0 0 16px 0; color: #1A36A4; font-size: 18px; }
+#add-panel label { display: block; font-size: 12px; color: #555; font-weight: 600; margin-bottom: 4px; margin-top: 10px; }
+#add-panel input, #add-panel textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px;
+  font-size: 14px; box-sizing: border-box; font-family: inherit;
+}
+#add-panel textarea { resize: vertical; }
+#add-panel .btn-row { display: flex; gap: 8px; margin-top: 16px; }
+#add-panel button { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
+#add-panel button:first-child { background: #1A36A4; color: #fff; }
+#add-panel .btn-cancel { background: #f0f0f0; color: #555; }
+[data-editable]:hover { background: rgba(43,91,232,0.05); }
+`;
+document.head.appendChild(editorStyle);
+
+// Call initEditor after admin login
+var origLoginAdmin = loginAdmin;
+window.loginAdmin = function() {
+  origLoginAdmin();
+  setTimeout(initEditor, 100);
+};
+
+pt>
+
+
+<script>
+// ========== Admin Page System ==========
+var ADMIN_PW = "admin2026";
+var teamPw = "daogou2026";
+var teamActive = true;
+
+function apTab(btn, panelId) {
+  document.querySelectorAll(".admin-tab").forEach(function(b){ b.classList.remove("active"); });
+  if (btn) btn.classList.add("active");
+  document.querySelectorAll(".admin-panel").forEach(function(p){ p.classList.remove("active"); });
+  var panel = document.getElementById(panelId);
+  if (panel) panel.classList.add("active");
+}
+
+function apShowPage() {
+  var role = sessionStorage.getItem("daogou_role");
+  if (role !== "admin") {
+    var ov = document.getElementById("pw-overlay");
+    if (ov) { ov.style.display = "flex"; showTab("admin"); var inp = document.getElementById("pw-admin"); if(inp) inp.focus(); }
+    return;
+  }
+  document.getElementById("admin-page").classList.add("active");
+  apLoadAll();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function apLogout() {
+  sessionStorage.removeItem("daogou_role");
+  sessionStorage.removeItem("daogou_access");
+  var ap = document.getElementById("admin-page");
+  if (ap) ap.classList.remove("active");
+  var ov = document.getElementById("pw-overlay");
+  if (ov) { ov.style.display = "flex"; showTab("team"); }
+}
+
+function apLoadAll() {
+  var t1 = document.getElementById("ap-team-pw"); if (t1) t1.value = teamPw;
+  var t2 = document.getElementById("ap-admin-pw"); if (t2) t2.value = ADMIN_PW;
+  var statusEl = document.getElementById("ap-access-status");
+  if (statusEl) statusEl.innerHTML = teamActive ? "&#x2705; 团队访问权限：正常" : "&#x274C; 团队访问权限：已取消";
+  var rBtn = document.getElementById("btn-revoke"); if (rBtn) rBtn.style.display = teamActive ? "inline-block" : "none";
+  var eBtn = document.getElementById("btn-enable"); if (eBtn) eBtn.style.display = teamActive ? "none" : "inline-block";
+  apLoadCards();
+  apLoadSections();
+  apLoadNav();
+}
+
+function apSaveTeamPw() {
+  var v = document.getElementById("ap-team-pw").value.trim();
+  if (!v) { alert("请输入新密码"); return; }
+  teamPw = v; saveAdminData();
+  var s = document.getElementById("ap-team-status"); if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
+}
+
+function apSaveAdminPw() {
+  var v = document.getElementById("ap-admin-pw").value.trim();
+  if (!v) { alert("请输入新密码"); return; }
+  ADMIN_PW = v; saveAdminData();
+  var s = document.getElementById("ap-team-status"); if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
+}
+
+function apRevokeAccess() {
+  if (!confirm("确定取消团队访问权限？所有普通成员将无法登录。")) return;
+  teamActive = false; saveAdminData(); apLoadAll();
+}
+
+function apEnableAccess() {
+  teamActive = true; saveAdminData(); apLoadAll();
+}
+
+function saveAdminData() {
+  localStorage.setItem("daogou_admin_data", JSON.stringify({ADMIN_PW, teamPw, teamActive}));
+}
+
+function loadAdminData() {
+  var d = localStorage.getItem("daogou_admin_data");
+  if (d) { var o = JSON.parse(d); ADMIN_PW = o.ADMIN_PW || ADMIN_PW; teamPw = o.teamPw || teamPw; teamActive = o.teamActive !== undefined ? o.teamActive : true; }
+}
+
+function apClearCardForm() {
+  ["ca-title","ca-icon","ca-desc","ca-link","ca-tags"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var sel = document.getElementById("ca-section"); if(sel) sel.value="";
+}
+
+function apClearSectionForm() {
+  ["sec-title","sec-id","sec-icon","sec-content"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var col = document.getElementById("sec-color"); if(col) col.value="blue";
+}
+
+function apClearNavForm() {
+  ["nav-label","nav-href"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var ord = document.getElementById("nav-order"); if(ord) ord.value="99";
+  var tp = document.getElementById("nav-type"); if(tp) tp.value="anchor";
+}
+
+function apLoadCards() {
+  var el = document.getElementById("ap-cards-list");
+  if (!el) return;
+  var cards = getCardsData();
+  if (cards.length === 0) {
+    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无卡片，点击下方表单添加</p>';
+    return;
+  }
+  var html = '<div class="admin-card"><h3><span>&#x1F4CB;</span> 已有的卡片 (' + cards.length + ')</h3>';
+  cards.forEach(function(c, i) {
+    html += '<div class="tool-item">';
+    html += '<div class="tool-preview">';
+    html += '<div class="tool-icon">' + (c.icon||'') + '</div>';
+    html += '<div class="tool-title">' + (c.title||'') + '</div>';
+    html += '<div class="tool-desc">' + (c.desc||'') + '</div>';
+    html += '<div class="tool-tags">';
+    if (c.tags) c.tags.split(',').forEach(function(t){ html += '<span class="tool-tag">' + t.trim() + '</span>'; });
+    html += '</div></div>';
+    html += '<div class="tool-actions">';
+    html += '<button class="btn-sm btn-red" onclick="apDeleteCard(' + i + ')">&#x1F5D1; 删除</button>';
+    html += '</div></div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function apAddCard() {
+  var title = document.getElementById("ca-title").value.trim();
+  var icon = document.getElementById("ca-icon").value.trim() || "&#x1F4CB;";
+  var desc = document.getElementById("ca-desc").value.trim();
+  var section = document.getElementById("ca-section").value;
+  var link = document.getElementById("ca-link").value.trim();
+  var tags = document.getElementById("ca-tags").value.trim();
+  if (!title) { alert("请输入卡片标题"); return; }
+  if (!link) { alert("请输入跳转链接"); return; }
+  var cards = getCardsData();
+  cards.push({title, icon, desc, section, link, tags});
+  saveCardsData(cards);
+  apLoadCards();
+  apClearCardForm();
+  alert("卡片已添加！刷新页面后生效。");
+}
+
+function apDeleteCard(idx) {
+  if (!confirm("确定删除此卡片？")) return;
+  var cards = getCardsData();
+  cards.splice(idx, 1);
+  saveCardsData(cards);
+  apLoadCards();
+}
+
+function getCardsData() {
+  var d = localStorage.getItem("daogou_cards");
+  return d ? JSON.parse(d) : [];
+}
+function saveCardsData(c) {
+  localStorage.setItem("daogou_cards", JSON.stringify(c));
+}
+
+function apLoadSections() {
+  var el = document.getElementById("ap-sections-list");
+  if (!el) return;
+  var sections = getSectionsData();
+  if (sections.length === 0) {
+    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无板块，使用下方表单添加新板块</p>';
+    return;
+  }
+  var colorMap = {blue:"蓝色",green:"绿色",purple:"紫色",orange:"橙色",red:"红色"};
+  var html = '<div class="admin-card"><h3><span>&#x1F4CB;</span> 已有的板块 (' + sections.length + ')</h3>';
+  sections.forEach(function(s, i) {
+    html += '<div class="section-item">';
+    html += '<div class="section-order">' + (i+1) + '</div>';
+    html += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ','title',this.value)">';
+    html += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ','id',this.value)">';
+    html += '<span style="font-size:12px;">' + (s.icon||'&#x1F4CB;') + '</span>';
+    html += '<span style="font-size:11px;padding:2px 6px;background:#E8F0FE;border-radius:4px;color:#1A36A4;">' + (colorMap[s.color]||"蓝色") + '</span>';
+    html += '<button class="btn-sm btn-red" onclick="apDeleteSection(' + i + ')">&#x1F5D1;</button>';
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function apAddSection() {
+  var title = document.getElementById("sec-title").value.trim();
+  var sid = document.getElementById("sec-id").value.trim();
+  var icon = document.getElementById("sec-icon").value.trim() || "&#x1F4CB;";
+  var color = document.getElementById("sec-color").value;
+  var content = document.getElementById("sec-content").value.trim();
+  if (!title || !sid) { alert("请输入板块标题和ID"); return; }
+  var sections = getSectionsData();
+  sections.push({title, id: sid, icon, color, content});
+  saveSectionsData(sections);
+  apLoadSections();
+  apClearSectionForm();
+  alert("板块已添加！刷新页面后生效。");
+}
+
+function apUpdateSection(idx, key, val) {
+  var sections = getSectionsData();
+  if (sections[idx]) sections[idx][key] = val;
+  saveSectionsData(sections);
+}
+
+function apDeleteSection(idx) {
+  if (!confirm("确定删除此板块？")) return;
+  var sections = getSectionsData();
+  sections.splice(idx, 1);
+  saveSectionsData(sections);
+  apLoadSections();
+}
+
+function getSectionsData() {
+  var d = localStorage.getItem("daogou_sections");
+  return d ? JSON.parse(d) : [];
+}
+function saveSectionsData(s) { localStorage.setItem("daogou_sections", JSON.stringify(s)); }
+
+function apLoadNav() {
+  var el = document.getElementById("ap-nav-list");
+  if (!el) return;
+  var nav = getNavData();
+  if (nav.length === 0) {
+    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无导航菜单项</p>';
+    return;
+  }
+  var html = '<div class="admin-card"><h3><span>&#x1F5D1;</span> 导航菜单 (' + nav.length + ')</h3>';
+  nav.forEach(function(n, i) {
+    html += '<div class="section-item">';
+    html += '<div class="section-order">' + (n.order||99) + '</div>';
+    html += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ','label',this.value)">';
+    html += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ','href',this.value)">';
+    html += '<button class="btn-sm btn-red" onclick="apDeleteNav(' + i + ')">&#x1F5D1;</button>';
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function apAddNavItem() {
+  var label = document.getElementById("nav-label").value.trim();
+  var href = document.getElementById("nav-href").value.trim();
+  var order = parseInt(document.getElementById("nav-order").value) || 99;
+  var type = document.getElementById("nav-type").value;
+  if (!label || !href) { alert("请输入菜单名称和跳转目标"); return; }
+  var nav = getNavData();
+  nav.push({label, href, order, type});
+  nav.sort(function(a,b){ return (a.order||99)-(b.order||99); });
+  saveNavData(nav);
+  apLoadNav();
+  apClearNavForm();
+  alert("菜单已添加！刷新页面后生效。");
+}
+
+function apUpdateNav(idx, key, val) {
+  var nav = getNavData();
+  if (nav[idx]) nav[idx][key] = val;
+  saveNavData(nav);
+}
+
+function apDeleteNav(idx) {
+  if (!confirm("确定删除此菜单？")) return;
+  var nav = getNavData();
+  nav.splice(idx, 1);
+  saveNavData(nav);
+  apLoadNav();
+}
+
+function getNavData() { var d = localStorage.getItem("daogou_nav"); return d ? JSON.parse(d) : []; }
+function saveNavData(n) { localStorage.setItem("daogou_nav", JSON.stringify(n)); }
+
+// ========== Login ==========
+function showTab(tab) {
+  var teamTab = document.getElementById("tab-team");
+  var adminTab = document.getElementById("tab-admin");
+  if (!teamTab || !adminTab) return;
+  teamTab.style.display = tab === "team" ? "flex" : "none";
+  adminTab.style.display = tab === "admin" ? "flex" : "none";
+  var btns = document.querySelectorAll("#pw-tabs button");
+  btns.forEach(function(b){ b.classList.remove("active"); });
+  if (tab === "team" && btns[0]) btns[0].classList.add("active");
+  if (tab === "admin" && btns[1]) btns[1].classList.add("active");
+}
+
+function loginTeam() {
+  var v = document.getElementById("pw-team");
+  if (!v) return;
+  v = v.value;
+  if (!teamActive) {
+    var err = document.getElementById("err-team");
+    if (err) { err.textContent = "当前团队权限已被管理员取消"; err.style.display = "block"; }
+    return;
+  }
+  if (v === teamPw) {
+    sessionStorage.setItem("daogou_role", "team");
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+  } else {
+    var err = document.getElementById("err-team");
+    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
+  }
+}
+
+function loginAdmin() {
+  var v = document.getElementById("pw-admin");
+  if (!v) return;
+  v = v.value;
+  if (v === ADMIN_PW) {
+    sessionStorage.setItem("daogou_role", "admin");
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+    var ap = document.getElementById("admin-page");
+    if (ap) { ap.classList.add("active"); apLoadAll(); }
+    window.scrollTo({top: 0, behavior: "instant"});
+  } else {
+    var err = document.getElementById("err-admin");
+    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
+  }
+}
+
+// Restore session
+(function(){
+  loadAdminData();
+  var role = sessionStorage.getItem("daogou_role");
+  if (role === "admin") {
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+    var ap = document.getElementById("admin-page");
+    if (ap) ap.classList.add("active");
+  } else if (role === "team" && teamActive) {
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+  }
+})();
+
+// Enter key support
+["pw-team","pw-admin"].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        if (id === "pw-team") loginTeam(); else loginAdmin();
+      }
+    });
+  }
+});
+
+// ========== Shortcut to add card ==========
+function apGotoAddCard() {
+  if (sessionStorage.getItem("daogou_role") !== "admin") {
+    apShowPage(); return;
+  }
+  apShowPage();
+  setTimeout(function() {
+    apTab(null, "ap-cards");
+    var ac = document.getElementById("ap-card-add");
+    if (ac) ac.scrollIntoView({behavior:"smooth", block:"start"});
+  }, 150);
+}
+</script>
+</body>
+</html>
+
+<script>
+
+(function(){
 var ADMIN_PW = "admin2026";
 var teamPw = "daogou2026";
 var teamActive = true;
@@ -3339,38 +3290,12 @@ function showTab(tab) {
   var tt = document.getElementById("tab-team");
   var at = document.getElementById("tab-admin");
   if (!tt || !at) return;
-  tt.style.display = tab === "team" ? "block" : "none";
-  at.style.display = tab === "admin" ? "block" : "none";
-  
-  // 隐藏错误信息
-  var errTeam = document.getElementById("err-team");
-  var errAdmin = document.getElementById("err-admin");
-  if (errTeam) errTeam.style.display = "none";
-  if (errAdmin) errAdmin.style.display = "none";
-  
-  // 清空输入框并设置焦点
-  var inpTeam = document.getElementById("pw-team");
-  var inpAdmin = document.getElementById("pw-admin");
-  if (tab === "team" && inpTeam) {
-    inpTeam.value = "";
-    inpTeam.focus();
-  }
-  if (tab === "admin" && inpAdmin) {
-    inpAdmin.value = "";
-    inpAdmin.focus();
-  }
-  
-  // 更新按钮状态
-  var btns = document.querySelectorAll("#pw-overlay .pw-tab");
+  tt.style.display = tab === "team" ? "flex" : "none";
+  at.style.display = tab === "admin" ? "flex" : "none";
+  var btns = document.querySelectorAll("#pw-tabs button");
   btns.forEach(function(b){ b.classList.remove("active"); });
-  if (tab === "team") {
-    var teamBtn = document.querySelector("#pw-overlay .pw-tab[data-tab='team']");
-    if (teamBtn) teamBtn.classList.add("active");
-  }
-  if (tab === "admin") {
-    var adminBtn = document.querySelector("#pw-overlay .pw-tab[data-tab='admin']");
-    if (adminBtn) adminBtn.classList.add("active");
-  }
+  if (tab === "team" && btns[0]) btns[0].classList.add("active");
+  if (tab === "admin" && btns[1]) btns[1].classList.add("active");
 }
 
 function loginTeam() {
@@ -3537,121 +3462,8 @@ function apDeleteCard(idx) {
   apLoadCards();
 }
 
-async function getSectionsData() {
-  if (sectionsCache) return sectionsCache;
-  
-  try {
-    const { data, error } = await supabase.from('sections').select('*');
-    if (error) throw error;
-    
-    if (data && data.length > 0) {
-      sectionsCache = data;
-      return data;
-    }
-  } catch (e) {
-    console.log('Supabase error, using localStorage fallback:', e);
-  }
-  
-  var d = localStorage.getItem("daogou_sections");
-  if (d) {
-    var sections = JSON.parse(d);
-    if (sections.length > 0) {
-      sectionsCache = sections;
-      return sections;
-    }
-  }
-  
-  var defaultSections = [
-    {
-      id: "s1",
-      title: "团队定位与角色定义",
-      content: "团队架构|角色|人数|核心职责\n组长（Andy）|1人|对外品牌对接、内部调度、特殊case决策\n售后专员 A / B / C|3人|日常咨询 / 投诉处理（按品牌分组）\n售后专员 D / E / F / G|4人|复杂case跟进、退换货协调、客情维护\n四大黄金原则|不承诺|未经品牌方确认，不对粉丝做实质性承诺\n|不传话|传话必须留记录，不得口头承诺替代正式流程\n|不让情绪升级|客户情绪上来时，你永远是降温的那一方\n|保护自己|恶意攻击截图留证，情绪激动时等冷静再处理"
-    },
-    {
-      id: "s2",
-      title: "服务标准动作（基础 SOP）",
-      content: "接收消息标准流程|标签|说明|处理时效\n[P1] 紧急投诉|威胁曝光 / 产品质量安全|立即上报组长\n[P2] 重要投诉|退换货申请 / 产品质疑|2小时内处理\n[P3] 普通咨询|使用咨询 / 肤质建议|24小时内回复\n[P4] 常规|表扬 / 常规咨询|下一个工作日\n首次响应话术模板|模板A — 正常咨询|亲爱的[粉丝名字]，感谢您的留言～我是[达人名]直播间的售后小助手，很高兴为您服务！您的问题我已经收到了，我这边帮您查询一下，稍后给您准确回复哦 ☺️\n|模板B — 投诉/情绪类|[粉丝名字]，我非常理解您现在的心情，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理，有任何进展我都会及时告知您。请您放心，这件事我一定会认真对待的 🙏\n|模板C — 威胁类（不卑不亢）|您好，我完全理解您希望问题得到解决的心情。我这边会认真记录您反馈的情况，并协助品牌方尽快给您一个处理方案。您的诉求我们会如实转达，同时也希望您能给我们一点处理时间，好吗？"
-    },
-    {
-      id: "s3",
-      title: "CARP 标准处理模型（所有投诉必走）",
-      content: "CARP模型|C|Control · 掌控节奏|不被客户情绪带着走\n语速放慢，回复间隔适当\n耐心读完所有消息再判断情绪\n|A|Acknowledge · 认可情绪|说出\"我完全理解您的感受\"\n\"换作是我也会着急\"\n\"您的心情我非常理解\"\n|R|Refocus · 转向解决|把话题从\"谁对谁错\"\n拉回到\"怎么解决\"\n|P|Problem Solve · 着手解决|有方案 → 立即给出时间节点\n无方案 → 承诺跟进，绝不不了了之\n禁止说的话|您不要这么激动|这有什么可生气的|您先冷静一下\n必须说出口|我完全理解您的感受|换作是我也会着急|您的心情我非常理解"
-    },
-    {
-      id: "s4",
-      title: "10种难缠客户分类应对标准",
-      content: "客户类型|特征|应对策略|话术模板\n愤怒投诉型|情绪激动，语言激烈|先认可情绪，再转向解决|我完全理解您的感受，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理。\n威胁曝光型|威胁要曝光、投诉平台|保持冷静，不被威胁影响|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n反复投诉型|同一问题多次投诉|记录历史，全面分析|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n要求赔偿型|直接要求赔偿金额|了解诉求，按流程处理|您的诉求我已经记录下来了，我会帮您向品牌方申请，尽快给您回复。\n质疑品牌型|质疑产品质量、品牌信誉|客观回应，不偏袒品牌|您的反馈我已经记录下来了，我会如实转达给品牌方，同时也会帮您跟进处理。\n拖延沟通型|回复慢，不配合提供信息|设定时间，明确要求|为了尽快帮您解决问题，还请您提供一下相关信息，我们会在收到信息后立即处理。\n对比竞品型|拿竞品对比，质疑产品价值|强调产品优势，提供解决方案|感谢您的反馈，我们的产品在[优势]方面有独特之处，针对您的问题，我可以为您提供[解决方案]。\n要求特殊处理型|要求超出常规流程的处理|解释流程，寻求替代方案|非常理解您的需求，不过我们的处理流程是[流程说明]，我可以帮您[替代方案]。\n语言攻击型|使用侮辱性语言|保持专业，不被影响|我非常理解您现在的心情，我们会认真对待您的反馈，争取尽快给您一个满意的处理方案。\n信息不全型|提供信息不完整，无法处理|引导提供信息，耐心等待|为了帮您更好地解决问题，还请您提供一下[所需信息]，我们会在收到信息后立即处理。"
-    },
-    {
-      id: "s5",
-      title: "退换货标准流程",
-      content: "退换货流程|步骤|说明|时效\n退货|1. 确认问题|了解退货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交退货申请|72小时内\n|4. 安排退货|提供退货地址，指导退货流程|96小时内\n|5. 确认退款|确认收到退货，安排退款|120小时内\n换货|1. 确认问题|了解换货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交换货申请|72小时内\n|4. 安排换货|提供换货地址，指导换货流程|96小时内\n|5. 确认收货|确认收到新货，完成换货|120小时内\n退款|1. 确认问题|了解退款原因，核实情况|24小时内\n|2. 收集证据|要求提供相关证据|48小时内\n|3. 品牌确认|向品牌方提交退款申请|72小时内\n|4. 确认退款|确认退款到账|96小时内"
-    },
-    {
-      id: "s6",
-      title: "特殊边界与升级机制",
-      content: "特殊边界|情况|处理方式|升级条件\n产品质量问题|产品出现质量问题|收集证据，向品牌方反馈|24小时内无响应\n过敏问题|使用产品后出现过敏|收集证据，建议就医|情况严重时\n假货质疑|粉丝质疑产品是假货|引导提供证据，向品牌方反馈|无法自证时\n价格争议|粉丝认为价格过高|解释价格构成，提供优惠信息|无法解决时\n物流问题|物流延迟、丢失|联系物流，跟进情况|72小时内无进展\n升级机制|升级条件|升级流程|处理时效\n同一问题被投诉2次以上|提交组长处理|24小时内\n粉丝威胁曝光 / 投诉平台 / 报警|提交组长处理|立即\n处理时间超过48小时未解决|提交组长处理|48小时后\n涉及金额超过500元|提交组长处理|立即\n涉及产品质量安全问题|提交组长处理|立即\n品牌方72小时内未回应|提交组长处理|72小时后"
-    },
-    {
-      id: "s7",
-      title: "协作与升级规范",
-      content: "协作规范|角色|职责|沟通方式\n组长|对外品牌对接、内部调度、特殊case决策|每日例会、一对一沟通\n售后专员|日常咨询 / 投诉处理|即时通讯、周例会\n品牌方|产品质量、售后服务|邮件、品牌群\n升级规范|升级流程|处理方式|时效要求\n第一步|专员处理|常规问题自行处理|24小时内\n第二步|组长介入|专员无法解决的问题|48小时内\n第三步|达人团队介入|组长无法解决的问题|72小时内\n第四步|法律途径|涉及法律问题|根据情况\n沟通工具|工具|用途|使用规范\n企业微信|日常沟通、客户联系|及时响应、专业用语\n品牌群|品牌方沟通、问题反馈|信息准确、留痕记录\n内部群|团队内部沟通、培训|积极参与、分享经验"
-    },
-    {
-      id: "s8",
-      title: "情绪管理与自我保护",
-      content: "情绪管理|技巧|说明|适用场景\n深呼吸法|深呼吸3-5次，缓解紧张情绪|情绪激动时\n积极暗示|提醒自己客户是对事不对人|被客户攻击时\n转移注意力|暂时离开工位，调整情绪|情绪难以控制时\n团队支持|向同事、组长倾诉|需要情感支持时\n自我保护|措施|说明|适用场景\n截图留证|保存所有沟通记录|可能涉及纠纷时\n设置边界|不与客户进行私人交流|客户要求私人联系方式时\n拒绝妥协|不做超出权限的承诺|客户要求特殊处理时\n寻求帮助|及时向组长汇报|遇到困难时\n心理支持|支持方式|说明|频率\n每日吐槽时间|15分钟可选参与|每日\n团队建设活动|增强团队凝聚力|每月\n专业心理辅导|提供专业心理支持|按需"
-    },
-    {
-      id: "s9",
-      title: "绩效考核与激励机制",
-      content: "绩效考核|指标|标准|权重\n首次响应时间|≤ 3分钟|20%\n问题解决率|≥ 85%（不升级到组长）|30%\n平均处理时长|≤ 24小时|20%\n客户满意度|≥ 90%（好评率）|20%\n品牌方投诉率|= 0|10%\n激励机制|奖励|条件|频率\n每月「服务之星」|客户好评最多者|每月\n季度最佳案例分享会|提交优秀案例|每季度\n品牌方参观学习机会|连续3个月KPI达标|每季度\n改进机制|措施|条件|频率\n组长一对一辅导|连续2个月KPI未达标|每月\n调整岗位或重新培训|连续3个月未达标|每季度\n每月case复盘会|汇总常见问题，更新手册|每月"
-    },
-    {
-      id: "s10",
-      title: "话术速查手册",
-      content: "话术速查|场景|话术模板\n安抚情绪|我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。\n投诉质疑品牌|您说得有道理，我这边帮您记录并反馈给品牌方。\n客户多次投诉|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n威胁曝光|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n要求找领导|我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，请问您方便接听电话的时间是？\n粉丝问「是不是很多人都遇到」|亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。\n被骂「骗子同伙」|我非常理解您的心情，我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？\n粉丝追问「为什么问这么多」|申请赔偿需要了解具体情况，这样我才能帮您申请到对应的补偿方案，这是正常流程，请理解。\n无法立即解决|您的情况我已经详细记录了，我会在[时间]前给您一个明确的回复，请耐心等待。\n结束语（任意场景）|您这个问题我一定会认真跟进到底的 💕 如有任何疑问随时联系我，祝您生活愉快！"
-    },
-    {
-      id: "scenarios",
-      title: "售后场景拆解",
-      icon: "🎯",
-      color: "orange",
-      content: "场景1|用竞品空瓶来「碰瓷」要求退款|高危|特征：用竞品空瓶冒充，威胁有录音|应对：不质疑、不承认、不拒绝，用「核实」拖延时间|核心教训：不要当场质疑，先内部查证据\n场景2|拒绝提供证据却发帖扩散|中危|特征：拒绝提供证据，已发帖|应对：说明需要证据的原因，提供品牌方联系方式|核心教训：被骂「骗子同伙」时保持专业温度\n场景3|开封后退全款、搬出「达人就要负责」|中危|特征：已开封使用，要求全款退|应对：用品牌方政策作为挡箭牌，给替代方案|核心教训：达人是销售渠道，不是无限责任主体\n场景4|购买后价格下降，要求退差价|低危|特征：其他平台价格更低|应对：说明渠道差异，提供补偿方案|核心教训：价格差异是正常的，重点在提供替代方案\n场景5|过敏后要求巨额赔偿|高危|特征：要求医药费、精神损失费|应对：先关心，再按流程处理，不承诺赔偿|核心教训：承诺超出权限是售后最大禁忌"
-    },
-    {
-      id: "training",
-      title: "新人培训计划",
-      icon: "📚",
-      color: "green",
-      content: "培训计划|天数|内容|目标\n第1天|品牌认知与团队定位|明白自己是谁，知道边界在哪|掌握团队定位和四大黄金原则\n第2天|响应标准与CARP模型|3分钟内首次响应，30秒内分类判断|掌握CARP情绪处理模型\n第3天|退换货流程与品牌沟通|所有退换货必须通过品牌群申请|掌握退换货流程和品牌群沟通规范\n第4天|10种难缠客户分类应对|每种类型的特征、话术、避坑指南|掌握10种客户类型的应对策略\n第5天|话术模板实战练习|熟记15个核心话术|掌握常用话术模板\n第6天|情绪管理与自我保护|团队情绪管理和员工自我保护|掌握情绪管理技巧和自我保护措施\n第7天|考核与上岗|实操考核和上岗后成长路径|通过考核，准备独立上岗"
-    }
-  ];
-  
-  await saveSectionsData(defaultSections);
-  sectionsCache = defaultSections;
-  return defaultSections;
-}
-
-async function saveSectionsData(sections) {
-  localStorage.setItem("daogou_sections", JSON.stringify(sections));
-  sectionsCache = sections;
-  
-  try {
-    for (const section of sections) {
-      const { error } = await supabase.from('sections').upsert({
-        id: section.id,
-        title: section.title,
-        content: section.content,
-        icon: section.icon || '',
-        color: section.color || 'blue'
-      });
-      if (error) throw error;
-    }
-  } catch (e) {
-    console.log('Supabase save error:', e);
-  }
-}
+function getSectionsData() { var d = localStorage.getItem("daogou_sections"); return d ? JSON.parse(d) : []; }
+function saveSectionsData(s) { localStorage.setItem("daogou_sections", JSON.stringify(s)); }
 
 function apClearSectionForm() {
   ["sec-title","sec-id","sec-icon","sec-content"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
@@ -3667,95 +3479,16 @@ function apLoadSections() {
   var h = '<div class="admin-card"><h3><span>\u1F4CB;</span> 已有的板块 (' + sections.length + ')</h3>';
   sections.forEach(function(s, i) {
     h += '<div class="section-item">';
-    h += '<div>';
     h += '<div class="section-order">' + (i+1) + '</div>';
-    h += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ',\'title\',this.value)">';
-    h += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ',\'id\',this.value)">';
+    h += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ','title',this.value)">';
+    h += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ','id',this.value)">';
     h += '<span style="font-size:12px;">' + (s.icon||'') + '</span>';
     h += '<span style="font-size:11px;padding:2px 6px;background:#E8F0FE;border-radius:4px;color:#1A36A4;">' + (cm[s.color]||"蓝色") + '</span>';
-    h += '</div>';
-    h += '<div class="section-actions">';
-    h += '<button class="btn-sm btn-blue" onclick="apEditSectionContent(' + i + ')">编辑内容</button>';
     h += '<button class="btn-sm btn-red" onclick="apDeleteSection(' + i + ')">\u1F5D1;</button>';
-    h += '</div>';
     h += '</div>';
   });
   h += '</div>';
   el.innerHTML = h;
-}
-
-// 编辑板块内容
-function apEditSectionContent(idx) {
-  var sections = getSectionsData();
-  var section = sections[idx];
-  if (!section) return;
-  
-  // 创建编辑面板
-  var editPanel = document.createElement("div");
-  editPanel.className = "section-edit-panel";
-  editPanel.innerHTML = `
-    <div class="edit-panel-header">
-      <h4>编辑板块：${section.title}</h4>
-      <button onclick="this.parentNode.parentNode.remove()" class="btn-sm btn-gray">关闭</button>
-    </div>
-    <div class="edit-panel-body">
-      <div class="form-group">
-        <label>板块标题</label>
-        <input type="text" id="edit-title-${idx}" value="${escHtml(section.title||'')}">
-      </div>
-      <div class="form-group">
-        <label>板块ID</label>
-        <input type="text" id="edit-id-${idx}" value="${escHtml(section.id||'')}">
-      </div>
-      <div class="form-group">
-        <label>板块内容（换行分隔，| 表示多列）</label>
-        <textarea id="edit-content-${idx}" class="editor-area">${escHtml(section.content||'')}</textarea>
-      </div>
-      <div class="form-actions">
-        <button onclick="apSaveSectionEdit(${idx})" class="btn-primary">保存修改</button>
-        <button onclick="this.parentNode.parentNode.parentNode.remove()" class="btn-gray">取消</button>
-      </div>
-    </div>
-  `;
-  
-  // 添加到页面
-  var sectionsList = document.getElementById("ap-sections-list");
-  if (sectionsList) {
-    sectionsList.parentNode.appendChild(editPanel);
-  }
-}
-
-// 保存板块编辑
-function apSaveSectionEdit(idx) {
-  var sections = getSectionsData();
-  var section = sections[idx];
-  if (!section) return;
-  
-  var title = document.getElementById(`edit-title-${idx}`).value.trim();
-  var id = document.getElementById(`edit-id-${idx}`).value.trim();
-  var content = document.getElementById(`edit-content-${idx}`).value.trim();
-  
-  if (!title || !id) {
-    alert("请输入板块标题和ID");
-    return;
-  }
-  
-  section.title = title;
-  section.id = id;
-  section.content = content;
-  
-  saveSectionsData(sections);
-  apLoadSections();
-  renderSections();
-  
-  // 关闭编辑面板
-  var editPanel = document.querySelector(".section-edit-panel");
-  if (editPanel) {
-    editPanel.remove();
-  }
-  
-  alert("板块内容已更新！刷新页面后生效。");
-  location.reload();
 }
 
 function apAddSection() {
@@ -3770,17 +3503,13 @@ function apAddSection() {
   saveSectionsData(sections);
   apLoadSections();
   apClearSectionForm();
-  // 重新渲染页面内容
-  renderSections();
-  alert("板块已添加！");
+  alert("板块已添加！刷新页面后生效。");
 }
 
 function apUpdateSection(idx, key, val) {
   var sections = getSectionsData();
   if (sections[idx]) sections[idx][key] = val;
   saveSectionsData(sections);
-  // 重新渲染页面内容
-  renderSections();
 }
 
 function apDeleteSection(idx) {
@@ -3809,8 +3538,8 @@ function apLoadNav() {
   nav.forEach(function(n, i) {
     h += '<div class="section-item">';
     h += '<div class="section-order">' + (n.order||99) + '</div>';
-    h += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ',\'label\',this.value)">';
-    h += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ',\'href\',this.value)">';
+    h += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ','label',this.value)">';
+    h += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ','href',this.value)">';
     h += '<button class="btn-sm btn-red" onclick="apDeleteNav(' + i + ')">\u1F5D1;</button>';
     h += '</div>';
   });
@@ -3839,906 +3568,12 @@ function apUpdateNav(idx, key, val) {
   saveNavData(nav);
 }
 
-function apDeleteSection(idx) {
+function apDeleteNav(idx) {
   if (!confirm("确定删除此菜单？")) return;
-  var sections = getSectionsData();
-  sections.splice(idx, 1);
-  saveSectionsData(sections);
-  apLoadSections();
-  // 重新渲染页面内容
-  renderSections();
-}
-
-// 渲染板块内容
-function renderSections() {
-  var sections = getSectionsData();
-  sections.forEach(function(section) {
-    var sectionEl = document.getElementById(section.id);
-    if (!sectionEl) return;
-    
-    // 更新板块标题
-    var titleEl = sectionEl.querySelector(".section-title");
-    if (titleEl) titleEl.textContent = section.title;
-    
-    // 根据板块ID渲染不同的内容结构
-    switch(section.id) {
-      case "s1":
-        renderSection1(section, sectionEl);
-        break;
-      case "s2":
-        renderSection2(section, sectionEl);
-        break;
-      case "s3":
-        renderSection3(section, sectionEl);
-        break;
-      case "s4":
-        renderSection4(section, sectionEl);
-        break;
-      case "s5":
-        renderSection5(section, sectionEl);
-        break;
-      case "s6":
-        renderSection6(section, sectionEl);
-        break;
-      case "s7":
-        renderSection7(section, sectionEl);
-        break;
-      case "s8":
-        renderSection8(section, sectionEl);
-        break;
-      case "s9":
-        renderSection9(section, sectionEl);
-        break;
-      case "s10":
-        renderSection10(section, sectionEl);
-        break;
-      case "scenarios":
-        renderSectionScenarios(section, sectionEl);
-        break;
-      case "training":
-        renderSectionTraining(section, sectionEl);
-        break;
-    }
-  });
-}
-
-// 渲染板块1：团队定位与角色定义
-function renderSection1(section, sectionEl) {
-  var content = section.content.split("\n");
-  var teamArchContent = [];
-  var goldenRulesContent = [];
-  var inTeamArch = true;
-  
-  content.forEach(function(line) {
-    if (line.startsWith("四大黄金原则")) {
-      inTeamArch = false;
-      return;
-    }
-    if (inTeamArch) {
-      teamArchContent.push(line);
-    } else {
-      goldenRulesContent.push(line);
-    }
-  });
-  
-  // 更新团队架构表格
-  var tableEl = sectionEl.querySelector(".table-wrap table");
-  if (tableEl) {
-    var tbodyEl = tableEl.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      teamArchContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td><span class="badge badge-blue">${parts[1]}</span></td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新四大黄金原则
-  var rulesEl = sectionEl.querySelector(".grid-2");
-  if (rulesEl) {
-    rulesEl.innerHTML = "";
-    var dots = ["dot-red", "dot-orange", "dot-blue", "dot-gray"];
-    goldenRulesContent.forEach(function(line, index) {
-      if (index === 0) return; // 跳过表头
-      var parts = line.split("|");
-      if (parts.length >= 2) {
-        var ruleDiv = document.createElement("div");
-        ruleDiv.className = "priority-row";
-        ruleDiv.innerHTML = `
-          <div class="priority-dot ${dots[index-1]}"></div>
-          <div><strong>${parts[0]}</strong> — ${parts[1]}</div>
-        `;
-        rulesEl.appendChild(ruleDiv);
-      }
-    });
-  }
-}
-
-// 渲染板块2：服务标准动作
-function renderSection2(section, sectionEl) {
-  var content = section.content.split("\n");
-  var flowContent = [];
-  var scriptContent = [];
-  var inFlow = true;
-  
-  content.forEach(function(line) {
-    if (line.startsWith("首次响应话术模板")) {
-      inFlow = false;
-      return;
-    }
-    if (inFlow) {
-      flowContent.push(line);
-    } else {
-      scriptContent.push(line);
-    }
-  });
-  
-  // 更新流程表格
-  var tableEl = sectionEl.querySelector(".table-wrap table");
-  if (tableEl) {
-    var tbodyEl = tableEl.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      flowContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          var badgeClass = "badge-blue";
-          if (parts[0].includes("P1")) badgeClass = "badge-red";
-          if (parts[0].includes("P2")) badgeClass = "badge-yellow";
-          if (parts[0].includes("P4")) badgeClass = "badge-green";
-          var timeClass = "";
-          if (parts[2].includes("立即")) timeClass = " style=\"color:var(--danger)\"";
-          if (parts[2].includes("2小时")) timeClass = " style=\"color:var(--warning)\"";
-          tr.innerHTML = `
-            <td><span class="badge ${badgeClass}">${parts[0]}</span></td>
-            <td>${parts[1]}</td>
-            <td${timeClass}>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新话术模板
-  var scriptEls = sectionEl.querySelectorAll(".sub-card");
-  scriptContent.forEach(function(line, index) {
-    if (index === 0) return; // 跳过表头
-    if (scriptEls[index-1]) {
-      var parts = line.split("|");
-      if (parts.length >= 2) {
-        var titleEl = scriptEls[index-1].querySelector(".sub-card-title");
-        var scriptBoxEl = scriptEls[index-1].querySelector(".script-box p");
-        if (titleEl) titleEl.innerHTML = `<span class="icon">📋</span> ${parts[0]}`;
-        if (scriptBoxEl) scriptBoxEl.textContent = parts[1];
-      }
-    }
-  });
-}
-
-// 渲染板块3：CARP 标准处理模型
-function renderSection3(section, sectionEl) {
-  var content = section.content.split("\n");
-  var carpContent = [];
-  var forbiddenContent = [];
-  var requiredContent = [];
-  var inCarp = true;
-  var inForbidden = false;
-  
-  content.forEach(function(line) {
-    if (line.startsWith("禁止说的话")) {
-      inCarp = false;
-      inForbidden = true;
-      return;
-    }
-    if (line.startsWith("必须说出口")) {
-      inForbidden = false;
-      return;
-    }
-    if (inCarp) {
-      carpContent.push(line);
-    } else if (inForbidden) {
-      forbiddenContent.push(line);
-    } else {
-      requiredContent.push(line);
-    }
-  });
-  
-  // 更新CARP模型
-  var carpCards = sectionEl.querySelectorAll(".carp-card");
-  var carpLetters = ["C", "A", "R", "P"];
-  carpContent.forEach(function(line, index) {
-    if (index === 0) return; // 跳过表头
-    var parts = line.split("|");
-    if (parts.length >= 3 && carpCards[index-1]) {
-      var letterEl = carpCards[index-1].querySelector(".carp-letter");
-      var wordEl = carpCards[index-1].querySelector(".carp-word");
-      var descEl = carpCards[index-1].querySelector(".carp-desc");
-      if (letterEl) letterEl.textContent = carpLetters[index-1];
-      if (wordEl) wordEl.textContent = parts[1];
-      if (descEl) descEl.textContent = parts[2].replace(/\\n/g, "\n");
-    }
-  });
-  
-  // 更新禁止说的话
-  var forbiddenEl = sectionEl.querySelector(".alert-danger strong");
-  if (forbiddenEl) {
-    forbiddenEl.textContent = "❌ 禁止说的话：";
-    var textNode = document.createTextNode(" " + forbiddenContent.slice(1).join(" / "));
-    forbiddenEl.parentNode.appendChild(textNode);
-  }
-  
-  // 更新必须说出口
-  var requiredEl = sectionEl.querySelector(".alert-success strong");
-  if (requiredEl) {
-    requiredEl.textContent = "✅ 必须说出口（至少选一句）：";
-    var textNode = document.createTextNode(" " + requiredContent.slice(1).join(" / "));
-    requiredEl.parentNode.appendChild(textNode);
-  }
-}
-
-// 渲染板块4：10种难缠客户分类应对标准
-function renderSection4(section, sectionEl) {
-  var content = section.content.split("\n");
-  var tableEl = sectionEl.querySelector(".table-wrap table");
-  if (tableEl) {
-    var tbodyEl = tableEl.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 4) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-            <td><div class="script-box small">${parts[3]}</div></td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块5：退换货标准流程
-function renderSection5(section, sectionEl) {
-  var content = section.content.split("\n");
-  var returnContent = [];
-  var exchangeContent = [];
-  var refundContent = [];
-  var currentSection = "return";
-  
-  content.forEach(function(line) {
-    if (line.startsWith("换货")) {
-      currentSection = "exchange";
-      return;
-    }
-    if (line.startsWith("退款")) {
-      currentSection = "refund";
-      return;
-    }
-    if (line.startsWith("退换货流程")) return;
-    if (currentSection === "return") {
-      returnContent.push(line);
-    } else if (currentSection === "exchange") {
-      exchangeContent.push(line);
-    } else {
-      refundContent.push(line);
-    }
-  });
-  
-  // 更新退货流程
-  var returnTable = sectionEl.querySelectorAll(".table-wrap table")[0];
-  if (returnTable) {
-    var tbodyEl = returnTable.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      returnContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新换货流程
-  var exchangeTable = sectionEl.querySelectorAll(".table-wrap table")[1];
-  if (exchangeTable) {
-    var tbodyEl = exchangeTable.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      exchangeContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新退款流程
-  var refundTable = sectionEl.querySelectorAll(".table-wrap table")[2];
-  if (refundTable) {
-    var tbodyEl = refundTable.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      refundContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块6：特殊边界与升级机制
-function renderSection6(section, sectionEl) {
-  var content = section.content.split("\n");
-  var boundaryContent = [];
-  var upgradeContent = [];
-  var inBoundary = true;
-  
-  content.forEach(function(line) {
-    if (line.startsWith("升级机制")) {
-      inBoundary = false;
-      return;
-    }
-    if (inBoundary) {
-      boundaryContent.push(line);
-    } else {
-      upgradeContent.push(line);
-    }
-  });
-  
-  // 更新特殊边界表格
-  var boundaryTable = sectionEl.querySelectorAll(".table-wrap table")[0];
-  if (boundaryTable) {
-    var tbodyEl = boundaryTable.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      boundaryContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新升级机制表格
-  var upgradeTable = sectionEl.querySelectorAll(".table-wrap table")[1];
-  if (upgradeTable) {
-    var tbodyEl = upgradeTable.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      upgradeContent.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块7：协作与升级规范
-function renderSection7(section, sectionEl) {
-  var content = section.content.split("\n");
-  var协作Content = [];
-  var升级Content = [];
-  var沟通Content = [];
-  var currentSection = "协作";
-  
-  content.forEach(function(line) {
-    if (line.startsWith("升级规范")) {
-      currentSection = "升级";
-      return;
-    }
-    if (line.startsWith("沟通工具")) {
-      currentSection = "沟通";
-      return;
-    }
-    if (line.startsWith("协作规范")) return;
-    if (currentSection === "协作") {
-      协作Content.push(line);
-    } else if (currentSection === "升级") {
-      升级Content.push(line);
-    } else {
-      沟通Content.push(line);
-    }
-  });
-  
-  // 更新协作规范表格
-  var协作Table = sectionEl.querySelectorAll(".table-wrap table")[0];
-  if (协作Table) {
-    var tbodyEl = 协作Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      协作Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新升级规范表格
-  var升级Table = sectionEl.querySelectorAll(".table-wrap table")[1];
-  if (升级Table) {
-    var tbodyEl = 升级Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      升级Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新沟通工具表格
-  var沟通Table = sectionEl.querySelectorAll(".table-wrap table")[2];
-  if (沟通Table) {
-    var tbodyEl = 沟通Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      沟通Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块8：情绪管理与自我保护
-function renderSection8(section, sectionEl) {
-  var content = section.content.split("\n");
-  var情绪Content = [];
-  var自我Content = [];
-  var心理Content = [];
-  var currentSection = "情绪";
-  
-  content.forEach(function(line) {
-    if (line.startsWith("自我保护")) {
-      currentSection = "自我";
-      return;
-    }
-    if (line.startsWith("心理支持")) {
-      currentSection = "心理";
-      return;
-    }
-    if (line.startsWith("情绪管理")) return;
-    if (currentSection === "情绪") {
-      情绪Content.push(line);
-    } else if (currentSection === "自我") {
-      自我Content.push(line);
-    } else {
-      心理Content.push(line);
-    }
-  });
-  
-  // 更新情绪管理表格
-  var情绪Table = sectionEl.querySelectorAll(".table-wrap table")[0];
-  if (情绪Table) {
-    var tbodyEl = 情绪Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      情绪Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新自我保护表格
-  var自我Table = sectionEl.querySelectorAll(".table-wrap table")[1];
-  if (自我Table) {
-    var tbodyEl = 自我Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      自我Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新心理支持表格
-  var心理Table = sectionEl.querySelectorAll(".table-wrap table")[2];
-  if (心理Table) {
-    var tbodyEl = 心理Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      心理Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块9：绩效考核与激励机制
-function renderSection9(section, sectionEl) {
-  var content = section.content.split("\n");
-  var绩效Content = [];
-  var激励Content = [];
-  var改进Content = [];
-  var currentSection = "绩效";
-  
-  content.forEach(function(line) {
-    if (line.startsWith("激励机制")) {
-      currentSection = "激励";
-      return;
-    }
-    if (line.startsWith("改进机制")) {
-      currentSection = "改进";
-      return;
-    }
-    if (line.startsWith("绩效考核")) return;
-    if (currentSection === "绩效") {
-      绩效Content.push(line);
-    } else if (currentSection === "激励") {
-      激励Content.push(line);
-    } else {
-      改进Content.push(line);
-    }
-  });
-  
-  // 更新绩效考核表格
-  var绩效Table = sectionEl.querySelectorAll(".table-wrap table")[0];
-  if (绩效Table) {
-    var tbodyEl = 绩效Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      绩效Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新激励机制表格
-  var激励Table = sectionEl.querySelectorAll(".table-wrap table")[1];
-  if (激励Table) {
-    var tbodyEl = 激励Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      激励Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-  
-  // 更新改进机制表格
-  var改进Table = sectionEl.querySelectorAll(".table-wrap table")[2];
-  if (改进Table) {
-    var tbodyEl = 改进Table.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      改进Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 3) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${parts[0]}</td>
-            <td>${parts[1]}</td>
-            <td>${parts[2]}</td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块10：话术速查手册
-function renderSection10(section, sectionEl) {
-  var content = section.content.split("\n");
-  var话术Content = [];
-  
-  content.forEach(function(line) {
-    if (line.startsWith("话术速查")) return;
-    话术Content.push(line);
-  });
-  
-  // 更新话术速查表格
-  var tableEl = sectionEl.querySelector(".table-wrap table");
-  if (tableEl) {
-    var tbodyEl = tableEl.querySelector("tbody");
-    if (tbodyEl) {
-      tbodyEl.innerHTML = "";
-      话术Content.forEach(function(line, index) {
-        if (index === 0) return; // 跳过表头
-        var parts = line.split("|");
-        if (parts.length >= 2) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${parts[0]}</strong></td>
-            <td><div class="script-box small">${parts[1]}</div></td>
-          `;
-          tbodyEl.appendChild(tr);
-        }
-      });
-    }
-  }
-}
-
-// 渲染板块：售后场景拆解
-function renderSectionScenarios(section, sectionEl) {
-  var content = section.content.split("\n");
-  var caseCards = sectionEl.querySelectorAll(".case-card");
-  
-  content.forEach(function(line, index) {
-    if (index === 0) return; // 跳过表头
-    var parts = line.split("|");
-    if (parts.length >= 5 && caseCards[index-1]) {
-      var caseCard = caseCards[index-1];
-      var caseTitle = caseCard.querySelector(".case-title");
-      var caseLevel = caseCard.querySelector(".case-level");
-      var caseSummary = caseCard.querySelector(".case-summary p");
-      var caseRightBox = caseCard.querySelector(".case-right-box .script-box");
-      var caseLessonBox = caseCard.querySelector(".case-lesson-box p");
-      
-      if (caseTitle) caseTitle.textContent = parts[1];
-      if (caseLevel) {
-        caseLevel.textContent = parts[2];
-        caseLevel.style.color = parts[2] === "高危" ? "#C00000" : parts[2] === "中危" ? "#FF6B00" : "#375E10";
-        caseLevel.style.backgroundColor = parts[2] === "高危" ? "#FFF2F2" : parts[2] === "中危" ? "#FFF5E6" : "#EAF2E3";
-      }
-      if (caseSummary) caseSummary.textContent = "特征：" + parts[3] + " | 应对：" + parts[4];
-      if (caseRightBox) caseRightBox.innerHTML = parts[4];
-      if (caseLessonBox) caseLessonBox.textContent = parts[5];
-    }
-  });
-}
-
-// 渲染板块：新人培训计划
-function renderSectionTraining(section, sectionEl) {
-  var content = section.content.split("\n");
-  var trainCards = sectionEl.querySelectorAll(".train-card");
-  
-  content.forEach(function(line, index) {
-    if (index === 0) return; // 跳过表头
-    var parts = line.split("|");
-    if (parts.length >= 4 && trainCards[index-1]) {
-      var trainCard = trainCards[index-1];
-      var trainDay = trainCard.querySelector(".train-day");
-      var trainTitle = trainCard.querySelector(".train-title");
-      var trainSubtitle = trainCard.querySelector(".train-subtitle");
-      var trainItems = trainCard.querySelector(".train-items");
-      
-      if (trainDay) trainDay.textContent = parts[0];
-      if (trainTitle) trainTitle.textContent = parts[2];
-      if (trainSubtitle) trainSubtitle.textContent = parts[1];
-      if (trainItems) {
-        trainItems.innerHTML = `
-          <div class="train-item">
-            <div class="train-label">培训内容</div>
-            <div class="train-text">${parts[2]}</div>
-          </div>
-          <div class="train-item">
-            <div class="train-label">培训目标</div>
-            <div class="train-text">${parts[3]}</div>
-          </div>
-        `;
-      }
-    }
-  });
-}
-
-// 主页面内容管理
-function getMainContentData() {
-  var d = localStorage.getItem("daogou_main_content");
-  return d ? JSON.parse(d) : {
-    title: "达人售后团队完整服务流程执行方案",
-    desc: "融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制",
-    tag: "v2.0 · 2026年修订版",
-    meta1: "📋 共10种客户类型",
-    meta2: "⚡ CARP标准处理模型",
-    meta3: "🛡️ 四大黄金原则",
-    toolsTitle: "配套工作表格",
-    toolsDesc: "日常工作留痕 · 问题跟进记录 · 专业知识填补",
-    toolsIntro: "以下表格均为团队内部工作留痕工具，点击名称即可跳转至金山文档填写使用。使用时请遵守信息安全规范，勿泄露粉丝个人信息。"
-  };
-}
-
-function saveMainContentData(data) {
-  localStorage.setItem("daogou_main_content", JSON.stringify(data));
-  // 更新页面显示
-  updateMainContentDisplay(data);
-}
-
-function updateMainContentDisplay(data) {
-  // 更新页面标题
-  var titleEl = document.querySelector(".header h1");
-  if (titleEl) titleEl.textContent = data.title;
-  
-  // 更新页面描述
-  var descEl = document.querySelector(".header-desc");
-  if (descEl) descEl.textContent = data.desc;
-  
-  // 更新版本标签
-  var tagEl = document.querySelector(".header-tag");
-  if (tagEl) tagEl.textContent = data.tag;
-  
-  // 更新元数据
-  var metaEls = document.querySelectorAll(".header-meta span");
-  if (metaEls[0]) metaEls[0].textContent = data.meta1;
-  if (metaEls[1]) metaEls[1].textContent = data.meta2;
-  if (metaEls[2]) metaEls[2].textContent = data.meta3;
-  
-  // 更新工具表格部分
-  var toolsTitleEl = document.querySelector("#tools h2");
-  if (toolsTitleEl) toolsTitleEl.textContent = "📋 " + data.toolsTitle;
-  
-  var toolsDescEl = document.querySelector("#tools p");
-  if (toolsDescEl) toolsDescEl.textContent = data.toolsDesc;
-  
-  var toolsIntroEl = document.querySelector("#tools + .section-intro p");
-  if (toolsIntroEl) toolsIntroEl.textContent = data.toolsIntro;
-}
-
-function apLoadMainContent() {
-  var data = getMainContentData();
-  document.getElementById("main-title").value = data.title;
-  document.getElementById("main-desc").value = data.desc;
-  document.getElementById("main-tag").value = data.tag;
-  document.getElementById("main-meta1").value = data.meta1;
-  document.getElementById("main-meta2").value = data.meta2;
-  document.getElementById("main-meta3").value = data.meta3;
-  document.getElementById("tools-title").value = data.toolsTitle;
-  document.getElementById("tools-desc").value = data.toolsDesc;
-  document.getElementById("tools-intro").value = data.toolsIntro;
-}
-
-function apSaveMainContent() {
-  var data = {
-    title: document.getElementById("main-title").value.trim(),
-    desc: document.getElementById("main-desc").value.trim(),
-    tag: document.getElementById("main-tag").value.trim(),
-    meta1: document.getElementById("main-meta1").value.trim(),
-    meta2: document.getElementById("main-meta2").value.trim(),
-    meta3: document.getElementById("main-meta3").value.trim(),
-    toolsTitle: document.getElementById("tools-title").value.trim(),
-    toolsDesc: document.getElementById("tools-desc").value.trim(),
-    toolsIntro: document.getElementById("tools-intro").value.trim()
-  };
-  
-  saveMainContentData(data);
-  
-  var statusEl = document.getElementById("ap-main-status");
-  if (statusEl) {
-    statusEl.style.display = "block";
-    setTimeout(function() {
-      if (statusEl) statusEl.style.display = "none";
-    }, 3000);
-  }
-  
-  alert("主页面内容已更新！");
+  var nav = getNavData();
+  nav.splice(idx, 1);
+  saveNavData(nav);
+  apLoadNav();
 }
 
 function apGotoAddCard() {
@@ -4760,7 +3595,7 @@ function initSmoothNav() {
     var dh = document.body.scrollHeight;
     navLinks.forEach(function(link) {
       var href = link.getAttribute('href');
-      if (!href || !href.startsWith('#') || href === '#') return;
+      if (!href || !href.startsWith('#')) return;
       var t = document.querySelector(href);
       if (!t) return;
       var r = t.getBoundingClientRect();
@@ -4790,39 +3625,17 @@ function init() {
     if (ov) ov.style.display = "none";
     if (ap) ap.classList.add("active");
   } else {
-    if (ov) ov.style.display = "block";
+    if (ov) ov.style.display = "flex";
     if (ap) ap.classList.remove("active");
   }
-
-  // Bind pw-overlay tab buttons
-  var tabBtns = document.querySelectorAll("#pw-overlay .pw-tab");
-  tabBtns.forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      showTab(this.getAttribute("data-tab"));
+  ["pw-team","pw-admin"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") { id === "pw-team" ? loginTeam() : loginAdmin(); }
     });
   });
-
-  // Bind submit buttons
-  var btnTeam = document.getElementById("btn-team");
-  if (btnTeam) btnTeam.addEventListener("click", loginTeam);
-  var btnAdmin = document.getElementById("btn-admin");
-  if (btnAdmin) btnAdmin.addEventListener("click", loginAdmin);
-
-  // Enter key on inputs
-  var inpTeam = document.getElementById("pw-team");
-  if (inpTeam) inpTeam.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") loginTeam();
-  });
-  var inpAdmin = document.getElementById("pw-admin");
-  if (inpAdmin) inpAdmin.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") loginAdmin();
-  });
-
   initSmoothNav();
-  // 初始化主页面内容
-  updateMainContentDisplay(getMainContentData());
-  // 初始化板块内容
-  renderSections();
 }
 
 if (document.readyState === "loading") {
@@ -4831,7 +3644,8 @@ if (document.readyState === "loading") {
   init();
 }
 
-</script>
+})();
 
+</script>
 </body>
 </html>
