@@ -1,0 +1,4837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>达人售后团队完整服务流程执行方案 v2.0</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabase = supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8Ja176nauxRR93A8_syYg_xa191aTN');
+let sectionsCache = null;
+</script>
+<style>
+  :root {
+    --primary: #2E74B5;
+    --primary-dark: #1F497D;
+    --primary-light: #D6E4F0;
+    --accent: #FFC000;
+    --accent-dark: #FF8C00;
+    --danger: #C00000;
+    --danger-bg: #FFF2F2;
+    --success: #375E10;
+    --success-bg: #EAF2E3;
+    --warning: #FF6B00;
+    --warning-bg: #FFF5E6;
+    --text: #1a1a1a;
+    --text-light: #666;
+    --bg: #F4F6F9;
+    --card-bg: #FFFFFF;
+    --border: #E0E6ED;
+    --radius: 16px;
+    --shadow: 0 2px 12px rgba(30, 73, 125, 0.08);
+    --shadow-hover: 0 8px 24px rgba(30, 73, 125, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: 80px;
+    bottom: -80px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .header-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .header-desc {
+    font-size: 15px;
+    opacity: 0.85;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .header-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .nav-inner {
+    display: flex;
+    gap: 4px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .nav a {
+    display: inline-block;
+    padding: 14px 16px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav a:hover, .nav a.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+  .nav a.primary-nav {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* ===== MAIN ===== */
+  .main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ===== SECTION ===== */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-num {
+    background: var(--primary);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 8px;
+    flex: 1;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); }
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .num {
+    background: var(--primary-light);
+    color: var(--primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .card-title .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .tag-danger { background: #FFE7E7; color: var(--danger); }
+  .tag-warning { background: #FFF4E0; color: var(--warning); }
+  .tag-success { background: var(--success-bg); color: var(--success); }
+  .tag-primary { background: var(--primary-light); color: var(--primary); }
+
+  /* ===== ALERT ===== */
+  .alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border-left: 4px solid;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .alert-danger { background: var(--danger-bg); border-color: var(--danger); color: #8B0000; }
+  .alert-warning { background: var(--warning-bg); border-color: var(--warning); color: #7A3800; }
+  .alert-success { background: var(--success-bg); border-color: var(--success); color: #2D4A0C; }
+  .alert-primary { background: var(--primary-light); border-color: var(--primary); color: var(--primary-dark); }
+  .alert strong { font-weight: 700; }
+
+  /* ===== QUOTE ===== */
+  .quote {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    color: var(--primary-dark);
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  /* ===== FLOW ===== */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .flow-step {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--text-light);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ===== TABLE ===== */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  thead tr {
+    background: var(--primary);
+    color: white;
+  }
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:nth-child(even) { background: #F8FAFC; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--primary-light); }
+
+  /* ===== BADGE ===== */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .badge-green { background: #E8F5E9; color: #2E7D32; }
+  .badge-yellow { background: #FFF8E1; color: #F57F17; }
+  .badge-red { background: #FFEBEE; color: #C62828; }
+  .badge-blue { background: var(--primary-light); color: var(--primary); }
+
+  /* ===== LIST ===== */
+  .list { list-style: none; margin: 10px 0; }
+  .list li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+  }
+  .list li:last-child { border-bottom: none; }
+  .list li::before {
+    content: '•';
+    color: var(--primary);
+    font-weight: 700;
+    position: absolute;
+    left: 8px;
+  }
+
+  /* ===== SCRIPT BOX ===== */
+  .script-box {
+    background: #FAFAFA;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 2;
+    position: relative;
+  }
+  .script-box::before {
+    content: '"';
+    font-size: 40px;
+    color: var(--primary-light);
+    position: absolute;
+    top: -4px;
+    left: 12px;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .script-box p { padding-left: 20px; }
+
+  /* ===== GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ===== PRIORITY ===== */
+  .priority-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    background: white;
+  }
+  .priority-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-red { background: var(--danger); }
+  .dot-orange { background: var(--warning); }
+  .dot-blue { background: var(--primary); }
+  .dot-gray { background: #999; }
+
+  /* ===== SUB CARD ===== */
+  .sub-card {
+    background: #F8FAFC;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .sub-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sub-card-title .icon { font-size: 18px; }
+
+  /* ===== DIVIDER ===== */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ===== PROHIBIT ===== */
+  .prohibit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+  }
+  .prohibit-item:last-child { border-bottom: none; }
+  .prohibit-x { color: var(--danger); font-weight: 700; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .prohibit-ok { color: var(--success); font-weight: 700; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ===== ARCH SECTION ===== */
+  .arch-box {
+    background: var(--primary-light);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin: 16px 0;
+  }
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-dark);
+  }
+  .arch-box-icon { font-size: 28px; margin-bottom: 8px; }
+  .arch-arrow { font-size: 22px; color: var(--primary); }
+
+  /* ===== CARP ===== */
+  .carp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 768px) { .carp-grid { grid-template-columns: 1fr 1fr; } }
+  .carp-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+    border: 2px solid var(--border);
+    transition: all 0.2s;
+  }
+  .carp-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .carp-letter {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .carp-word {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .carp-desc { font-size: 12px; color: var(--text-light); line-height: 1.7; }
+
+/* ====== SCENARIOS SECTION ====== */
+.scenarios-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.scenarios-list {
+  position: sticky;
+  top: 90px;
+}
+.scenario-nav {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #E8F0FE;
+  box-shadow: 0 2px 8px rgba(26,54,164,0.06);
+}
+.scenario-nav-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A36A4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #E8F0FE;
+}
+.scenario-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #444;
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+.scenario-link:hover {
+  background: #F0F4FF;
+  color: #1A36A4;
+}
+.scenario-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.scenarios-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.case-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E8F0FE;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
+  transition: box-shadow 0.2s;
+}
+.case-card:hover {
+  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
+}
+.case-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 100%);
+  border-bottom: 1px solid #E8F0FE;
+}
+.case-num {
+  background: #1A36A4;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.case-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A2E;
+  flex: 1;
+}
+.case-level {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.case-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.case-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1A36A4;
+  background: #EEF2FF;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.case-summary p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+.case-dialogue pre {
+  background: #F8F9FA;
+  border: 1px solid #E8E8E8;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+  margin: 0;
+  border-left: 3px solid #1A36A4;
+}
+.case-tag-danger {
+  font-size: 12px;
+  font-weight: 700;
+  color: #C00000;
+  background: #FFF2F2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.case-tag-success {
+  font-size: 12px;
+  font-weight: 700;
+  color: #375E10;
+  background: #EAF2E3;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.script-box {
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.danger-script {
+  background: #FFF5F5;
+  border: 1px solid #FFD0D0;
+  color: #8B0000;
+}
+.success-script {
+  background: #F4FAF0;
+  border: 1px solid #C8E6B8;
+  color: #2D5016;
+}
+.case-lesson-box p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A36A4;
+  background: linear-gradient(135deg, #EEF2FF 0%, #F0F4FF 100%);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin: 0;
+  line-height: 1.7;
+  border-left: 4px solid #1A36A4;
+}
+
+/* ====== TRAINING SECTION ====== */
+.training-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.training-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+.training-track {
+  position: relative;
+  margin-bottom: 20px;
+}
+.track-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1A36A4 0%, #2B5BE8 33%, #2B5BE8 50%, #E8F0FE 80%);
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+.track-dots {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+.track-dot {
+  background: #fff;
+  border: 3px solid #1A36A4;
+  color: #1A36A4;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-dot.active {
+  background: #1A36A4;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(26,54,164,0.2);
+}
+.track-dot small {
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.train-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E8F0FE;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
+  transition: box-shadow 0.2s;
+}
+.train-card:hover {
+  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
+}
+.train-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  color: #fff;
+}
+.train-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.train-meta {
+  flex: 1;
+}
+.train-day {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+.train-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.train-subtitle {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.train-items {
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.train-item {
+  background: #F8FAFF;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #E8F0FE;
+}
+.train-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #1A36A4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.train-text {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.7;
+}
+
+/* ====== TRAINING TIMING NOTE ====== */
+.train-timing-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(135deg, #FFF8E6 0%, #FFF3CC 100%);
+  border: 1px solid #FFD966;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 20px 0 8px;
+  max-width: 800px;
+}
+.note-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+.note-text {
+  font-size: 13px;
+  color: #6B5200;
+  line-height: 1.7;
+}
+.note-text strong {
+  color: #8B6914;
+}
+
+/* ====== TRAINING TIMING NOTE ====== */
+.train-timing-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(135deg, #FFF8E6 0%, #FFF3CC 100%);
+  border: 1px solid #FFD966;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 20px 0 8px;
+  max-width: 800px;
+}
+.note-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+.note-text {
+  font-size: 13px;
+  color: #6B5200;
+  line-height: 1.7;
+}
+.note-text strong {
+  color: #8B6914;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+  .scenarios-list {
+    position: static;
+  }
+  .scenario-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .scenario-nav-title {
+    grid-column: 1 / -1;
+  }
+  .scenario-link {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .train-items {
+    grid-template-columns: 1fr;
+  }
+  .track-dot {
+    width: 48px;
+    height: 48px;
+    font-size: 9px;
+  }
+  .track-dot small {
+    font-size: 8px;
+  }
+}
+/* 配套工作表格 */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 0 0 20px 0;
+}
+.tool-card {
+  background: #fff;
+  border: 1.5px solid #E8F0FE;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.tool-card:hover {
+  border-color: #2B5BE8;
+  box-shadow: 0 4px 16px rgba(26,54,164,0.1);
+  transform: translateY(-2px);
+}
+.tool-card .tool-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+.tool-card .tool-body {
+  flex: 1;
+}
+.tool-card .tool-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A36A4;
+  margin-bottom: 6px;
+}
+.tool-card .tool-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.tool-card .tool-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tool-card .tool-tag {
+  background: #E8F0FE;
+  color: #2B5BE8;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.tool-card .tool-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #1A36A4;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+.tool-card .tool-link:hover {
+  background: #2B5BE8;
+}
+
+.nav-highlight {
+  background: #F7C948 !important;
+  color: #1A36A4 !important;
+  font-weight: 700 !important;
+  border-radius: 20px !important;
+}
+
+
+.tool-card-add:hover { background: #E8F0FF !important; transform: scale(1.02); transition: all 0.2s; }
+
+</style>
+  <style>
+/* Admin Panel Page */
+#admin-page {
+  display: none; min-height: 100vh; background: #F0F4FF; padding: 40px 24px;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+#admin-page.active { display: block; }
+.admin-container { max-width: 1100px; margin: 0 auto; }
+.admin-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 32px; padding: 16px 24px; background: #fff; border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.1);
+}
+.admin-topbar h1 { margin: 0; font-size: 22px; color: #1A36A4; }
+.admin-topbar .btn-danger {
+  background: #e74c3c; color: #fff; border: none; padding: 8px 20px;
+  border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600;
+}
+
+/* Tab Navigation */
+.admin-tabs {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.admin-tab {
+  padding: 10px 20px; border: 2px solid #E8F0FE; background: #fff;
+  border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: 600;
+  color: #555; transition: all 0.2s;
+}
+.admin-tab.active { background: #1A36A4; color: #fff; border-color: #1A36A4; }
+
+/* Panels */
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+/* Cards */
+.admin-card {
+  background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.08);
+}
+.admin-card h3 { margin: 0 0 16px 0; color: #1A36A4; font-size: 16px;
+  display: flex; align-items: center; gap: 6px; }
+.admin-card h3 span { font-size: 20px; }
+
+/* Form */
+.admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.admin-form.full { grid-template-columns: 1fr; }
+.admin-form label { display: block; font-size: 12px; color: #555; font-weight: 600; margin-bottom: 4px; }
+.admin-form input, .admin-form textarea, .admin-form select {
+  width: 100%; padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px;
+  font-size: 14px; box-sizing: border-box; font-family: inherit; transition: border 0.2s;
+}
+.admin-form input:focus, .admin-form textarea:focus {
+  border-color: #2B5BE8; outline: none;
+}
+.admin-form textarea { resize: vertical; min-height: 80px; }
+.admin-form textarea.editor-area { min-height: 200px; background: #FAFAFA; }
+.admin-form-btns { display: flex; gap: 8px; margin-top: 12px; }
+.admin-form-btns button {
+  flex: 1; padding: 10px; border: none; border-radius: 8px;
+  font-weight: 700; font-size: 14px; cursor: pointer; transition: transform 0.1s;
+}
+.admin-form-btns button:active { transform: scale(0.98); }
+.btn-primary { background: #1A36A4; color: #fff; }
+.btn-primary:hover { background: #2B5BE8; }
+.btn-green { background: #27ae60; color: #fff; }
+.btn-green:hover { background: #219a52; }
+.btn-red { background: #e74c3c; color: #fff; }
+.btn-red:hover { background: #c0392b; }
+.btn-gray { background: #eee; color: #555; }
+.btn-gray:hover { background: #ddd; }
+
+/* Section list */
+.section-item {
+  display: flex; gap: 8px; align-items: center; padding: 12px;
+  border: 1.5px solid #E8F0FE; border-radius: 10px; margin-bottom: 8px;
+}
+.section-item input { flex: 1; }
+.section-item .section-order { color: #888; font-size: 12px; min-width: 30px; text-align: center; }
+.section-item .btn-sm {
+  padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+
+/* Tool cards list */
+.tool-item {
+  display: flex; gap: 8px; align-items: flex-start; padding: 12px;
+  border: 1.5px solid #E8F0FE; border-radius: 10px; margin-bottom: 8px;
+  background: #FAFAFA;
+}
+.tool-item .tool-preview { flex: 1; }
+.tool-item .tool-preview .tool-icon { font-size: 24px; margin-bottom: 4px; }
+.tool-item .tool-preview .tool-title { font-weight: 700; font-size: 14px; color: #1A36A4; }
+.tool-item .tool-preview .tool-desc { font-size: 12px; color: #666; margin-top: 2px; }
+.tool-item .tool-preview .tool-tags { margin-top: 4px; }
+.tool-item .tool-preview .tool-tag {
+  display: inline-block; padding: 2px 8px; background: #E8F0FE; border-radius: 20px;
+  font-size: 11px; color: #1A36A4; margin-right: 4px; margin-bottom: 2px;
+}
+.tool-item .tool-actions { display: flex; flex-direction: column; gap: 4px; }
+
+/* Status banner */
+.status-banner {
+  padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; font-weight: 600;
+}
+.status-banner.green { background: #D4EDDA; color: #155724; border: 1.5px solid #C3E6CB; }
+.status-banner.red { background: #F8D7DA; color: #721C24; border: 1.5px solid #F5C6CB; }
+.status-banner.blue { background: #E8F0FE; color: #1A36A4; border: 1.5px solid #C5D3F0; }
+
+/* Section editor panel */
+.section-edit-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+}
+.section-edit-row label { font-size: 11px; color: #888; display: block; }
+
+/* Activity cards */
+.activity-item {
+  display: flex; gap: 12px; padding: 12px; border: 1.5px solid #E8F0FE;
+  border-radius: 10px; margin-bottom: 8px; background: #FAFAFA;
+}
+.activity-item .activity-info { flex: 1; }
+.activity-item .activity-title { font-weight: 700; font-size: 14px; color: #1A36A4; }
+.activity-item .activity-meta { font-size: 12px; color: #888; margin-top: 4px; }
+
+/* Nav links editor */
+.nav-edit-row {
+  display: flex; gap: 8px; align-items: center; padding: 8px 12px;
+  border: 1.5px solid #E8F0FE; border-radius: 8px; margin-bottom: 6px;
+}
+.nav-edit-row input { flex: 1; border: none; background: transparent; font-size: 14px; font-weight: 600; }
+.nav-edit-row .nav-hint { font-size: 11px; color: #aaa; }
+
+/* Password section */
+.pw-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end;
+  padding: 16px; background: #FAFAFA; border-radius: 10px; margin-bottom: 12px;
+}
+.pw-row label { font-size: 12px; font-weight: 600; color: #555; }
+.pw-row input { padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px; font-size: 14px; width: 200px; }
+.pw-row button { padding: 10px 16px; background: #1A36A4; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+/* Add section */
+.add-section-btn {
+  width: 100%; padding: 14px; border: 2px dashed #2B5BE8; background: transparent;
+  border-radius: 10px; color: #2B5BE8; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.add-section-btn:hover { background: #F0F4FF; }
+
+/* Save all */
+.save-all-bar {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1A36A4; color: #fff; padding: 14px 28px; border-radius: 30px;
+  font-size: 15px; font-weight: 700; box-shadow: 0 4px 20px rgba(26,54,164,0.4);
+  cursor: pointer; z-index: 99999; display: none;
+}
+.save-all-bar.show { display: flex; gap: 12px; align-items: center; }
+.save-all-bar button {
+  background: #F7C948; color: #1A36A4; border: none; padding: 8px 16px;
+  border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 13px;
+}
+</style>
+  <style>
+#pw-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  z-index: 99999;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#pw-overlay .pw-inner {
+  width: 100%; max-width: 400px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+}
+#pw-overlay .pw-lock { font-size: 56px; margin-bottom: 6px; line-height: 1; }
+#pw-overlay .pw-title { color: #fff; font-size: 22px; margin: 0 0 4px 0; font-weight: 700; }
+#pw-overlay .pw-subtitle { color: rgba(255,255,255,0.7); margin: 0 0 16px 0; font-size: 14px; }
+#pw-overlay .pw-tabs {
+  display: flex; gap: 8px; margin-bottom: 16px;
+}
+#pw-overlay .pw-tab {
+  flex: 1; padding: 8px 0; font-size: 13px; font-weight: 600; cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.4); background: transparent; color: rgba(255,255,255,0.7);
+  border-radius: 20px; transition: all 0.2s; text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+#pw-overlay .pw-tab.active,
+#pw-overlay .pw-tab:active {
+  background: rgba(255,255,255,0.2); color: #fff; border-color: #fff;
+}
+#pw-overlay .pw-form-wrap { text-align: center; }
+#pw-overlay .pw-tab-content { text-align: center; }
+#pw-overlay .pw-input {
+  display: block; width: 100%; max-width: 280px; margin: 0 auto 8px auto;
+  padding: 12px 16px; font-size: 16px; border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px; background: rgba(255,255,255,0.1); color: #fff;
+  text-align: center; outline: none; transition: border 0.2s; box-sizing: border-box;
+  -webkit-appearance: none;
+}
+#pw-overlay .pw-input::placeholder { color: rgba(255,255,255,0.5); }
+#pw-overlay .pw-input:focus { border-color: #F7C948; }
+#pw-overlay .pw-submit {
+  display: block; width: 100%; max-width: 280px; margin: 4px auto 0 auto;
+  padding: 13px 0; font-size: 16px; font-weight: 700; background: #F7C948;
+  color: #1A36A4; border: none; border-radius: 12px; cursor: pointer;
+  transition: transform 0.1s; box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#pw-overlay .pw-submit:active { transform: scale(0.97); }
+#pw-overlay .pw-error { color: #ff6b6b; font-size: 13px; min-height: 18px; margin-bottom: 4px; }
+#pw-overlay .pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 8px; }
+
+/* ====== SCENARIOS SECTION ====== */
+.scenarios-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.scenarios-list {
+  position: sticky;
+  top: 90px;
+}
+.scenario-nav {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #E8F0FE;
+  box-shadow: 0 2px 8px rgba(26,54,164,0.06);
+}
+.scenario-nav-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A36A4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #E8F0FE;
+}
+.scenario-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #444;
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+.scenario-link:hover {
+  background: #F0F4FF;
+  color: #1A36A4;
+}
+.scenario-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.scenarios-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.case-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E8F0FE;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
+  transition: box-shadow 0.2s;
+}
+.case-card:hover {
+  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
+}
+.case-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 100%);
+  border-bottom: 1px solid #E8F0FE;
+}
+.case-num {
+  background: #1A36A4;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.case-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A2E;
+  flex: 1;
+}
+.case-level {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.case-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.case-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1A36A4;
+  background: #EEF2FF;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.case-summary p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+.case-dialogue pre {
+  background: #F8F9FA;
+  border: 1px solid #E8E8E8;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+  margin: 0;
+  border-left: 3px solid #1A36A4;
+}
+.case-tag-danger {
+  font-size: 12px;
+  font-weight: 700;
+  color: #C00000;
+  background: #FFF2F2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.case-tag-success {
+  font-size: 12px;
+  font-weight: 700;
+  color: #375E10;
+  background: #EAF2E3;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.script-box {
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.danger-script {
+  background: #FFF5F5;
+  border: 1px solid #FFD0D0;
+  color: #8B0000;
+}
+.success-script {
+  background: #F4FAF0;
+  border: 1px solid #C8E6B8;
+  color: #2D5016;
+}
+.case-lesson-box p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A36A4;
+  background: linear-gradient(135deg, #EEF2FF 0%, #F0F4FF 100%);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin: 0;
+  line-height: 1.7;
+  border-left: 4px solid #1A36A4;
+}
+
+/* ====== TRAINING SECTION ====== */
+.training-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.training-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+.training-track {
+  position: relative;
+  margin-bottom: 20px;
+}
+.track-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1A36A4 0%, #2B5BE8 50%, #E8F0FE 100%);
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+.track-dots {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+.track-dot {
+  background: #fff;
+  border: 3px solid #1A36A4;
+  color: #1A36A4;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-dot.active {
+  background: #1A36A4;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(26,54,164,0.2);
+}
+.track-dot small {
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.train-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E8F0FE;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,54,164,0.06);
+  transition: box-shadow 0.2s;
+}
+.train-card:hover {
+  box-shadow: 0 4px 24px rgba(26,54,164,0.12);
+}
+.train-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  color: #fff;
+}
+.train-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.train-meta {
+  flex: 1;
+}
+.train-day {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+.train-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.train-subtitle {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.train-items {
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.train-item {
+  background: #F8FAFF;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #E8F0FE;
+}
+.train-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #1A36A4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.train-text {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.7;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+  .scenarios-list {
+    position: static;
+  }
+  .scenario-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .scenario-nav-title {
+    grid-column: 1 / -1;
+  }
+  .scenario-link {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .train-items {
+    grid-template-columns: 1fr;
+  }
+  .track-dot {
+    width: 48px;
+    height: 48px;
+    font-size: 9px;
+  }
+  .track-dot small {
+  font-size: 8px;
+}
+}
+
+/* ====== 编辑面板样式 ====== */
+.section-edit-panel {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #E8F0FE;
+  border-radius: 8px;
+  background: #FAFBFF;
+}
+.edit-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #E8F0FE;
+}
+.edit-panel-header h4 {
+  margin: 0;
+  color: #1A36A4;
+}
+.edit-panel-body .form-group {
+  margin-bottom: 16px;
+}
+.edit-panel-body label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #1A36A4;
+}
+.edit-panel-body input,
+.edit-panel-body textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #E8F0FE;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.edit-panel-body textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #E8F0FE;
+}
+.btn-sm {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.btn-sm.btn-blue {
+  background: #2B5BE8;
+  color: white;
+}
+.btn-sm.btn-blue:hover {
+  background: #1A36A4;
+}
+.btn-sm.btn-gray {
+  background: #E8F0FE;
+  color: #1A36A4;
+}
+.btn-sm.btn-gray:hover {
+  background: #D4E0FF;
+}
+.btn-sm.btn-red {
+  background: #FF4D4F;
+  color: white;
+}
+.btn-sm.btn-red:hover {
+  background: #D9363E;
+}
+
+/* ====== 板块列表样式调整 ====== */
+#ap-content .section-item {
+  justify-content: space-between;
+}
+#ap-content .section-item > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+#ap-content .section-item .section-actions {
+  display: flex;
+  gap: 8px;
+}
+</style>
+
+</head>
+<body>
+
+<div id="pw-overlay">
+  <div class="pw-inner">
+    <div class="pw-lock">&#x1F512;</div>
+    <h2 class="pw-title">导购客服工作手册</h2>
+    <p class="pw-subtitle">请选择登录身份</p>
+    <div id="pw-tabs" class="pw-tabs">
+      <button class="pw-tab active" data-tab="team">&#x1F465; 团队成员</button>
+      <button class="pw-tab" data-tab="admin">&#x1F4BC; 管理员</button>
+    </div>
+    <div id="pw-form-wrap" class="pw-form-wrap">
+      <div id="tab-team" class="pw-tab-content">
+        <input type="password" id="pw-team" class="pw-input" placeholder="请输入团队密码" autocomplete="off">
+        <div class="pw-error" id="err-team">密码错误，请重试</div>
+        <button id="btn-team" class="pw-submit">&#x1F6AA; 进入手册</button>
+      </div>
+      <div id="tab-admin" class="pw-tab-content" style="display:none;">
+        <input type="password" id="pw-admin" class="pw-input" placeholder="请输入管理员密码" autocomplete="off">
+        <div class="pw-error" id="err-admin">密码错误，请重试</div>
+        <button id="btn-admin" class="pw-submit">&#x2699; 登录管理后台</button>
+        <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="admin-page">
+  <div class="admin-container">
+
+    <!-- Top bar -->
+    <div class="admin-topbar">
+      <h1>&#x2699; 管理后台</h1>
+      <button class="btn-danger" onclick="apLogout()">&#x274C; 退出管理</button>
+    </div>
+
+    <!-- Status -->
+    <div id="ap-status" class="status-banner blue">&#x1F4CB; 已登录管理后台，可对页面进行编辑</div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="apTab(this, 'ap-team')">&#x1F465; 团队密码</button>
+      <button class="admin-tab" onclick="apTab(this, 'ap-cards')">&#x1F4CB; 表格卡片</button>
+      <button class="admin-tab" onclick="apTab(this, 'ap-content')">&#x270F; 板块内容</button>
+      <button class="admin-tab" onclick="apTab(this, 'ap-nav')">&#x1F5D1; 导航菜单</button>
+      <button class="admin-tab" onclick="apTab(this, 'ap-main')">&#x1F5A8; 主页面内容</button>
+    </div>
+
+    <!-- ========== Team Password Panel ========== -->
+    <div id="ap-team" class="admin-panel active">
+      <div class="admin-card">
+        <h3><span>&#x1F511;</span> 密码管理</h3>
+        <div class="admin-form">
+          <div>
+            <label>团队成员登录密码</label>
+            <input type="text" id="ap-team-pw" placeholder="当前密码: daogou2026">
+          </div>
+          <button class="btn-primary" onclick="apSaveTeamPw()">&#x2705; 保存团队密码</button>
+        </div>
+        <div class="admin-form" style="margin-top:12px;">
+          <div>
+            <label>管理员登录密码</label>
+            <input type="text" id="ap-admin-pw" placeholder="当前密码: admin2026">
+          </div>
+          <button class="btn-primary" onclick="apSaveAdminPw()">&#x2705; 保存管理员密码</button>
+        </div>
+        <div id="ap-team-status" style="margin-top:12px;font-size:13px;color:#27ae60;display:none;">&#x2705; 密码已更新</div>
+      </div>
+      <div class="admin-card">
+        <h3><span>&#x1F6AB;</span> 团队访问控制</h3>
+        <p style="margin:0 0 12px 0;font-size:13px;color:#666;">取消权限后，普通团队成员无法再登录手册</p>
+        <div id="ap-access-status" style="padding:10px 16px;background:#D4EDDA;border-radius:8px;font-size:13px;font-weight:600;color:#155724;margin-bottom:12px;">&#x2705; 团队访问权限：正常</div>
+        <div class="admin-form-btns">
+          <button class="btn-red" id="btn-revoke" onclick="apRevokeAccess()">&#x274C; 取消团队访问</button>
+          <button class="btn-green" id="btn-enable" onclick="apEnableAccess()" style="display:none;">&#x2705; 恢复团队访问</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Cards Panel ========== -->
+    <div id="ap-cards" class="admin-panel">
+      <div id="ap-cards-list"></div>
+      <div id="ap-card-add" class="admin-card" style="border:2px dashed #2B5BE8;background:#F8FAFF;">
+        <h3><span>&#x2795;</span> 添加新卡片</h3>
+        <div class="admin-form full">
+          <div class="section-edit-row">
+            <div><label>卡片标题</label><input type="text" id="ca-title" placeholder="如：护肤知识库"></div>
+            <div><label>图标（表情）</label><input type="text" id="ca-icon" placeholder="&#x1F4DA;"></div>
+          </div>
+          <div><label>卡片描述</label><input type="text" id="ca-desc" placeholder="简要说明此表格的用途"></div>
+          <div class="section-edit-row">
+            <div>
+              <label>对应板块</label>
+              <select id="ca-section">
+                <option value="">-- 选择板块 --</option>
+                <option value="tools">工具表格</option>
+                <option value="workflows">工作流程</option>
+                <option value="cases">案例库</option>
+                <option value="training">新人培训</option>
+              </select>
+            </div>
+            <div><label>跳转链接</label><input type="text" id="ca-link" placeholder="https://kdocs.cn/..."></div>
+          </div>
+          <div><label>标签（逗号分隔）</label><input type="text" id="ca-tags" placeholder="护肤, 咨询, 售后"></div>
+        </div>
+        <div class="admin-form-btns">
+          <button class="btn-primary" onclick="apAddCard()">&#x2795; 添加卡片</button>
+          <button class="btn-gray" onclick="apClearCardForm()">&#x21BA; 清空</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Content Panel ========== -->
+    <div id="ap-content" class="admin-panel">
+      <div class="admin-card">
+        <h3><span>&#x270F;</span> 板块内容管理</h3>
+        <p style="margin:0 0 16px 0;font-size:13px;color:#666;">管理手册各板块的内容（标题、图标、颜色、内容）。</p>
+        <div id="ap-sections-list"></div>
+        <div style="margin-top:16px;border-top:1px solid #E8F0FE;padding-top:16px;">
+          <h4 style="margin:0 0 8px 0;font-size:14px;color:#1A36A4;">&#x2795; 添加新板块</h4>
+          <div class="section-edit-row">
+            <div><label>板块标题</label><input type="text" id="sec-title" placeholder="如：案例库"></div>
+            <div><label>板块ID（英文，用于跳转锚点）</label><input type="text" id="sec-id" placeholder="cases"></div>
+          </div>
+          <div class="section-edit-row">
+            <div><label>板块图标</label><input type="text" id="sec-icon" placeholder="&#x1F4CB;"></div>
+            <div>
+              <label>颜色主题</label>
+              <select id="sec-color">
+                <option value="blue">蓝色主题</option>
+                <option value="green">绿色主题</option>
+                <option value="purple">紫色主题</option>
+                <option value="orange">橙色主题</option>
+                <option value="red">红色主题</option>
+              </select>
+            </div>
+          </div>
+          <div><label>板块内容（换行分隔，| 表示多列）</label><textarea id="sec-content" class="editor-area" placeholder="内容行1 | 内容列2
+内容行3 | 内容列4"></textarea></div>
+          <div class="admin-form-btns">
+            <button class="btn-primary" onclick="apAddSection()">&#x2795; 添加板块</button>
+            <button class="btn-gray" onclick="apClearSectionForm()">&#x21BA; 清空</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Nav Panel ========== -->
+    <div id="ap-nav" class="admin-panel">
+      <div class="admin-card">
+        <h3><span>&#x1F5D1;</span> 导航菜单编辑</h3>
+        <p style="margin:0 0 16px 0;font-size:13px;color:#666;">管理顶部导航栏的菜单项。</p>
+        <div id="ap-nav-list"></div>
+        <div style="margin-top:16px;border-top:1px solid #E8F0FE;padding-top:16px;">
+          <h4 style="margin:0 0 8px 0;font-size:14px;color:#1A36A4;">&#x2795; 添加菜单项</h4>
+          <div class="section-edit-row">
+            <div><label>菜单名称</label><input type="text" id="nav-label" placeholder="如：工具表格"></div>
+            <div><label>跳转目标</label><input type="text" id="nav-href" placeholder="#tools"></div>
+          </div>
+          <div class="section-edit-row">
+            <div><label>排列顺序（数字越小越靠前）</label><input type="number" id="nav-order" placeholder="1" value="99"></div>
+            <div><label>菜单类型</label>
+              <select id="nav-type">
+                <option value="anchor">锚点链接（#id）</option>
+                <option value="external">外部链接</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-form-btns">
+            <button class="btn-primary" onclick="apAddNavItem()">&#x2795; 添加菜单</button>
+            <button class="btn-gray" onclick="apClearNavForm()">&#x21BA; 清空</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Main Page Content Panel ========== -->
+    <div id="ap-main" class="admin-panel">
+      <div class="admin-card">
+        <h3><span>&#x1F5A8;</span> 主页面内容编辑</h3>
+        <p style="margin:0 0 16px 0;font-size:13px;color:#666;">编辑主页面的标题、描述和其他文字内容。</p>
+        
+        <div class="admin-form full">
+          <div><label>页面标题</label><input type="text" id="main-title" placeholder="达人售后团队完整服务流程执行方案"></div>
+          <div><label>页面描述</label><input type="text" id="main-desc" placeholder="融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制"></div>
+          <div><label>版本标签</label><input type="text" id="main-tag" placeholder="v2.0 · 2026年修订版"></div>
+          <div><label>元数据 1</label><input type="text" id="main-meta1" placeholder="📋 共10种客户类型"></div>
+          <div><label>元数据 2</label><input type="text" id="main-meta2" placeholder="⚡ CARP标准处理模型"></div>
+          <div><label>元数据 3</label><input type="text" id="main-meta3" placeholder="🛡️ 四大黄金原则"></div>
+          <div><label>工具表格标题</label><input type="text" id="tools-title" placeholder="配套工作表格"></div>
+          <div><label>工具表格描述</label><input type="text" id="tools-desc" placeholder="日常工作留痕 · 问题跟进记录 · 专业知识填补"></div>
+          <div><label>工具表格介绍</label><textarea id="tools-intro" class="editor-area" placeholder="以下表格均为团队内部工作留痕工具，点击名称即可跳转至金山文档填写使用。使用时请遵守信息安全规范，勿泄露粉丝个人信息。"></textarea></div>
+        </div>
+        
+        <div class="admin-form-btns">
+          <button class="btn-primary" onclick="apSaveMainContent()">✅; 保存主页面内容</button>
+          <button class="btn-gray" onclick="apLoadMainContent()">↺; 重新加载</button>
+        </div>
+        <div id="ap-main-status" style="margin-top:12px;font-size:13px;color:#27ae60;display:none;">✅; 内容已更新</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-tag">v2.0 · 2026年修订版</div>
+  <h1>达人售后团队完整服务流程执行方案</h1>
+  <p class="header-desc">融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制</p>
+  <div class="header-meta">
+    <span>📋 共10种客户类型</span>
+    <span>⚡ CARP标准处理模型</span>
+    <span>🛡️ 四大黄金原则</span>
+  </div>
+</div>
+->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#tools" class="primary-nav">&#x1F4CB; 工作表格</a>
+    <a href="#s1">团队定位</a>
+    <a href="#s2">服务标准</a>
+    <a href="#s3">CARP模型</a>
+    <a href="#s4">10种类型</a>
+    <a href="#s5">退换货</a>
+    <a href="#s6">特殊边界</a>
+    <a href="#s7">协作升级</a>
+    <a href="#s8">情绪管理</a>
+    <a href="#s9">绩效考核</a>
+    <a href="#s10">话术速查</a>
+    <a href="#scenarios">售后场景</a>
+    <a href="#training">新人培训</a>
+    <a href="#" id="ap-enter-btn" onclick="apShowPage(); return false;" style="background:#F7C948;color:#1A36A4;font-weight:700;border-radius:20px;padding:6px 16px;margin-left:8px;cursor:pointer;display:inline-block;">&#x2699; 管理后台</a>
+  </div>
+</nav>
+
+
+
+
+<div class="section-header" id="tools">
+    <div class="header-icon">&#x1F4CB;</div>
+    <div class="header-content">
+      <h2>&#x1F4CB; 配套工作表格</h2>
+      <p>日常工作留痕 · 问题跟进记录 · 专业知识填补</p>
+    </div>
+  </div>
+
+  <div class="section-intro" style="padding:0 0 20px 0;">
+    <p>以下表格均为团队内部工作留痕工具，点击名称即可跳转至金山文档填写使用。使用时请遵守信息安全规范，勿泄露粉丝个人信息。</p>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F4C1;</div>
+      <div class="tool-body">
+        <div class="tool-title">主品使用方法</div>
+        <div class="tool-desc">各品牌主推产品的标准使用方法、注意事项、肤质适配说明，供客服日常查阅，快速回答粉丝「怎么用」类问题。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">产品知识</span>
+          <span class="tool-tag">客服必备</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/csj6kwYMnrtj" target="_blank" '主品使用方法'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F4DD;</div>
+      <div class="tool-body">
+        <div class="tool-title">售后问题登记表（2026）</div>
+        <div class="tool-desc">记录所有粉丝提交的售后问题，包含问题类型、跟进状态、处理结果、升级原因。每日登记、每周汇总，是团队问题分析的原始数据来源。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">问题跟进</span>
+          <span class="tool-tag">每日必填</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/cmhViUI1mDxw" target="_blank" '售后问题登记表（2026）'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F5BC;</div>
+      <div class="tool-body">
+        <div class="tool-title">消息截图汇总表</div>
+        <div class="tool-desc">按日期+粉丝ID+问题类型汇总所有需要留证的截图记录。文件名格式：[日期]_[品牌]_[粉丝ID]_[问题类型]_[处理结果]，截图需保存6个月。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">留证存档</span>
+          <span class="tool-tag">6个月</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/cb2WZen4ScRb" target="_blank" '消息截图汇总表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F4E5;</div>
+      <div class="tool-body">
+        <div class="tool-title">群聊管理备注表</div>
+        <div class="tool-desc">记录各品牌群/粉丝群的关键信息，包含：品牌群对接人、群公告、特殊政策说明、退换货申请格式规范，避免每次重复确认。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">品牌对接</span>
+          <span class="tool-tag">信息汇总</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/cbdkSxuZWFte" target="_blank" '群聊管理备注表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F4F1;</div>
+      <div class="tool-body">
+        <div class="tool-title">粉丝回访记录表</div>
+        <div class="tool-desc">记录已处理case的回访结果，验证问题是否真正解决。适用于：过敏case（72小时后回访）、赔偿/退款case（7天后确认）、重点粉丝专项跟踪。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">客户关怀</span>
+          <span class="tool-tag">售后闭环</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/caQnuRll8c8C" target="_blank" '粉丝回访记录表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F550;</div>
+      <div class="tool-body">
+        <div class="tool-title">售后客服排班表</div>
+        <div class="tool-desc">团队排班总览，包含：每日值班人员、节假日/直播场次特别排班、代班记录。确保每个时段有人响应，首次响应不超过3分钟。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">排班管理</span>
+          <span class="tool-tag">团队协作</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/crfCb16WDp1a" target="_blank" '售后客服排班表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F3C6;</div>
+      <div class="tool-body">
+        <div class="tool-title">绩效考核统计表</div>
+        <div class="tool-desc">月度KPI统计，包含：首次响应时间、问题解决率、平均处理时长、客户满意度、品牌方投诉率。每月末由组长更新，作为绩效评定依据。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">绩效管理</span>
+          <span class="tool-tag">月度更新</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/cilTIvaos01P" target="_blank" '绩效考核统计表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F3D7;</div>
+      <div class="tool-body">
+        <div class="tool-title">培训复盘记录表</div>
+        <div class="tool-desc">每次新人培训、case复盘会的记录存档。包含：培训日期、参会人员、核心议题、处理亮点/失误、改进措施。每月更新，形成知识沉淀。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">知识沉淀</span>
+          <span class="tool-tag">持续改进</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/chvXjBtRnD3C" target="_blank" '培训复盘记录表'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">&#x1F4CA;</div>
+      <div class="tool-body">
+        <div class="tool-title">产品调研数据 <span style="background:#FF9800;color:#fff;padding:1px 6px;border-radius:4px;font-size:11px;">待定</span></div>
+        <div class="tool-desc">各品牌主推产品的成分分析、竞品对比、市场用户反馈数据。待品牌方提供资料后填充，作为专业应答的知识库支撑。</div>
+        <div class="tool-meta">
+          <span class="tool-tag">产品知识</span>
+          <span class="tool-tag">持续更新</span>
+        </div>
+      </div>
+      <a class="tool-link" href="https://www.kdocs.cn/l/cdlf4aPqh8WN" target="_blank" '产品调研数据'); return false;">&#x1F517; 新标签页打开</a>
+    </div>
+
+    <div class="tool-card tool-card-add" onclick="apGotoAddCard();" style="cursor:pointer; border: 2px dashed #2B5BE8; background: #F0F4FF; justify-content: center; align-items: center; min-height: 160px;">
+      <div style="text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 8px;">&#x2795;</div>
+        <div style="font-size: 14px; color: #2B5BE8; font-weight: 700;">添加新表格</div>
+        <div style="font-size: 12px; color: #888; margin-top: 4px;">点击添加工作表格卡片</div>
+      </div>
+    </div>
+
+  
+    <div class="tool-card-add" onclick="apShowPage(); return false;" style="cursor:pointer; border: 2px dashed #2B5BE8; background: #F0F4FF; justify-content: center; align-items: center; min-height: 160px;">
+      <div style="text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 8px;">&#x2795;</div>
+        <div style="font-size: 14px; color: #2B5BE8; font-weight: 700;">添加新表格</div>
+        <div style="font-size: 12px; color: #888; margin-top: 4px;">点击进入管理后台添加</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="info-note" style="margin-top:24px;">
+    <div class="note-icon">&#x1F4A1;</div>
+    <div class="note-text">
+      <strong>使用提示：</strong>所有表格均为金山文档在线协作，团队成员可实时编辑。如需导出存档，可在金山文档中导出为Excel本地保存。
+      新增表格或链接变更请联系组长更新本手册。
+    </div>
+  </div>
+-->
+<div class="main">
+
+  <!-- ===== SECTION 1 ===== -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">团队定位与角色定义</div>
+    </div>
+
+    <div class="arch-box">
+      <div class="arch-box-icon">🔗</div>
+      <div class="arch-flow">
+        <span>👤 粉丝</span>
+        <span class="arch-arrow">→</span>
+        <span>🔧 达人售后团队（我们）</span>
+        <span class="arch-arrow">→</span>
+        <span>🏢 品牌方</span>
+      </div>
+      <p style="margin-top:12px; color: var(--primary-dark); font-size:14px; font-weight:600;">
+        我们是「粉丝与品牌之间的中间协调方」—— 不是客服，不是品牌方
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏗️ 团队架构</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>角色</th><th>人数</th><th>核心职责</th></tr></thead>
+          <tbody>
+            <tr><td><strong>组长（Andy）</strong></td><td><span class="badge badge-blue">1人</span></td><td>对外品牌对接、内部调度、特殊case决策</td></tr>
+            <tr><td><strong>售后专员 A / B / C</strong></td><td><span class="badge badge-blue">3人</span></td><td>日常咨询 / 投诉处理（按品牌分组）</td></tr>
+            <tr><td><strong>售后专员 D / E / F / G</strong></td><td><span class="badge badge-blue">4人</span></td><td>复杂case跟进、退换货协调、客情维护</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid var(--danger);">
+      <div class="card-title">
+        <span>⚠️</span> 四大黄金原则（所有成员必须背诵）
+      </div>
+      <div class="grid-2">
+        <div class="priority-row">
+          <div class="priority-dot dot-red"></div>
+          <div><strong>不承诺</strong> — 未经品牌方确认，不对粉丝做实质性承诺</div>
+        </div>
+        <div class="priority-row">
+          <div class="priority-dot dot-orange"></div>
+          <div><strong>不传话</strong> — 传话必须留记录，不得口头承诺替代正式流程</div>
+        </div>
+        <div class="priority-row">
+          <div class="priority-dot dot-blue"></div>
+          <div><strong>不让情绪升级</strong> — 客户情绪上来时，你永远是降温的那一方</div>
+        </div>
+        <div class="priority-row">
+          <div class="priority-dot dot-gray"></div>
+          <div><strong>保护自己</strong> — 恶意攻击截图留证，情绪激动时等冷静再处理</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2 ===== -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">服务标准动作（基础 SOP）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ 接收消息标准流程（3分钟内必须响应）</div>
+      <div class="flow" style="margin-bottom:16px;">
+        <div class="flow-step">📩 收到消息</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">🔎 30秒分类</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">⏱️ 3分钟首次响应</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">📁 归档处理</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>标签</th><th>说明</th><th>处理时效</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-red">[P1] 紧急投诉</span></td>
+              <td>威胁曝光 / 产品质量安全</td>
+              <td><strong style="color:var(--danger)">立即上报组长</strong></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-yellow">[P2] 重要投诉</span></td>
+              <td>退换货申请 / 产品质疑</td>
+              <td><strong style="color:var(--warning)">2小时内处理</strong></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blue">[P3] 普通咨询</span></td>
+              <td>使用咨询 / 肤质建议</td>
+              <td>24小时内回复</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-green">[P4] 常规</span></td>
+              <td>表扬 / 常规咨询</td>
+              <td>下一个工作日</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 首次响应话术模板（包含：称呼 + 态度 + 动作）</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">📋</span> 模板A — 正常咨询</div>
+        <div class="script-box">
+          <p>亲爱的[粉丝名字]，感谢您的留言～我是[达人名]直播间的售后小助手，很高兴为您服务！您的问题我已经收到了，我这边帮您查询一下，稍后给您准确回复哦 ☺️</p>
+        </div>
+      </div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💛</span> 模板B — 投诉/情绪类</div>
+        <div class="script-box">
+          <p>[粉丝名字]，我非常理解您现在的心情，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理，有任何进展我都会及时告知您。请您放心，这件事我一定会认真对待的 🙏</p>
+        </div>
+      </div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">🛡️</span> 模板C — 威胁类（不卑不亢）</div>
+        <div class="script-box">
+          <p>您好，我完全理解您希望问题得到解决的心情。我这边会认真记录您反馈的情况，并协助品牌方尽快给您一个处理方案。您的诉求我们会如实转达，同时也希望您能给我们一点处理时间，好吗？</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3 ===== -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">CARP 标准处理模型（所有投诉必走）</div>
+    </div>
+
+    <div class="carp-grid">
+      <div class="carp-card">
+        <div class="carp-letter">C</div>
+        <div class="carp-word">Control · 掌控节奏</div>
+        <div class="carp-desc">不被客户情绪带着走<br>语速放慢，回复间隔适当<br>耐心读完所有消息再判断情绪</div>
+      </div>
+      <div class="carp-card">
+        <div class="carp-letter">A</div>
+        <div class="carp-word">Acknowledge · 认可情绪</div>
+        <div class="carp-desc">说出"我完全理解您的感受"<br>"换作是我也会着急"<br>"您的心情我非常理解"</div>
+      </div>
+      <div class="carp-card">
+        <div class="carp-letter">R</div>
+        <div class="carp-word">Refocus · 转向解决</div>
+        <div class="carp-desc">把话题从"谁对谁错"<br>拉回到"怎么解决"</div>
+      </div>
+      <div class="carp-card">
+        <div class="carp-letter">P</div>
+        <div class="carp-word">Problem Solve · 着手解决</div>
+        <div class="carp-desc">有方案 → 立即给出时间节点<br>无方案 → 承诺跟进，绝不不了了之</div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger">
+      <strong>❌ 禁止说的话：</strong> "您不要这么激动" / "这有什么可生气的" / "您先冷静一下"
+    </div>
+    <div class="alert alert-success">
+      <strong>✅ 必须说出口（至少选一句）：</strong> "我完全理解您的感受" / "换作是我也会着急" / "您的心情我非常理解"
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4 ===== -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">10种难缠客户分类应对标准</div>
+    </div>
+
+    <!-- 类型一 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">1</span> 愤怒投诉型
+        <span class="tag tag-danger">P1/P2</span>
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>语气强硬、用感叹号、多条消息轰炸、要求立即处理</div>
+      <div class="flow" style="margin-bottom:14px;">
+        <div class="flow-step">立即安抚（30秒内）</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">告知已记录</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">2小时内出方案</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">跟进到解决</div>
+      </div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 黄金话术</div>
+        <div class="script-box">
+          <p>"我理解您的感受，请您相信我们非常重视您的反馈。我这就帮您协调处理，预计[具体时间]内给您回复，请保持手机畅通～"</p>
+        </div>
+      </div>
+      <div class="alert alert-danger"><strong>避坑：</strong>❌ 不要争论谁对谁错 &nbsp; ❌ 不要说"不归我们管" &nbsp; ❌ 不要用"规定"压客户</div>
+    </div>
+
+    <!-- 类型二 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">2</span> 威胁曝光型
+        <span class="tag tag-danger">P1</span>
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>"我要发帖曝光你" / "我要投诉到平台" / "我要告你们"</div>
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="priority-row"><div class="priority-dot dot-red"></div><strong>不因威胁而让步</strong> — 但态度不能变硬</div>
+        <div class="priority-row"><div class="priority-dot dot-orange"></div><strong>不激化</strong> — 不反驳、不嘲讽、不冷漠</div>
+      </div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术（态度友好但底线清晰）</div>
+        <div class="script-box">
+          <p>"我理解您希望问题得到重视的心情，我们会认真对待每一位顾客的反馈。您反馈的情况我已经详细记录，会第一时间反馈给品牌方，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？"</p>
+        </div>
+      </div>
+      <div class="alert alert-danger"><strong>⚡ 升级机制：</strong>粉丝威胁曝光 → 立即截图保存证据 → <strong>2小时内上报组长</strong> → 必要时提前与品牌方沟通预案</div>
+    </div>
+
+    <!-- 类型三 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">3</span> 无理取闹型
+        <span class="tag tag-warning">开封后退 / 过期后退 / 赠品要求</span>
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>处理原则：</strong>先肯定 → 说明政策 → 给替代方案 → 表明立场（不对抗）</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">📦</span> 已开封但想退货</div>
+        <div class="script-box">
+          <p>"我理解您用完后觉得不合适的心情。不过[品牌名]的规定是已开封产品不支持退换，因为涉及到产品安全问题，请您理解。不过我这边可以帮您申请一下[替换方案/优惠券/积分]，您看可以吗？"</p>
+        </div>
+      </div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">📅</span> 已过期产品想退</div>
+        <div class="script-box">
+          <p>"亲爱的，产品过期确实让人很烦恼。按照品牌方的售后政策，已过期的产品不在退换范围内。我能理解这个结果可能不是您期望的，我这边可以把您的反馈如实记录，反馈给品牌方，看是否有其他解决方案，好吗？"</p>
+        </div>
+      </div>
+      <div class="alert alert-primary" style="margin-top:12px;">
+        <strong>💡 替代方案库（提前与品牌方沟通好的）：</strong>
+        专属优惠券（10-50元） · 积分补偿 · 下次优先发货 · 小样补发（需申请） · 客服安抚礼品（需组长审批）
+      </div>
+    </div>
+
+    <!-- 类型四 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">4</span> 反复纠缠型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>同一问题投诉多次，每次都说没解决</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术</div>
+        <div class="script-box">
+          <p>"亲爱的，我查了一下您的记录，您之前反馈的问题我们[已做XX处理]。目前情况是[现状]，我这边会在[时间]前给您最终回复，请您耐心等待一下好吗？"</p>
+        </div>
+      </div>
+      <div style="padding:12px 0; font-size:14px;"><strong>处理步骤：</strong>① 调出历史记录确认处理进度 → ② 明确告知已处理部分 → ③ 给出截止时间节点</div>
+    </div>
+
+    <!-- 类型五 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">5</span> 情感脆弱 / 哭诉委屈型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>带情绪哭诉、表达委屈、强调自己的不幸遭遇</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💛</span> 话术</div>
+        <div class="script-box">
+          <p>"亲爱的，我能感受到您真的受了委屈，您的心情我非常理解。我会认真记录您说的情况，也会向品牌方如实反馈，争取帮您解决这个问题。请您先别着急，我们一起来想办法好吗？"</p>
+        </div>
+      </div>
+      <div class="alert alert-danger"><strong>避坑：</strong>❌ 不要打断对方 &nbsp; ❌ 不要说"您想太多了" &nbsp; ❌ 不要说"这个情况不严重"</div>
+    </div>
+
+    <!-- 类型六 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">6</span> 专业质问型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>用专业术语质疑产品质量、成分、效果</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术</div>
+        <div class="script-box">
+          <p>"您说得非常专业，您提到的[成分/问题]我这边也了解一些。我需要帮您确认一下更详细的信息，请给我[时间]，我查清楚后第一时间回复您，好吗？"</p>
+        </div>
+      </div>
+      <div style="font-size:14px; padding:8px 0;"><strong>原则：</strong>承认对方说得有道理的地方 → 不懂就说"我帮您查一下" → 必要时升级到品牌方专业人员</div>
+    </div>
+
+    <!-- 类型七 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">7</span> 要求找主管 / 找老板型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>"让你们领导来" / "我要找你们负责人"</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术</div>
+        <div class="script-box">
+          <p>"我完全理解您希望得到更多支持的心情。我是今天负责跟进您这个case的售后专员，我会把您的问题完整记录并转达。请相信我和我的团队会尽全力帮您处理。我这边会安排组长跟进，方案确认后我们会通过大管家账号联系您，好吗？"</p>
+        </div>
+      </div>
+      <div class="alert alert-primary"><strong>升级标准：</strong>连续3次投诉同一问题 / 涉及金额超过[X元] / 涉及品牌方核心政策冲突</div>
+    </div>
+
+    <!-- 类型八 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">8</span> 故意找茬 / 恶意索赔型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>明显恶意、多次索赔、要求超额赔偿</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术</div>
+        <div class="script-box">
+          <p>"亲爱的，我理解您有您的诉求。关于您的这个情况，我会如实记录并向品牌方反馈。不过根据我们的售后政策，[说明边界]，希望您能理解。我会持续跟进您这个case，有任何进展第一时间通知您。"</p>
+        </div>
+      </div>
+      <div class="alert alert-danger"><strong>⚠️ 注意：</strong>态度保持友好，但底线清晰 → 所有沟通必须有记录（截图/录音备份）→ 必要时走法务路径</div>
+    </div>
+
+    <!-- 类型九 -->
+    <div class="card" style="border: 2px solid var(--danger);">
+      <div class="card-title">
+        <span class="num" style="background:var(--danger);">9</span>
+        多人串联 / 集体投诉型
+        <span class="tag tag-danger">⚠️ 舆情高危</span>
+      </div>
+
+      <div class="sub-card" style="background:#FFF5F5; border-color:#FFCDD2;">
+        <div class="sub-card-title" style="color:var(--danger);">
+          <span class="icon">🚨</span> 内部预警机制（团队内部用，不让粉丝知道）
+        </div>
+        <p style="font-size:14px; margin-bottom:10px;">收到第1个投诉时，团队内部立即做两件事：</p>
+        <p style="font-size:14px; margin-left:16px;">① 打开内部统计表，记录问题类型+时间（<strong>不公开给粉丝</strong>）<br>② 判断是否涉及产品核心问题 / 是否可能扩散</p>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>等级</th><th>规模</th><th>内部处理方式</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-green">🟢 低风险</span></td><td>1-5人/非核心问题</td><td>内部正常处理，不对外声张</td></tr>
+              <tr><td><span class="badge badge-yellow">🟡 中风险</span></td><td>5人以上/同一问题集中</td><td>组长开始与品牌方提前沟通预案</td></tr>
+              <tr><td><span class="badge badge-red">🔴 高风险</span></td><td>@达人/话题发酵/媒体介入</td><td>组长+达人团队启动危机预案，48小时内出官方口径</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="alert alert-danger" style="margin-top:16px;">
+        <strong>⚠️ 顶级公关的核心原则：永远不要告诉一个粉丝"别人也有这个问题"。</strong><br>
+        告诉他"别人也有" = ① 这个问题是客观真实存在的 + ② 品牌早就知道但没解决 + ③ 我投诉是有道理的<br>
+        <strong>这三件事叠加在一起，会让一个普通投诉直接升级成集体维权。</strong>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">✅</span> 标准回复模板（适用于任何投诉，不提"多人"）</div>
+        <div class="script-box">
+          <p>"亲爱的，感谢您的反馈，我这边已经详细记录了您的情况。产品出现这样的问题确实不应该，我这边会第一时间向品牌方反馈核实，争取尽快给您一个满意的处理方案。请您放心，您的这个问题我一定会认真跟进到底的 💕"</p>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">❓</span> 粉丝追问"是不是很多人都遇到这个问题"</div>
+        <div class="script-box">
+          <p>"亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。您的情况我已经完整记录了，我会把您的具体反馈转达给品牌方，争取给您一个满意的处理结果 🙏"</p>
+        </div>
+        <div class="alert alert-primary" style="margin-top:10px; margin-bottom:0;">
+          <strong>关键：</strong>不承认多人，也不否认多人，把话题拉回到"认真处理你的问题"
+        </div>
+      </div>
+
+      <div class="sub-card" style="margin-top:12px;">
+        <div class="sub-card-title"><span class="icon">🛡️</span> 防止舆情扩散的关键动作</div>
+        <div class="priority-row"><div class="priority-dot dot-blue"></div><div><strong>① 每个粉丝都当作唯一的case处理</strong><br><span style="font-size:13px; color:var(--text-light);">顶级公关的原则：客户不关心"别人怎么样"，只关心"我的问题能不能解决"</span></div></div>
+        <div class="priority-row"><div class="priority-dot dot-blue"></div><div><strong>② 主动出击，而不是被动等待</strong><br><span style="font-size:13px; color:var(--text-light);">内部发现同一问题超过3例时，主动联系品牌方要处理方案</span></div></div>
+        <div class="priority-row"><div class="priority-dot dot-orange"></div><div><strong>③ 达人的存在感（关键！）</strong><br><span style="font-size:13px; color:var(--text-light);">达人本人发一条："看到一些朋友的反馈了，我和团队正在了解情况，会尽快给大家一个负责任的答复"</span></div></div>
+        <div class="priority-row"><div class="priority-dot dot-blue"></div><div><strong>④ 统一出口，一致口径</strong><br><span style="font-size:13px; color:var(--text-light);">品牌方出方案后，所有人用同一模板回复</span></div></div>
+        <div class="priority-row"><div class="priority-dot dot-blue"></div><div><strong>⑤ 解决后主动公示</strong><br><span style="font-size:13px; color:var(--text-light);">在粉丝群/评论区发公告："关于XX问题，我们已经和品牌方沟通完毕，处理方案如下……"</span></div></div>
+      </div>
+
+      <div class="alert alert-danger" style="margin-top:12px;">
+        <strong>🚫 顶级公关绝对禁止的话术：</strong><br>
+        ❌ "其实近期也有其他朋友反映过这个问题"<br>
+        ❌ "这种情况我们之前也有收到"<br>
+        ❌ "不是只有你一个人"<br>
+        ❌ "很多粉丝都在问这个"<br>
+        <strong>→ 以上每一句都是舆情爆发的导火索。永远不要主动提"多人"。</strong>
+      </div>
+    </div>
+
+    <!-- 类型十 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="num">10</span> 沉默抗拒型
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px;"><strong>特征：</strong>回复很慢、态度冷淡、说"随便你"、"无所谓"</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">💬</span> 话术</div>
+        <div class="script-box">
+          <p>"亲爱的，您的问题我已经了解了，目前的处理方案是[方案]。我这边会持续关注，有任何进展都会第一时间通知您。如果您还有其他问题，随时可以联系我，祝您生活愉快 🌸"</p>
+        </div>
+      </div>
+      <div style="font-size:14px; padding:8px 0;"><strong>原则：</strong>不要追问太紧 → 发一条总结性消息 → 告知对方随时可联系</div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5 ===== -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">退换货专项处理流程</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 标准退换货申请流程</div>
+      <div class="flow" style="margin-bottom:20px;">
+        <div class="flow-step">粉丝申请</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">确认订单+产品状态</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">判断是否在品牌支持范围</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">品牌群申请</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">品牌方审批</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">反馈粉丝</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>情况</th><th>是否支持退换</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>未开封 + 7天内</td><td><span class="badge badge-green">✅ 支持</span></td><td>品牌方承担运费</td></tr>
+            <tr><td>未开封 + 7-15天</td><td><span class="badge badge-yellow">⚠️ 视情况</span></td><td>需品牌方审批</td></tr>
+            <tr><td>已开封 + 有质量问题</td><td><span class="badge badge-green">✅ 支持</span></td><td>需拍照/视频证据</td></tr>
+            <tr><td>已开封 + 无质量问题</td><td><span class="badge badge-red">❌ 不支持</span></td><td>可申请补偿方案</td></tr>
+            <tr><td>已过期</td><td><span class="badge badge-red">❌ 不支持</span></td><td>可申请人情补偿</td></tr>
+            <tr><td>直播特殊说明款</td><td><span class="badge badge-yellow">⚠️ 特殊处理</span></td><td>以当时直播说明为准</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 品牌群申请模板</div>
+      <div class="script-box" style="background:#F0F4FF;">
+        <p>@品牌方 您好，这边有一位粉丝[订单号]，情况如下：<br><br>
+        问题描述：[具体描述]<br>
+        产品状态：[未开封/已开封/已使用]<br>
+        粉丝诉求：[退货/换货/退款]<br>
+        申请处理方式：[请品牌方指示]<br>
+        附证据：[截图链接]</p>
+      </div>
+      <div class="alert alert-primary"><strong>要求：</strong>所有品牌群申请必须包含「证据」+「订单号」+「处理建议」</div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6 ===== -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">特殊处理边界规则（宠粉也得有底线）</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="icon" style="font-size:20px;">✅</span> 可自主决定（无需上报）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 语气上额外温暖 / 送表情包 / 主动多给一次回复机会</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 延迟48小时回复的，额外赠送小样（价值不超过30元）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 客户说"谢谢"时主动多给一个优惠券码</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon" style="font-size:20px;">🔐</span> 需要组长审批</div>
+        <div class="prohibit-item"><span class="prohibit-x">✗</span> 补偿金额超过100元</div>
+        <div class="prohibit-item"><span class="prohibit-x">✗</span> 退换货超出品牌政策范围</div>
+        <div class="prohibit-item"><span class="prohibit-x">✗</span> 承诺品牌方尚未确认的处理方式</div>
+        <div class="prohibit-item"><span class="prohibit-x">✗</span> 粉丝要求"下次直播帮我备注"</div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" style="margin-top:16px;">
+      <strong>🚫 绝对不能突破的底线：</strong><br>
+      ❌ 不得自行承诺退款金额（必须品牌方确认）<br>
+      ❌ 不得泄露粉丝个人信息给品牌方（或反之）<br>
+      ❌ 不得以"我是帮你"为由做超出权限的承诺<br>
+      ❌ 不得在情绪激动时做决定（等冷静下来）
+    </div>
+  </div>
+
+  <!-- ===== SECTION 7 ===== -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">内部协作与升级机制</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 每日例会机制</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>时间</th><th>内容</th><th>主持人</th></tr></thead>
+          <tbody>
+            <tr><td>早上 9:00</td><td>昨日遗留case跟进 + 今日重点</td><td>各组员</td></tr>
+            <tr><td>下午 16:00</td><td>今日新case汇总 + 品牌方反馈同步</td><td>Andy / 组长</td></tr>
+            <tr><td>不定期</td><td>难缠case复盘讨论（存档形成话术库）</td><td>Andy</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⬆️ 升级触发条件（满足任一即升级）</div>
+      <div class="grid-2">
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 同一问题被投诉2次以上</div>
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 粉丝威胁曝光 / 投诉平台 / 报警</div>
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 处理时间超过48小时未解决</div>
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 涉及金额超过500元</div>
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 涉及产品质量安全问题（可能舆情）</div>
+        <div class="prohibit-item"><span class="prohibit-x">⬆️</span> 品牌方72小时内未回应</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💾 记录留档规范</div>
+      <div class="alert alert-primary"><strong>必须存档：</strong>所有投诉对话截图（保存6个月）· 品牌群申请和回复截图 · 升级决策审批记录 · 补偿/退款操作记录</div>
+      <div class="sub-card">
+        <div class="sub-card-title"><span class="icon">📁</span> 存档格式建议</div>
+        <div class="script-box" style="background:#F0F4FF;">
+          <p>[日期]_[品牌名]_[粉丝ID]_[问题类型]_[处理结果]<br><br>
+          例：20260315_XX品牌_粉丝A_开封退货_处理：补偿50元券</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 8 ===== -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title">情绪管理与自我保护</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🧘 团队情绪管理（组长负责）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 每天设立"吐槽时间"（15分钟，可选参与）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 遇到恶意人身攻击可申请暂时离开工位</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 每月一次心理疏导或团建</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🛡️ 员工自我保护指南</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 客户语言攻击 ≠ 真的在骂你个人（对事不对人）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 遇到威胁/恐吓 → 截图留证 → 上报组长</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 感到委屈时可以找组长或同事倾诉</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 永远不要用工作手机/账号发表个人情绪言论</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">⚠️ 常见"陷阱"规避</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>陷阱</th><th>正确做法</th></tr></thead>
+          <tbody>
+            <tr><td>粉丝说"你们达人怎么不管"</td><td>"我会把您的反馈转达给团队，我们一起解决"</td></tr>
+            <tr><td>粉丝说"别的品牌都给我退了"</td><td>"我理解，每个品牌政策不同，我会帮您尽力申请"</td></tr>
+            <tr><td>粉丝说"我录屏了/截图了"</td><td>"好的，您保留证据是您的权利，我们也会认真处理您的问题"</td></tr>
+            <tr><td>粉丝深夜发消息</td><td>正常响应时间内处理，不需要立即回复</td></tr>
+            <tr><td>粉丝连续多条轰炸式发消息</td><td>耐心逐条读完再回复，不要被带节奏，不要立即回怼</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 9 ===== -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title">绩效考核与质量检查</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 KPI 指标（每月统计）</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>指标</th><th>目标值</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>首次响应时间</td><td><span class="badge badge-green">≤ 3分钟</span></td><td>从收到消息到首次回复</td></tr>
+            <tr><td>问题解决率</td><td><span class="badge badge-green">≥ 85%</span></td><td>不升级到组长的问题比例</td></tr>
+            <tr><td>平均处理时长</td><td><span class="badge badge-green">≤ 24小时</span></td><td>从收到投诉到最终解决</td></tr>
+            <tr><td>客户满意度</td><td><span class="badge badge-green">≥ 90%</span></td><td>好评率（可设月度抽查）</td></tr>
+            <tr><td>品牌方投诉率</td><td><span class="badge badge-green">0</span></td><td>被品牌方投诉沟通方式不当</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <div class="card-title">🔍 每周质检机制</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 随机抽查每位员工10条对话</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 重点检查：情绪管理 / 话术规范 / 流程合规</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 优秀案例归档到话术库，分享学习</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏆 奖励与改进</div>
+        <div class="prohibit-item"><span class="prohibit-ok">🏅</span> 每月"服务之星"（客户好评最多者）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">📋</span> 季度最佳案例分享会</div>
+        <div class="prohibit-item"><span class="prohibit-ok">⭐</span> 连续3个月KPI达标 → 优先安排品牌方参观学习机会</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 10 ===== -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title">话术模板速查表</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💛 情绪安抚类</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>场景</th><th>话术</th></tr></thead>
+          <tbody>
+            <tr><td>客户很生气</td><td>"我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。"</td></tr>
+            <tr><td>客户质疑品牌</td><td>"您说得有道理，我这边帮您记录并反馈给品牌方。"</td></tr>
+            <tr><td>客户多次投诉</td><td>"感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。"</td></tr>
+            <tr><td>客户威胁曝光</td><td>"我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。"</td></tr>
+            <tr><td>客户要求找领导</td><td>"我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，方案确认后，我们会通过大管家账号联系您。"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+= -->
+
+  <!-- ==================== SCENARIOS SECTION ==================== -->
+  <section class="scenarios-section" id="scenarios">
+    <div class="section-header">
+      <h2>🧩 售后场景拆解</h2>
+      <p>10个真实案例，还原错误vs正确应对方式</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenarios-list">
+        <div class="scenario-nav">
+          <div class="scenario-nav-title">📂 场景目录</div>
+          <a href="#case1" class="scenario-link" data-case="1"><span class="scenario-dot" style="background:#C00000"></span>场景1 过期产品要求退款+赔偿</a>
+          <a href="#case2" class="scenario-link" data-case="2"><span class="scenario-dot" style="background:#C00000"></span>场景2 竞品碰瓷</a>
+          <a href="#case3" class="scenario-link" data-case="3"><span class="scenario-dot" style="background:#FF6B00"></span>场景3 拒绝提供证据发帖扩散</a>
+          <a href="#case4" class="scenario-link" data-case="4"><span class="scenario-dot" style="background:#FF6B00"></span>场景4 开封后退全款</a>
+          <a href="#case5" class="scenario-link" data-case="5"><span class="scenario-dot" style="background:#375E10"></span>场景5 价格下降要求退差价</a>
+          <a href="#case6" class="scenario-link" data-case="6"><span class="scenario-dot" style="background:#C00000"></span>场景6 一人多号叠加赔偿</a>
+          <a href="#case7" class="scenario-link" data-case="7"><span class="scenario-dot" style="background:#FF6B00"></span>场景7 录音留证要求客服出面</a>
+          <a href="#case8" class="scenario-link" data-case="8"><span class="scenario-dot" style="background:#C00000"></span>场景8 直播展示与实物不符</a>
+          <a href="#case9" class="scenario-link" data-case="9"><span class="scenario-dot" style="background:#375E10"></span>场景9 赠品包装不同</a>
+          <a href="#case10" class="scenario-link" data-case="10"><span class="scenario-dot" style="background:#FF6B00"></span>场景10 无证据要求赔偿</a>
+        </div>
+      </div>
+      <div class="scenarios-cases">
+        
+  <div class="case-card" id="case1">
+    <div class="case-header">
+      <div class="case-num">场景1</div>
+      <div class="case-title">过期产品要求全额退款+赔偿精神损失</div>
+      <span class="case-level" style="color:#C00000; background:#FFF2F2;">🔴 高危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「小美」在直播间买了精华液，收到后发现产品过期了3个月。她非常愤怒，要求全额退款+200元精神损失赔偿，理由是「用了过期护肤品万一毁容怎么办」。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：你们卖给我过期产品！我脸上已经有点痒了，万一毁容谁负责！
+客服：亲，产品过期的确是我们的责任，您先别着急……请问您有去医院检查吗？
+粉丝：检查？我又不是学医的，我怎么知道是不是这个产品的问题？你们要赔我200块！
+客服：全额退款可以的，但200块需要跟品牌方申请。
+粉丝：那就快申请！我最多等3天，3天不给我就发帖曝光！</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服A直接答应全额退款（没有走品牌审批流程），承诺「我来帮你申请200元」，超出权限导致品牌方追究。同时说「产品过期是我们的责任」等于承认全部责任，给粉丝后续投诉提供了书面证据。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：先安抚情绪，30秒内响应，告知「产品出现问题我非常重视」。<br>第二步：确认订单+产品批次号（判断是否为批次问题而非个例）。<br>第三步：告知粉丝「我会第一时间向品牌方反馈，24小时内给您回复」，不自行承诺金额。<br>第四步：内部上报组长，同时在品牌群申请处理方案。<br>第五步：回复粉丝时说明「品牌方已确认全额退款+补偿方案」，由品牌方背书。<br>关键：不承认全责（说「产品出现问题」而非「过期是我们的责任」），把责任归到品牌方政策处理。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>承诺超出权限是售后最大禁忌。粉丝说「你帮我申请」，你只能说「我帮您转达」，永远不能替品牌方做主。精神损失赔偿必须有组长+品牌方双重确认才能答应。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case2">
+    <div class="case-header">
+      <div class="case-num">场景2</div>
+      <div class="case-title">用竞品空瓶来「碰瓷」要求退款</div>
+      <span class="case-level" style="color:#C00000; background:#FFF2F2;">🔴 高危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「阿杰」买了水乳，用了半个月后说「过敏了」要求退货。但照片里瓶身logo和购买的品牌不一样——他混用了竞品水乳。团队拒绝后，他威胁说「我有录音，当时主播说过敏包退」。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：我用了你们产品过敏了，你看脸都红了，要求退货退款！
+客服：亲爱的，我看到您反馈了。请问方便发一下订单截图和产品照片吗？
+粉丝：[发了照片]
+客服A：亲，我看了一下，照片里的瓶子logo和我们品牌的瓶子不太一样……
+粉丝：什么？你什么意思？你说我是骗子？我有录音的，当时主播说「过敏了包退」！
+客服A：好的好的，我没说不退，你别激动，我帮你申请……</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服A看到瓶子不一样时下意识质疑粉丝，被粉丝抓住「你说我是骗子」这个把柄。随后客服A害怕矛盾升级，直接答应退款——这恰恰中了粉丝的套：他录音保留证据，是碰瓷的常见手法。客服A没有对比订单信息、没有留证据反驳，直接认输，给了不该退的款。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：不要当场质疑「你这是竞品」，这会激化矛盾，给粉丝「被冤枉」的感觉。<br>第二步：用中性话术——「我帮您看一下产品批次，确实影响使用体验我们会认真处理」（不说「骗子」，只说「核实」）。<br>第三步：内部对比订单产品图片。如果确认是竞品混用，截图保留证据，在品牌群说明情况（不说粉丝是骗子，只说「产品与订单不符，需核实」）。<br>第四步：给粉丝的回复是「需要核实产品批次，如果确实是我们的产品导致过敏，我们一定负责」，把举证责任还给粉丝。<br>第五步：如确为碰瓷，内部记录「竞品混用+录音碰瓷」，走法务路径。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>处理竞品碰瓷的关键：不质疑、不承认、不拒绝。用「核实」二字拖延时间，内部先查证据，再决定是否给解决方案。录音碰瓷是最常见的手段——承诺永远要看品牌方确认情况再给。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case3">
+    <div class="case-header">
+      <div class="case-num">场景3</div>
+      <div class="case-title">拒绝提供证据却发帖扩散</div>
+      <span class="case-level" style="color:#FF6B00; background:#FFF5E6;">🟡 中危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「丽娜」说用了眼霜后眼睛肿了，要求赔偿医药费。但当客服请求她提供就医记录或产品批次号时，她一口拒绝：「我凭什么给你们证据？你们是骗子同伙吗？」并表示已在小红书发了帖子，要求品牌方主动联系她道歉。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：你们的眼霜让我眼睛肿了，我要求赔偿医药费！
+客服：亲爱的，我非常理解您的心情。您方便提供一下就医记录和产品批次号吗？我们需要核实才能帮您申请处理方案。
+粉丝：凭什么？你们想套我信息是不是？你们跟品牌是一伙的，骗子！
+客服：亲您误会了，我们只是需要核实产品批次，才能向品牌方申请……
+粉丝：我不管，我已经发小红书了，你们等着吧！</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服被「骗子同伙」这个帽子吓到，立刻软化态度道歉，并承诺「我这就帮您申请，不用证据了」——这是典型的情绪被带着走。实际上粉丝拒绝提供证据反而说明她的「伤情」可能无法证实，此刻应保持冷静，用「按规定流程处理」而非「道歉认怂」来应对。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：用CARP模型，先认可情绪——「眼睛肿了真的让人担心，您的感受我非常理解」。<br>第二步：说明需要证据的原因——「按照品牌方的处理流程，我们需要产品批次号来核实是否为那一批次的问题，同时需要了解具体情况来帮您申请对应的方案」。<br>第三步：对方拒绝提供时——「我理解您的顾虑，如果您暂时不方便提供，您也可以直接联系品牌方官方客服[联系方式]，他们有专门的质量追踪通道」。<br>第四步：同时内部上报组长，说明「该粉丝拒绝提供证据，已发帖」，由组长判断是否需要品牌方主动联系粉丝。<br>第五步：品牌方决定是否发声明。不要私自承诺赔偿。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>被骂「骗子同伙」时，正确的反应是保持专业温度，而不是立刻道歉软化。道歉等于承认有责任，会成为后续维权的证据。用「按规定处理流程」来回应，既不失温度，也有底线。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case4">
+    <div class="case-header">
+      <div class="case-num">场景4</div>
+      <div class="case-title">开封后退全款、搬出「达人就要负责」</div>
+      <span class="case-level" style="color:#FF6B00; background:#FFF5E6;">🟡 中危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「阿May」买的防晒霜用了大半瓶，说「不好用、不防晒黑」，要求全额退款。但根据品牌方政策，已开封使用过的产品不支持全额退款。粉丝不接受，说「我不管，达人卖的东西达人负责，不退钱我就天天来问」。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：这个防晒霜根本不好用，我都用了一半了还是晒黑了！要全额退款！
+客服：亲，防晒霜开封后使用过的产品，按品牌方政策是不支持全额退款的……
+粉丝：我不管，达人卖的东西达人负责！你去找达人给我退！
+客服：亲，我理解您的心情……
+粉丝：你不解决我就天天找你！</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服B被「达人就要负责」这句话拿住，不知道怎么回应，最后说「我再帮您问问品牌方」，给了粉丝希望，然后品牌方拒绝后又来骚扰。这个case从一开始就陷入了「达人有无限责任」的陷阱话术，没有用品牌方政策来做挡箭牌。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：用CARP认可情绪——「用了防晒霜还是晒黑了，肯定很失望，我理解您的感受」。<br>第二步：用品牌方政策作为挡箭牌——「品牌方对于已开封使用过的产品有明确规定，是不支持全额退款的，这一点我在帮您申请前需要提前说明，以免给您不切实际的期待」。<br>第三步：给替代方案——「不过我这边可以帮您申请补偿方案，比如[20%优惠券/积分/下次优先发货]，您看可以吗？」（提前与品牌方沟通好备用方案）。<br>第四步：如果粉丝坚持——「您的诉求我会如实记录并反馈给达人团队，有任何结果会第一时间通知您」。<br>第五步：内部记录此case，汇总同类问题给组长，作为向品牌方争取更好补偿政策的依据。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>永远不要让粉丝觉得「达人就要为所有问题兜底」。达人是销售渠道，不是无限责任主体。产品问题归品牌方政策处理，团队是协调方，不是赔付方。替代方案要提前准备，不要临时找品牌方要。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case5">
+    <div class="case-header">
+      <div class="case-num">场景5</div>
+      <div class="case-title">购买后价格下降，要求退差价</div>
+      <span class="case-level" style="color:#375E10; background:#EAF2E3;">🟢 低危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「小雪」上周在直播间买了899元的护肤品，这周看到同款在另一个平台只卖699元。她要求退差价200元，否则也给差评。客服查了订单，确认是同一产品不同平台价格不同。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：我上周在你们这买的这个产品899，结果今天别的平台只要699！你们这是在骗我们老粉！
+客服：我查了一下，您购买的是[产品名]，确实近期其他平台价格有调整……
+粉丝：那就退差价！200块！
+客服：亲，这个差价我没办法直接退给您，我帮您问问……
+（客服问品牌方，品牌方表示这是平台补贴行为，不在退差价政策范围内）</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服没有先核实品牌方是否有差价政策就答应了帮问，结果品牌方拒绝后骑虎难下。客服反复说「我帮您问问」却得到否定答案，多次给粉丝希望又打破期望，反而激化了矛盾。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：先确认信息——「我帮您核实一下这个情况，稍等一分钟」。<br>第二步：内部查证——查品牌方是否支持差价补偿、近期是否有价格保护政策。<br>第三步：回复——「亲爱的，我帮您核实了一下，[平台名]的价格差异是因为[平台补贴/限时活动]，不在品牌方差价补偿政策范围内，这个结果可能不是您期望的，我理解您的失望心情」。<br>第四步：给替代方案——「不过我这边可以帮您申请一张专属优惠券，下次购买时可以直接抵用，您看方便吗？」（提前与品牌方沟通能给的优惠）。<br>第五步：如果对方仍坚持——「我会把您这次反馈记录下来，作为团队向品牌方争取更优价格保护政策的参考，感谢您的建议」。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>承诺前先查政策。客服永远不要说「我帮你问问」然后让粉丝等——一旦问了品牌方并被拒绝，就等于在粉丝心里欠了一次。提前了解好哪些情况有补偿政策，哪些没有，才能给出准确的回复。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case6">
+    <div class="case-header">
+      <div class="case-num">场景6</div>
+      <div class="case-title">一人多号买多件，每件都投诉要求叠加赔偿</div>
+      <span class="case-level" style="color:#C00000; background:#FFF2F2;">🔴 高危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「老王」用三个不同账号买了同一款产品，收货后以「产品瑕疵」为由，每个账号都提交了赔偿申请。客服发现三个订单的收货地址相同、购买时间相近，判断为同一消费者故意拆分订单以叠加赔偿。品牌方表示只接受一个订单的赔偿申请。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝（账号A）：产品有瑕疵，要求赔偿
+客服：亲请问可以提供瑕疵照片吗？
+粉丝（账号B）：还没收到货就破了，要求赔偿
+粉丝（账号C）：味道不对，要求赔偿
+（三个账号都来自同一地址，客服发现后没有立即上报，继续各自处理）</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服没有发现三个账号的关联性，分别处理并各自答应赔偿，导致品牌方最终收到三份赔偿申请。品牌方发现后追究团队责任，认为团队配合粉丝薅羊毛。客服没有联动意识，不知道跨账号识别和上报。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：收到投诉时多查一步——订单号、品牌、数量、收货地址是否有异常关联。发现关联立即上报组长。<br>第二步：组长判断后，内部对品牌方说明「经核实，该消费者使用多个账号购买，已确认属于同一消费者，品牌方只需处理一个赔偿申请」。<br>第三步：给粉丝的回复——「亲爱的，我这边查询到您有多个订单，我们会在核实后统一向品牌方申请处理方案，请耐心等待」。<br>第四步：如果粉丝追问——「每个订单我们都会认真对待，但品牌方有统一的处理标准，请您理解」。<br>第五步：内部记录多账号投诉，防范同类情况再次发生。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>跨账号识别是防范「薅羊毛」的关键。收到投诉多查一步：收货地址、IP地址、购买时间是否有重叠。发现异常立即上报组长，不要各自为战。被动配合粉丝薅羊毛的团队会被品牌方追责。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case7">
+    <div class="case-header">
+      <div class="case-num">场景7</div>
+      <div class="case-title">录音留证后，要求当时客服亲自出面证明</div>
+      <span class="case-level" style="color:#FF6B00; background:#FFF5E6;">🟡 中危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「小董」在一次投诉中全程录音，并找到当时回复的客服「小李」，要求她个人出面证明品牌方有过失，否则就要把录音发到网上。客服「小李」个人很害怕，不知道该怎么办。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝（发截图）：这是我跟你聊天的录音，你们当时的客服小李承认了产品有问题。现在我要你们书面道歉，否则我发到网上！
+小李（慌张）：你别发……我当时只是说帮您问问，不是承认有问题……</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服小李在慌乱中说了「我当时只是说帮您问问」，这句话被粉丝记录下来，恰好证明她承认了品牌方可能存在问题。私下找粉丝解释、试图挽回的行为反而给了粉丝更多把柄。这种情况应该立即上报组长，而不是试图自己解决。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：客服收到此类消息，立即截图留证，停止私下沟通。<br>第二步：立即上报组长，并说明「粉丝声称有录音，可能被断章取义」。<br>第三步：组长内部讨论：核实当时的完整对话记录（后台可查），评估粉丝录音的内容是否属实。<br>第四步：如果录音内容被断章取义，由组长或达人团队出面发声明，不让客服个人回应。<br>第五步：给粉丝的回复——「关于您的诉求，我们会通过官方渠道与您沟通，请关注我们的私信」。<br>第六步：后续所有涉及录音/截图的case，都统一由组长层面处理，客服不单独回应。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>客服个人永远不要试图「解释清楚」，录音一旦被断章取义，任何私下解释都可能成为新的证据。所有涉及录音/外部证据的case，必须第一时间上报组长，统一口径处理。客服保护自己最重要的一条：不要在慌乱中说任何新的话。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case8">
+    <div class="case-header">
+      <div class="case-num">场景8</div>
+      <div class="case-title">直播展示和实物不符，声称是「假货」要求十倍赔偿</div>
+      <span class="case-level" style="color:#C00000; background:#FFF2F2;">🔴 高危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「阿玲」收到的产品和直播间展示的包装颜色略有不同（深蓝vs浅蓝），她在网上搜索发现「两个包装都是正品，只是生产批次不同」。但她仍一口咬定是假货，要求十倍赔偿，理由是「直播展示和实物不符，构成欺诈」。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：这个产品和直播展示的不一样！颜色深浅都不同！假货！你们要十倍赔偿！
+客服：亲，我查了一下，不同批次的包装颜色会有差异，两个都是正品……
+粉丝：什么批次不批次的，我不懂！我只知道跟直播不一样就是假货！你要是不赔我就去找平台申诉！
+客服：那我帮您申请一下试试……
+（客服答应帮申请十倍赔偿，但品牌方表示不支持）</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服在没有确认品牌方政策的情况下，被「假货」这个词吓住，直接说「我帮您申请试试」，等于承认了可能存在假货问题。十倍赔偿是《消费者权益保护法》针对欺诈行为的赔偿，适用门槛极高，客服没有资格承诺。这个case最危险的地方在于客服无意中暗示了「产品可能有问题」，给后续舆情埋下了隐患。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：确认产品批次差异是否为正常情况（内部查证）。<br>第二步：如果确实是批次差异——「亲爱的，您收到的是新批次产品，包装颜色略有差异是正常的，两个批次均为正品，我这边可以提供品牌方的产品批次说明给您」。<br>第三步：粉丝仍坚持时——「我理解您的顾虑，如果您认为产品有质量问题，可以通过平台申诉通道来解决，平台会有专门的鉴定流程。我也会把您反馈的情况同步给品牌方」。<br>第四步：内部向品牌方说明「有粉丝反映包装颜色与直播展示不符」，由品牌方决定是否在直播间补充说明批次差异。<br>第五步：永远不说「产品有问题」，说「包装颜色有批次差异」。不承认假货，不承诺赔偿，把责任归到平台申诉和品牌方说明。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>面对「假货」指控，第一反应是核对产品批次、渠道凭证，而不是道歉或承诺赔偿。「假货」和「批次差异」是两个完全不同的定性，前者涉及法律风险，后者只是正常的市场情况。客服没有资格做「假货」的定性，要留给品牌方和平台处理。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case9">
+    <div class="case-header">
+      <div class="case-num">场景9</div>
+      <div class="case-title">赠品包装和正品不同，要求赠品也退款</div>
+      <span class="case-level" style="color:#375E10; background:#EAF2E3;">🟢 低危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「琪琪」收到正装产品后，发现赠品（小样）包装和正品略有不同，质疑赠品是假货，要求赠品也退款或赔偿。客服核实后确认赠品为品牌方统一配发，属正品，只是包装因出口版本不同而有差异。</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：你们送的赠品包装和正品不一样，这个是假货吧？赠品也要退款！
+客服：亲，赠品是小样，出口版本和国内版本的包装会有不同，但成分和规格是一样的……
+粉丝：不一样就是假货！赠品也要赔钱！
+客服：亲，赠品是不支持单独退款的哦……
+粉丝：那我就把正装也退了，赠品不要了！</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服花了很长时间解释出口版本问题，但粉丝不接受，最后客服说「赠品不支持单独退款」，反而给了粉丝退正装的理由。这个case的失误在于客服过度解释赠品问题，忽略了正装订单的正常处理，没有抓住主次矛盾。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：先确认订单状态——正装是否存在问题？如果正装没问题，就把对话重点放在正装上。<br>第二步：简明回应赠品问题——「赠品是品牌方随单配发的，属于正品。如果您对赠品有疑虑，收到的小样规格和成分与正装一致，我这边可以提供品牌方的说明」。<br>第三步：如果粉丝坚持——「赠品是小样，不是单独销售产品，无法单独退款或折现。如果您希望退货正装，需要符合品牌方的退换货政策[具体政策]」。<br>第四步：不要在赠品问题上纠缠太久，把话题拉回「您这次购买的主产品使用体验怎么样？」。<br>第五步：如果粉丝坚持退正装，按正常退换货流程处理，不要因为赠品问题额外让步。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>处理复杂投诉时，永远先确认主产品是否有问题，不要被赠品/次要问题带跑。客服要有「主次分明」的意识：正装是核心，赠品是附加。先稳住主订单，再处理次要问题。过度解释反而会让粉丝觉得你在「狡辩」。</p>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="case10">
+    <div class="case-header">
+      <div class="case-num">场景10</div>
+      <div class="case-title">无证据要求赔偿，还挖「逻辑陷阱」</div>
+      <span class="case-level" style="color:#FF6B00; background:#FFF5E6;">🟡 中危</span>
+    </div>
+    <div class="case-body">
+      <div class="case-summary"><span class="case-tag">📋 场景描述</span><p>粉丝「阿珍」买的护肤品没有任何肉眼可见的瑕疵，产品批次、渠道均正常，但她坚持说「用了过敏」，要求赔偿医药费和精神损失费共500元。客服多次要求她提供就医记录，她始终拒绝，并说「你们要是没责任为什么要问这么多？」</p></div>
+      <div class="case-dialogue"><span class="case-tag">💬 对话还原</span><pre>粉丝：我用了你们的产品过敏了，要赔偿！
+客服：亲，过敏的原因比较复杂，方便提供一下就医记录吗？
+粉丝：什么记录？我又不是来报案的！没责任你们为什么问这么多？你们心虚了吧！
+客服：不是的亲，我是为了帮您申请赔偿才需要了解情况……
+粉丝：那就直接赔500块！我没时间搞这些！</pre></div>
+      <div class="case-wrong-box">
+        <div class="case-tag-danger">❌ 错误应对（实际发生）</div>
+        <div class="script-box danger-script">客服陷入了「为什么要问这么多」的逻辑陷阱——粉丝的逻辑是：你问得多=你心虚=你承认有责任。实际上客服询问就医记录是为了帮粉丝申请赔偿做准备，完全合理，但被粉丝的逻辑带跑后，客服开始道歉、解释，越解释越显得「心虚」。最终骑虎难下，答应赔偿，但品牌方会追责。</div>
+      </div>
+      <div class="case-right-box">
+        <div class="case-tag-success">✅ 正确拆解</div>
+        <div class="script-box success-script">第一步：用CARP模型，认可情绪但不承认责任——「皮肤过敏真的很让人难受，您的担心我完全理解」。<br>第二步：解释申请流程（不是为了证明有责任，而是为了帮她拿到赔偿）——「品牌方的赔偿申请需要了解具体情况，这样才能帮您申请到对应的补偿方案，否则没有依据无法申请」。<br>第三步：对方拒绝提供证据时——「如果您暂时不方便提供，也可以通过品牌方的客服热线直接沟通，他们有专门的过敏处理通道」。<br>第四步：同时内部记录——「该粉丝无法提供就医证明，内部评估产品渠道/批次均正常，暂不支持赔偿」。<br>第五步：给粉丝的最终回复——「我非常理解您的心情，但根据品牌方的赔偿流程，需要提供相应的凭证才能申请。如果您后续能提供相关凭证，我们会继续跟进您的case」。<br>第六步：永远不说「没责任所以不用问」，说「按规定需要这些材料才能帮您申请」。</div>
+      </div>
+      <div class="case-lesson-box">
+        <div class="case-tag">🎯 核心教训</div>
+        <p>被问到「为什么要问这么多」时，不要陷入自证清白的陷阱。正确的逻辑是：我问是为了帮你拿到赔偿，不是为了证明你没责任。赔偿申请需要材料是正常的流程，不等于承认责任。客服要记住：帮粉丝申请赔偿 ≠ 承认有责任。</p>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TRAINING SECTION ==================== -->
+  <section class="training-section" id="training">
+    <div class="section-header">
+      <h2>📚 新人培训计划</h2>
+      <p>7天系统学习，从入门到独立上岗（含Alra品牌话术）</p>
+    </div>
+    <div class="training-timeline">
+      <div class="training-track">
+        <div class="track-line"></div>
+        <div class="track-dots">
+          <div class="track-dot active" data-day="1">Day 1<br><small>认知<br>规范</small></div>
+          <div class="track-dot" data-day="2">Day 2<br><small>情绪<br>流程</small></div>
+          <div class="track-dot" data-day="3">Day 3<br><small>话术<br>FAQ</small></div>
+          <div class="track-dot" data-day="4">Day 4<br><small>特殊<br>场景</small></div>
+          <div class="track-dot" data-day="5">Day 5<br><small>考核<br>上岗</small></div>
+        </div>
+      </div>
+      
+  <div class="train-timing-note">
+    <div class="note-icon">&#x1F4DD;</div>
+    <div class="note-text">本培训计划整合自团队<strong>售后场景拆解</strong>与<strong>Alra品牌售后询盘话术模板 v1.1</strong>，涵盖8大高频场景、标准话术、红线禁区与特殊场景处理。时间紧凑但内容完整，建议集中学习+当天实操演练。</div>
+  </div>
+      
+
+
+  <div class="train-card" id="train01">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F3E2;</div>
+      <div class="train-meta">
+        <div class="train-day">第1天 · 上午</div>
+        <div class="train-title">品牌认知与团队定位</div>
+        <div class="train-subtitle">明白自己是谁，知道边界在哪</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">团队定位</div>
+        <div class="train-text">我们是粉丝与品牌之间的「中间协调方」—— 不是客服，不是品牌方，不是达人的代言人</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">核心价值</div>
+        <div class="train-text">帮粉丝解决问题，帮品牌维护口碑，帮达人留住信任</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">四大黄金原则</div>
+        <div class="train-text">&#x274C; 不承诺（未经品牌方确认）<br>&#x274C; 不传话（传话必须留记录）<br>&#x274C; 不让情绪升级<br>&#x274C; 保护自己（截图留证）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">常见误区</div>
+        <div class="train-text">&#x274C; 「达人卖的东西达人负责」 → 达人只是渠道，赔付责任归品牌方<br>&#x274C; 「我能帮你申请」 → 你只能说「我帮您转达」<br>&#x274C; 「这个问题我能处理」 → 必须先问组长和品牌方</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train02">
+    <div class="train-card-header">
+      <div class="train-icon">&#x26A0;</div>
+      <div class="train-meta">
+        <div class="train-day">第1天 · 上午</div>
+        <div class="train-title">红线禁区与自我保护</div>
+        <div class="train-subtitle">哪些话绝对不能说，哪些事必须做</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 效果红线（绝对禁止）</div>
+        <div class="train-text">&#x274C; 「绝对没问题」「保证能治好」「一个月就好了」「没有任何副作用」<br>统一改为：「因人而异，建议坚持4-8周观察」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 责任归属红线</div>
+        <div class="train-text">&#x274C; 「那是你的问题」「别人用都没事」「我们产品没问题」<br>统一改为：「我帮你确认后回复」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 处理态度红线</div>
+        <div class="train-text">&#x274C; 「不归我管」「我不知道」「处理不了」「你爱找谁找谁」<br>统一改为：「我帮你记录，转给对应同事跟进」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 过敏敷衍红线</div>
+        <div class="train-text">&#x274C; 「这很正常，没事」「再观察两天」「建立耐受就是这样」<br>统一改为：「先停用，我会转给品牌团队处理」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 未经授权承诺红线</div>
+        <div class="train-text">&#x274C; 「可以赔/可以退」（无权决定）<br>&#x274C; 「明天一定答复」「这个我说了算」<br>统一改为：「你的诉求我记下了，24小时内品牌团队会联系你」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 删除差评红线（违规）</div>
+        <div class="train-text">&#x274C; 「麻烦删一下差评」「删了赔你」「删了给你退款」<br>合规话术：「感谢反馈，帮你解决问题后愿意的话帮忙更新评价，不强求」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F6AB; 「应该是」高危禁区</div>
+        <div class="train-text">&#x274C; 「应该是正常的」「应该是过敏」「应该问题不大」<br>猜测性回答 = 延误+不信任，一旦说错就完了。<br>&#x2705; 统一改为：「我帮你确认后回复」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">&#x1F512; 必须截图留证</div>
+        <div class="train-text">需截图保存：辱骂/威胁/超出权限承诺/产品照片<br>文件名格式：[日期]_[品牌]_[粉丝ID]_[问题类型]_[处理结果]<br>保存期限：6个月</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train03">
+    <div class="train-card-header">
+      <div class="train-icon">&#x26A1;</div>
+      <div class="train-meta">
+        <div class="train-day">第1天 · 下午</div>
+        <div class="train-title">响应标准与优先级判断</div>
+        <div class="train-subtitle">3分钟内首次响应，30秒内分类判断</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">响应时效标准</div>
+        <div class="train-text">P0紧急（威胁曝光/涉及安全） → 4小时内专人联系<br>P1紧急投诉 → 立即上报<br>P2重要投诉 → 2小时内处理<br>P3普通咨询 → 24小时内回复<br>P4常规 → 下一个工作日</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">首次响应模板（30秒必回）</div>
+        <div class="train-text">宝子！我看到啦 &#x1F64C; 先别急，跟我说说怎么了？你说的情况我记下来了，一定帮你处理到底！<br><br>&#x274C; 禁止开头：「请问您遇到了什么问题？」（太正式）<br>&#x274C; 禁止：「您好，看到您的反馈了」（像机器人）<br>&#x274C; 禁止：直接发产品链接或自动回复（零温度）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">情绪激动用户安抚模板</div>
+        <div class="train-text">宝子别急，我懂你的心情 &#x1F614; 先深呼吸一下，我在这里陪你处理，不解决不罢休 &#x2764; 来，慢慢跟我说，我们一起想办法<br><br>技巧：承认情绪，不辩解（「你说得对，这种情况确实不应该发生」）<br>&#x274C; 避免：「你先冷静一下」（会让人更激动）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">多问题并发处理</div>
+        <div class="train-text">&#x26A0; 适用：用户一口气提3个以上问题<br>&#x2705; 模板：「宝子，问题我都记下来了，一个个给你处理 &#x1F4AA; 按紧急程度来，先处理[最紧急的]，然后[次要的]，最后[其他的]。我们先搞第一个，好吗？」<br><br>不要碎片化回复（分开回显得在敷衍）<br>用数字编号让用户感觉被认真对待<br>解决一个主动说「搞定了，继续下一个」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train04">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F9D8;</div>
+      <div class="train-meta">
+        <div class="train-day">第2天 · 上午</div>
+        <div class="train-title">客诉调查七步法（核心流程）</div>
+        <div class="train-subtitle">Alra标准流程，每一步都有话术</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">第一步：礼貌接待，建立信任</div>
+        <div class="train-text">&#x2705; 话术：「宝子你好！谢谢你愿意跟我说 &#x1F64F; 你先别担心，我仔细听，慢慢说，我全程都在～」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">第二步：深入了解，挖掘需求</div>
+        <div class="train-text">&#x2705; 话术：「为了帮你搞准确，先问你几个关键问题：你描述得越细，我越能帮你判断原因哦～」<br><br>追问技巧：开放式引导（「能具体说说是什么感觉吗？」）<br>确认细节（「是右边脸颊，还是两边都有？」）<br>&#x274C; 避免：「你是不是没用对方法？」（像在推责任）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">第三步+第四步：同步交叉执行</div>
+        <div class="train-text">&#x26A0; 说明：追溯肤质和分析用法在实际对话中同时进行、灵活切换，跟着用户自然节奏走，核心是快速收集信息，不要让用户感觉在被审问。<br><br>&#x2705; 话术：「帮你分析一下，再问你几个问题：关于肤质：[追问] 关于用法：[追问]」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">第五步：提供建议，解释原理</div>
+        <div class="train-text">&#x2705; 话术：「看了一下你的情况，我的建议是：【这么做】[具体方案]【为什么】因为……（用大白话解释原理）你按这个试3-5天，有好转就继续，变得更严重的话马上告诉我！」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">第六步：识别红线，立刻上报</div>
+        <div class="train-text">&#x1F6A8; 遇到这些情况，立刻上报，不要自己扛：<br>· 出现水疱/渗液/严重红肿<br>· 粉丝威胁找媒体/监管部门<br>· 超过权限的赔偿要求<br><br>&#x2705; 话术：「宝子，你说的这种情况需要我们品牌专业团队来处理，我会马上把你的情况转过去，你按以下步骤先做：①停用这款产品 ②清水轻轻洗，不用洗面奶 ③出现[具体症状]立刻去医院。我今天内把你的情况提交给品牌团队，24小时内他们会直接联系你。」<br><br>&#x274C; 禁止说：「这只是正常反应，没事」「再观察两天看看」「处理不了」「应该是……」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">第七步：统一口径，专业沟通</div>
+        <div class="train-text">对外宣传三原则（必须记住）：<br><strong>成分你最懂</strong> — 对产品成分的理解和选择，说出专业感<br><strong>检测关最严</strong> — 远超行业标准的多重检测，说出安全感<br><strong>合规专家审</strong> — 所有物料经过合规团队审核，说出信任感</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train05">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F504;</div>
+      <div class="train-meta">
+        <div class="train-day">第2天 · 下午</div>
+        <div class="train-title">退换货流程与品牌沟通规范</div>
+        <div class="train-subtitle">所有退换货必须通过品牌群申请</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">判断标准</div>
+        <div class="train-text">未开封+7天内 → 支持<br>已开封+有质量问题 → 支持（需证据）<br>已开封+无质量问题 → 不支持（可申请补偿）<br>已过期 → 不支持（可申请人情补偿）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">申请流程</div>
+        <div class="train-text">确认订单 → 确认产品状态 → 判断是否在品牌支持范围 → 在品牌群申请（附：证据+订单号+处理建议）→ 等待审批（24-48小时）→ 反馈粉丝</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">品牌群沟通格式</div>
+        <div class="train-text">@品牌方 / 问题描述 / 产品状态 / 粉丝诉求 / 申请处理方式 / 附证据<br><br>永远不能在品牌群外私下承诺粉丝处理结果</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">重要提醒</div>
+        <div class="train-text">粉丝问「能不能退」 → 只能说「我帮您申请」<br>品牌方回复后才能给粉丝最终答复<br>没有品牌方回复，不能给任何实质性承诺</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train06">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F4AC;</div>
+      <div class="train-meta">
+        <div class="train-day">第3天 · 上午</div>
+        <div class="train-title">高频场景FAQ话术（上）</div>
+        <div class="train-subtitle">场景1-4：产品功效 / 过敏 / 使用 / 破损</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">场景1 · 产品功效咨询</div>
+        <div class="train-text"><strong>Q：这款产品能去皱吗？</strong><br>&#x2705; 「这款含高纯度玻色因，能促进胶原蛋白生成、改善细纹，经过第三方权威机构功效验证，坚持用有助延缓老化。每个人肤质不同，效果因人而异，建议坚持用4-8周看看变化 &#x1F60A;」<br><br><strong>Q：为什么比别家的贵？</strong><br>&#x2705; 「好问题！Alra坚持高品质进口原料，每一批次都经过远超行业标准的多重检测，这份投入只为给你带来真正安心有效的护肤体验。护肤品和普通商品不一样，成分纯度、稳定性、配方科学性都直接影响效果和安全性，我们宁愿在源头多投入，也不想让你的皮肤承担风险。」<br><br>&#x274C; 禁止：「因为我们是大牌啊」「便宜没好货」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景2 · 过敏/疑似过敏</div>
+        <div class="train-text"><strong>Q：我用完过敏了！</strong><br>&#x2705; 「宝子，真的很抱歉！先别急：<br>1. 停用产品，不要再涂了<br>2. 用清水轻轻洗脸，什么都不要抹<br>3. 观察24小时，如果出现水疱/渗液/肿得更厉害，或者身体不舒服，立刻去医院。你的情况我会马上转给品牌专业团队，24小时内他们会联系你全程跟进 &#x1F64F;」<br><br><strong>Q：这个产品安全吗？会烂脸吗？</strong><br>&#x2705; 「宝子问得好，说明你对自己皮肤很负责 &#x1F4AA; Alra每款产品都经过严格质检和安全评估，符合国家化妆品标准。护肤反应因人而异，就像有人对芒果过敏、有人对海鲜过敏，这是个人差异，不是产品本身有问题。」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景3 · 产品使用疑问</div>
+        <div class="train-text"><strong>Q：用了脸红是正常的吗？</strong><br>情况A（轻微泛红+30分钟内消退）：「用完轻微泛红是果酸的正常反应哦～ 说明产品里的活性成分在起作用，促进老废角质代谢。30分钟内会自然消退，不用担心 &#x1F60A;」<br>情况B（泛红超1小时或刺痛）：「这种情况说明你皮肤对这款产品还没建立耐受，先暂停2-3天，等皮肤缓过来。初次使用一定要先少量上脸……」<br><br><strong>Q：需要建立耐受，怎么建？</strong><br>&#x2705; 「第1-2周：黄豆大小，全脸薄涂，停留3-5分钟后清水洗掉，隔2-3天用一次<br>第3-4周：停留时间延长到10分钟，观察皮肤状态<br>第4周以后：无不舒服可以尝试过夜。<br>过程中轻微刺痛或脱皮是正常的，减少用量或拉长间隔就好。出现明显红肿水疱，立刻停用联系我。」<br><br><strong>Q：用了还能用维A醇吗？</strong><br>&#x26A0; 「维A醇和果酸最好不要一起用，两个叠加刺激性会增强，容易出现泛红/脱皮/刺痛。建议搭配方案：[早C晚A分时使用，或先用果酸2-3周再引入维A醇]」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景4 · 产品破损/保质期</div>
+        <div class="train-text"><strong>Q：收到产品破损了/漏液了</strong><br>&#x2705; 「宝子，收到破损真的很抱歉 &#x1F614; 别急，我帮你处理！麻烦你先做两件事：①拍照（产品+包装）②发一下订单号。核实之后我们可以免运费补发新的，或者补偿你一张优惠券，可以吗？真的非常抱歉 &#x1F64F;」<br><br><strong>Q：产品保质期/生产日期怎么查？</strong><br>&#x2705; 「好问题！Alra产品批次信息透明可查 &#x1F4CB; 你看一下外包装：[说明查看位置]。如果看不清，告诉我产品名和批号，我帮你查 &#x1F60A;」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train07">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F4AC;</div>
+      <div class="train-meta">
+        <div class="train-day">第3天 · 下午</div>
+        <div class="train-title">高频场景FAQ话术（下）</div>
+        <div class="train-subtitle">场景5-8：质疑对比 / 效果 / 赔偿 / 删评</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">场景5 · 质疑/对比类</div>
+        <div class="train-text"><strong>Q：网上有人说你们产品有问题？</strong><br>&#x2705; 「谢谢宝子愿意告诉我们 &#x1F64F; 我们始终坚持「成分懂、检测严、合规审」原则，对产品品质负责到底。如果你看到的是具体信息，辛苦发给我：[请用户提供链接/截图]。我们会立即认真核查，有结果第一时间告诉你。如果确实是我们的问题，绝不回避，负责到底 &#x1F4AA;」<br><br><strong>Q：别人用了怎么没事？</strong><br>&#x2705; 「您观察得很仔细！确实存在个体差异，就像有人喝牛奶不舒服，有人完全没问题，是肤质不同，不是产品的问题 &#x1F60A; 你用后的情况我会认真记录，反馈给产品配方团队。如果你愿意多说说你用后的具体情况，我可以帮你分析 &#x1F64F;」<br><br><strong>Q：我皮肤能用好吗？</strong><br>&#x2705; 「谢谢信任！按你描述的肤质，理论上适合你，但因为个体差异，建议：如果你以前有过敏史，或者现在皮肤正处于敏感状态，建议先用温和产品稳定皮肤，再考虑功效型产品哦～」<br>&#x274C; 禁止：「放心，绝对没问题！」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景6 · 使用效果类</div>
+        <div class="train-text"><strong>Q：用了没效果怎么办？</strong><br>情况A（使用不足4周）：「宝子，功效型护肤品一般要坚持用才能看到效果 &#x1F60A; 皮肤代谢周期28天左右，建议：[鼓励坚持+检查用法] 你用了多久了？说说使用感受，我帮你分析。」<br><br>情况B（超过8周仍无明显效果）：「宝子，理解你的心情，用了这么久看不到效果确实会着急 &#x1F4AA; 不过用这么久没感觉到变化，通常有两种情况，我们来一个个排查：<br>B1：其实有效果，但没感知到（润物细无声）。<br>B2：产品确实不适合你，需要调整。<br>帮我回答几个问题：[用量/搭配/目标困扰]。你说的情况我会反馈给品牌团队，帮你分析要不要调整用法或者换方案 &#x1F64F;」<br><br><strong>拍照对比法</strong>（最常见被忽略的场景）：「宝子，先别急着下结论，来做个小测试：打开手机相册，找一张用之前的脸部照片，关掉美颜和滤镜，跟现在的脸对比一下——有没有发现：[光泽/痘印/吸收/稳定/出油] 有以上任意一点，那就是有效果，只是变化比较细，每天看镜子不容易发现。」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景7 · 赔偿/退款诉求</div>
+        <div class="train-text">&#x2705; 「宝子，我理解你的心情，真的很抱歉带来了不便 &#x1F64F; 赔偿/退款这个我没权限直接答应，但我把你的诉求完整记下来，马上提交给客服主管和品牌团队。会在24小时内与你联系，沟通具体方案。这段时间辛苦留意抖音消息，方便他们联系你。如果比较紧急，我帮你催一下优先处理。」<br><br>&#x274C; 禁止：「可以赔/可以退」（无权决定）<br>&#x274C; 禁止：「这不归我管」（推诿）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景8 · 删除差评诉求（高风险）</div>
+        <div class="train-text">&#x2705; 「宝子，看到你的反馈了，真的很抱歉给你带来了不好的体验 &#x1F614; 对于大家评论，每条我们都会认真对待 &#x1F64F; 关于你反馈的问题，我们希望能直接和你沟通，彻底帮你解决：[提供联系方式]。如果处理完你满意了，愿意的话帮忙更新一下评价？不强求，只是真心希望帮你解决问题 &#x1F4AA;」<br><br>&#x274C; 禁止：直接说「删一下差评」/ 「删了赔你」/ 「删了给你退款」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train08">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F6D1;</div>
+      <div class="train-meta">
+        <div class="train-day">第4天 · 上午</div>
+        <div class="train-title">特殊场景处理与升级机制</div>
+        <div class="train-subtitle">不能按常规流程处理的情况</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">场景A · 用户要求赔偿/退款</div>
+        <div class="train-text">不当场答应，先安抚+升级，24小时内回复<br>&#x2705; 话术：「我理解你的心情，你的诉求我记下来了，会第一时间提交给品牌团队处理，24小时内会有人联系你。」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景B · 用户威胁投诉（监管/媒体）</div>
+        <div class="train-text">&#x1F6A8; 立刻标记P0紧急，4小时内部门负责人或更高级别专人联系<br>&#x2705; 话术：「我理解您希望问题得到重视。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。我这边会立刻上报，稍后会有专人联系您。」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景C · 用户要求删除差评（高风险）</div>
+        <div class="train-text">&#x26A0; 不能要求删评，不能用赔偿诱导删评<br>&#x2705; 合规话术：「感谢反馈，我们会认真处理，你满意的话愿意的话帮忙更新评价，不强求。」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景D · 用户辱骂/人身攻击</div>
+        <div class="train-text">保持专业，截图留证，标记跟进<br>不要回骂，不要激化，冷静处理<br>如持续攻击可暂时离开工位休息</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">场景E · 老客户重复投诉</div>
+        <div class="train-text">查阅历史记录，避免重复提问<br>再次回复时先确认：「宝子，上次的问题处理到哪一步了？我们继续跟进」<br>不要让用户重复叙述同一问题</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">升级触发条件</div>
+        <div class="train-text">&#x2B06;&#xFE0F; 同一问题被投诉2次以上<br>&#x2B06;&#xFE0F; 粉丝威胁曝光 / 投诉平台 / 报警<br>&#x2B06;&#xFE0F; 处理时间超过48小时未解决<br>&#x2B06;&#xFE0F; 涉及金额超过500元<br>&#x2B06;&#xFE0F; 涉及产品质量安全问题（可能舆情）<br>&#x2B06;&#xFE0F; 品牌方72小时内未回应</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">万能脱身句（不知道怎么说时）</div>
+        <div class="train-text">「宝子，你这个问题比较专业，我要先确认一下细节 &#x1F64F; 我先记下来，稍后给你准确的回复，好吗？一般1-2小时，一定第一时间联系你。」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train09">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F6AB;</div>
+      <div class="train-meta">
+        <div class="train-day">第4天 · 下午</div>
+        <div class="train-title">难缠客户应对与无理取闹处理</div>
+        <div class="train-subtitle">五不原则 + 10种客户分类</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">五不原则（处理无理取闹/恶意用户）</div>
+        <div class="train-text">&#x274C; 不对骂 — 保持专业，不激化矛盾<br>&#x274C; 不承诺 — 超出权限的不答应<br>&#x274C; 不过多解释 — 3次无效停止纠缠<br>&#x274C; 不单独扛 — 立刻上报组长<br>&#x274C; 不留把柄 — 截图保存所有对话</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">愤怒投诉型</div>
+        <div class="train-text">特征：用感叹号、多条消息轰炸、要求立即处理<br>&#x2705; 话术：「我理解您的感受，我这就帮您协调处理，预计[时间]内给您回复」<br>&#x274C; 避坑：不要争论对错，不要说「不归我们管」</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">威胁曝光型</div>
+        <div class="train-text">特征：「我要发帖曝光」 / 「我要投诉平台」<br>&#x2705; 话术：「我理解您希望问题得到重视的心情，我们会认真对待每一位顾客的反馈」<br>&#x274C; 避坑：不因威胁而让步，但态度不能变硬</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">无理取闹型</div>
+        <div class="train-text">特征：开封后退/过期后退/赠品要求超出政策<br>&#x2705; 话术：先肯定情绪 → 说明品牌方政策（用「品牌方规定」而非「我们规定」）→ 给替代方案<br>&#x274C; 避坑：不给对抗，给台阶</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">多人串联型（舆情高危）</div>
+        <div class="train-text">特征：同一问题多人集中反馈<br>&#x2705; 话术：每个粉丝都当作唯一case处理，回复不提「多人」<br>&#x274C; 避坑：永远不要说「别人也有这个问题」——会让普通投诉升级成集体维权</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">其余5种</div>
+        <div class="train-text">&#x2774; 反复纠缠型 — 不重复给相同答案，引导看之前的回复记录<br>&#x2775; 情感脆弱型 — 优先处理情绪，再处理问题<br>&#x2776; 专业质问型 — 不懂就说「我确认后回复」，不瞎猜<br>&#x2777; 找领导型 — 「我理解，我安排组长跟进，方案确认后通过大管家账号联系您」<br>&#x2778; 沉默抗拒型 — 给出明确时限，让用户知道有人在跟进</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="train-card" id="train10">
+    <div class="train-card-header">
+      <div class="train-icon">&#x1F3C6;</div>
+      <div class="train-meta">
+        <div class="train-day">第5天</div>
+        <div class="train-title">综合考核与上岗评估</div>
+        <div class="train-subtitle">通过考核，正式成为团队一员</div>
+      </div>
+    </div>
+    <div class="train-items">
+      <div class="train-item">
+        <div class="train-label">考核安排</div>
+        <div class="train-text">上午笔试（产品知识+服务规范，60分及格）<br>下午实操演练（3个真实case模拟，组长现场打分）<br>通过后：组长签署上岗确认单，正式进入team群</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">笔试范围</div>
+        <div class="train-text">四大黄金原则（默写）<br>红线禁区（判断对错题）<br>7步客诉调查法（填空）<br>升级机制4个触发条件（填空）<br>8大场景话术应用题（给场景写回复）<br>「应该是」禁区统一改为（填空）</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">实操考核标准（5项×20分=100分）</div>
+        <div class="train-text">情绪处理：是否先用CARP安抚情绪（20分）<br>流程合规：是否按7步法+退换货流程处理（20分）<br>红线意识：是否未触碰禁区/超权限承诺（20分）<br>话术应用：8大场景话术是否正确使用（20分）<br>升级判断：是否正确判断需要升级的case（20分）<br>总分80分及以上通过</div>
+      </div>
+      <div class="train-item">
+        <div class="train-label">上岗后成长路径</div>
+        <div class="train-text">Week 1-2：组长带教，每日复盘<br>Week 3-4：独立处理普通case，重大case上报<br>Month 2：开始处理复杂投诉，积累品牌群沟通经验<br>Month 3：考核晋升通道开放，可申请「高级售后专员」</div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </section>
+
+
+<div class="footer">
+  <p>达人售后团队完整服务流程执行方案 v2.0 · 专为 Andy 团队定制</p>
+</div>
+
+<script>
+// 初始化默认值
+var ADMIN_PW = "admin2026";
+var teamPw = "daogou2026";
+var teamActive = true;
+
+function saveAdminData() {
+  localStorage.setItem("daogou_admin_data", JSON.stringify({ADMIN_PW:ADMIN_PW, teamPw:teamPw, teamActive:teamActive}));
+}
+
+function loadAdminData() {
+  var d = localStorage.getItem("daogou_admin_data");
+  if (d) { try { var o = JSON.parse(d); ADMIN_PW = o.ADMIN_PW || ADMIN_PW; teamPw = o.teamPw || teamPw; teamActive = o.teamActive !== undefined ? o.teamActive : true; } catch(e){} }
+}
+
+function showTab(tab) {
+  var tt = document.getElementById("tab-team");
+  var at = document.getElementById("tab-admin");
+  if (!tt || !at) return;
+  tt.style.display = tab === "team" ? "block" : "none";
+  at.style.display = tab === "admin" ? "block" : "none";
+  
+  // 隐藏错误信息
+  var errTeam = document.getElementById("err-team");
+  var errAdmin = document.getElementById("err-admin");
+  if (errTeam) errTeam.style.display = "none";
+  if (errAdmin) errAdmin.style.display = "none";
+  
+  // 清空输入框并设置焦点
+  var inpTeam = document.getElementById("pw-team");
+  var inpAdmin = document.getElementById("pw-admin");
+  if (tab === "team" && inpTeam) {
+    inpTeam.value = "";
+    inpTeam.focus();
+  }
+  if (tab === "admin" && inpAdmin) {
+    inpAdmin.value = "";
+    inpAdmin.focus();
+  }
+  
+  // 更新按钮状态
+  var btns = document.querySelectorAll("#pw-overlay .pw-tab");
+  btns.forEach(function(b){ b.classList.remove("active"); });
+  if (tab === "team") {
+    var teamBtn = document.querySelector("#pw-overlay .pw-tab[data-tab='team']");
+    if (teamBtn) teamBtn.classList.add("active");
+  }
+  if (tab === "admin") {
+    var adminBtn = document.querySelector("#pw-overlay .pw-tab[data-tab='admin']");
+    if (adminBtn) adminBtn.classList.add("active");
+  }
+}
+
+function loginTeam() {
+  var el = document.getElementById("pw-team");
+  if (!el) return;
+  var v = el.value;
+  if (!teamActive) {
+    var err = document.getElementById("err-team");
+    if (err) { err.textContent = "当前团队权限已被管理员取消"; err.style.display = "block"; }
+    return;
+  }
+  if (v === teamPw) {
+    sessionStorage.setItem("daogou_role", "team");
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+  } else {
+    var err = document.getElementById("err-team");
+    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
+  }
+}
+
+function loginAdmin() {
+  var el = document.getElementById("pw-admin");
+  if (!el) return;
+  var v = el.value;
+  if (v === ADMIN_PW) {
+    sessionStorage.setItem("daogou_role", "admin");
+    var ov = document.getElementById("pw-overlay");
+    if (ov) ov.style.display = "none";
+    var ap = document.getElementById("admin-page");
+    if (ap) ap.classList.add("active");
+    apLoadAll();
+    window.scrollTo({top:0, behavior:"instant"});
+  } else {
+    var err = document.getElementById("err-admin");
+    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
+  }
+}
+
+function apTab(btn, panelId) {
+  document.querySelectorAll(".admin-tab").forEach(function(b){ b.classList.remove("active"); });
+  if (btn) btn.classList.add("active");
+  document.querySelectorAll(".admin-panel").forEach(function(p){ p.classList.remove("active"); });
+  var panel = document.getElementById(panelId);
+  if (panel) panel.classList.add("active");
+}
+
+function apShowPage() {
+  var role = sessionStorage.getItem("daogou_role");
+  if (role !== "admin") {
+    var ov = document.getElementById("pw-overlay");
+    if (ov) { ov.style.display = "flex"; showTab("admin"); var inp = document.getElementById("pw-admin"); if(inp) { inp.value = ""; inp.focus(); } }
+    return;
+  }
+  var ap = document.getElementById("admin-page");
+  if (ap) ap.classList.add("active");
+  apLoadAll();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function apLogout() {
+  sessionStorage.removeItem("daogou_role");
+  var ap = document.getElementById("admin-page");
+  if (ap) ap.classList.remove("active");
+  var ov = document.getElementById("pw-overlay");
+  if (ov) { ov.style.display = "flex"; showTab("team"); }
+}
+
+function apLoadAll() {
+  var t1 = document.getElementById("ap-team-pw"); if (t1) t1.value = teamPw;
+  var t2 = document.getElementById("ap-admin-pw"); if (t2) t2.value = ADMIN_PW;
+  var se = document.getElementById("ap-access-status");
+  if (se) se.innerHTML = teamActive ? "\u2705 团队访问权限：正常" : "\u274C 团队访问权限：已取消";
+  var rb = document.getElementById("btn-revoke"); if (rb) rb.style.display = teamActive ? "inline-block" : "none";
+  var eb = document.getElementById("btn-enable"); if (eb) eb.style.display = teamActive ? "none" : "inline-block";
+  apLoadCards();
+  apLoadSections();
+  apLoadNav();
+}
+
+function apSaveTeamPw() {
+  var v = document.getElementById("ap-team-pw").value.trim();
+  if (!v) { alert("请输入新密码"); return; }
+  teamPw = v; saveAdminData();
+  var s = document.getElementById("ap-team-status");
+  if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
+}
+
+function apSaveAdminPw() {
+  var v = document.getElementById("ap-admin-pw").value.trim();
+  if (!v) { alert("请输入新密码"); return; }
+  ADMIN_PW = v; saveAdminData();
+  var s = document.getElementById("ap-team-status");
+  if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
+}
+
+function apRevokeAccess() {
+  if (!confirm("确定取消团队访问权限？所有普通成员将无法登录。")) return;
+  teamActive = false; saveAdminData(); apLoadAll();
+}
+
+function apEnableAccess() {
+  teamActive = true; saveAdminData(); apLoadAll();
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function getCardsData() { var d = localStorage.getItem("daogou_cards"); return d ? JSON.parse(d) : []; }
+function saveCardsData(c) { localStorage.setItem("daogou_cards", JSON.stringify(c)); }
+
+function apClearCardForm() {
+  ["ca-title","ca-icon","ca-desc","ca-link","ca-tags"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var sel = document.getElementById("ca-section"); if(sel) sel.value="";
+}
+
+function apLoadCards() {
+  var el = document.getElementById("ap-cards-list");
+  if (!el) return;
+  var cards = getCardsData();
+  if (cards.length === 0) { el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无卡片，点击下方表单添加</p>'; return; }
+  var h = '<div class="admin-card"><h3><span>\u1F4CB;</span> 已有的卡片 (' + cards.length + ')</h3>';
+  cards.forEach(function(c, i) {
+    h += '<div class="tool-item">';
+    h += '<div class="tool-preview">';
+    h += '<div class="tool-icon">' + (c.icon||'') + '</div>';
+    h += '<div class="tool-title">' + escHtml(c.title||'') + '</div>';
+    h += '<div class="tool-desc">' + escHtml(c.desc||'') + '</div>';
+    h += '<div class="tool-tags">';
+    if (c.tags) c.tags.split(',').forEach(function(t){ h += '<span class="tool-tag">' + escHtml(t.trim()) + '</span>'; });
+    h += '</div></div>';
+    h += '<div class="tool-actions">';
+    h += '<button class="btn-sm btn-red" onclick="apDeleteCard(' + i + ')">\u1F5D1; 删除</button>';
+    h += '</div></div>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+function apAddCard() {
+  var title = document.getElementById("ca-title").value.trim();
+  var icon = document.getElementById("ca-icon").value.trim() || "\u1F4CB;";
+  var desc = document.getElementById("ca-desc").value.trim();
+  var section = document.getElementById("ca-section").value;
+  var link = document.getElementById("ca-link").value.trim();
+  var tags = document.getElementById("ca-tags").value.trim();
+  if (!title) { alert("请输入卡片标题"); return; }
+  if (!link) { alert("请输入跳转链接"); return; }
+  var cards = getCardsData();
+  cards.push({title:title, icon:icon, desc:desc, section:section, link:link, tags:tags});
+  saveCardsData(cards);
+  apLoadCards();
+  apClearCardForm();
+  alert("卡片已添加！刷新页面后生效。");
+}
+
+function apDeleteCard(idx) {
+  if (!confirm("确定删除此卡片？")) return;
+  var cards = getCardsData();
+  cards.splice(idx, 1);
+  saveCardsData(cards);
+  apLoadCards();
+}
+
+async function getSectionsData() {
+  if (sectionsCache) return sectionsCache;
+  
+  try {
+    const { data, error } = await supabase.from('sections').select('*');
+    if (error) throw error;
+    
+    if (data && data.length > 0) {
+      sectionsCache = data;
+      return data;
+    }
+  } catch (e) {
+    console.log('Supabase error, using localStorage fallback:', e);
+  }
+  
+  var d = localStorage.getItem("daogou_sections");
+  if (d) {
+    var sections = JSON.parse(d);
+    if (sections.length > 0) {
+      sectionsCache = sections;
+      return sections;
+    }
+  }
+  
+  var defaultSections = [
+    {
+      id: "s1",
+      title: "团队定位与角色定义",
+      content: "团队架构|角色|人数|核心职责\n组长（Andy）|1人|对外品牌对接、内部调度、特殊case决策\n售后专员 A / B / C|3人|日常咨询 / 投诉处理（按品牌分组）\n售后专员 D / E / F / G|4人|复杂case跟进、退换货协调、客情维护\n四大黄金原则|不承诺|未经品牌方确认，不对粉丝做实质性承诺\n|不传话|传话必须留记录，不得口头承诺替代正式流程\n|不让情绪升级|客户情绪上来时，你永远是降温的那一方\n|保护自己|恶意攻击截图留证，情绪激动时等冷静再处理"
+    },
+    {
+      id: "s2",
+      title: "服务标准动作（基础 SOP）",
+      content: "接收消息标准流程|标签|说明|处理时效\n[P1] 紧急投诉|威胁曝光 / 产品质量安全|立即上报组长\n[P2] 重要投诉|退换货申请 / 产品质疑|2小时内处理\n[P3] 普通咨询|使用咨询 / 肤质建议|24小时内回复\n[P4] 常规|表扬 / 常规咨询|下一个工作日\n首次响应话术模板|模板A — 正常咨询|亲爱的[粉丝名字]，感谢您的留言～我是[达人名]直播间的售后小助手，很高兴为您服务！您的问题我已经收到了，我这边帮您查询一下，稍后给您准确回复哦 ☺️\n|模板B — 投诉/情绪类|[粉丝名字]，我非常理解您现在的心情，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理，有任何进展我都会及时告知您。请您放心，这件事我一定会认真对待的 🙏\n|模板C — 威胁类（不卑不亢）|您好，我完全理解您希望问题得到解决的心情。我这边会认真记录您反馈的情况，并协助品牌方尽快给您一个处理方案。您的诉求我们会如实转达，同时也希望您能给我们一点处理时间，好吗？"
+    },
+    {
+      id: "s3",
+      title: "CARP 标准处理模型（所有投诉必走）",
+      content: "CARP模型|C|Control · 掌控节奏|不被客户情绪带着走\n语速放慢，回复间隔适当\n耐心读完所有消息再判断情绪\n|A|Acknowledge · 认可情绪|说出\"我完全理解您的感受\"\n\"换作是我也会着急\"\n\"您的心情我非常理解\"\n|R|Refocus · 转向解决|把话题从\"谁对谁错\"\n拉回到\"怎么解决\"\n|P|Problem Solve · 着手解决|有方案 → 立即给出时间节点\n无方案 → 承诺跟进，绝不不了了之\n禁止说的话|您不要这么激动|这有什么可生气的|您先冷静一下\n必须说出口|我完全理解您的感受|换作是我也会着急|您的心情我非常理解"
+    },
+    {
+      id: "s4",
+      title: "10种难缠客户分类应对标准",
+      content: "客户类型|特征|应对策略|话术模板\n愤怒投诉型|情绪激动，语言激烈|先认可情绪，再转向解决|我完全理解您的感受，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理。\n威胁曝光型|威胁要曝光、投诉平台|保持冷静，不被威胁影响|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n反复投诉型|同一问题多次投诉|记录历史，全面分析|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n要求赔偿型|直接要求赔偿金额|了解诉求，按流程处理|您的诉求我已经记录下来了，我会帮您向品牌方申请，尽快给您回复。\n质疑品牌型|质疑产品质量、品牌信誉|客观回应，不偏袒品牌|您的反馈我已经记录下来了，我会如实转达给品牌方，同时也会帮您跟进处理。\n拖延沟通型|回复慢，不配合提供信息|设定时间，明确要求|为了尽快帮您解决问题，还请您提供一下相关信息，我们会在收到信息后立即处理。\n对比竞品型|拿竞品对比，质疑产品价值|强调产品优势，提供解决方案|感谢您的反馈，我们的产品在[优势]方面有独特之处，针对您的问题，我可以为您提供[解决方案]。\n要求特殊处理型|要求超出常规流程的处理|解释流程，寻求替代方案|非常理解您的需求，不过我们的处理流程是[流程说明]，我可以帮您[替代方案]。\n语言攻击型|使用侮辱性语言|保持专业，不被影响|我非常理解您现在的心情，我们会认真对待您的反馈，争取尽快给您一个满意的处理方案。\n信息不全型|提供信息不完整，无法处理|引导提供信息，耐心等待|为了帮您更好地解决问题，还请您提供一下[所需信息]，我们会在收到信息后立即处理。"
+    },
+    {
+      id: "s5",
+      title: "退换货标准流程",
+      content: "退换货流程|步骤|说明|时效\n退货|1. 确认问题|了解退货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交退货申请|72小时内\n|4. 安排退货|提供退货地址，指导退货流程|96小时内\n|5. 确认退款|确认收到退货，安排退款|120小时内\n换货|1. 确认问题|了解换货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交换货申请|72小时内\n|4. 安排换货|提供换货地址，指导换货流程|96小时内\n|5. 确认收货|确认收到新货，完成换货|120小时内\n退款|1. 确认问题|了解退款原因，核实情况|24小时内\n|2. 收集证据|要求提供相关证据|48小时内\n|3. 品牌确认|向品牌方提交退款申请|72小时内\n|4. 确认退款|确认退款到账|96小时内"
+    },
+    {
+      id: "s6",
+      title: "特殊边界与升级机制",
+      content: "特殊边界|情况|处理方式|升级条件\n产品质量问题|产品出现质量问题|收集证据，向品牌方反馈|24小时内无响应\n过敏问题|使用产品后出现过敏|收集证据，建议就医|情况严重时\n假货质疑|粉丝质疑产品是假货|引导提供证据，向品牌方反馈|无法自证时\n价格争议|粉丝认为价格过高|解释价格构成，提供优惠信息|无法解决时\n物流问题|物流延迟、丢失|联系物流，跟进情况|72小时内无进展\n升级机制|升级条件|升级流程|处理时效\n同一问题被投诉2次以上|提交组长处理|24小时内\n粉丝威胁曝光 / 投诉平台 / 报警|提交组长处理|立即\n处理时间超过48小时未解决|提交组长处理|48小时后\n涉及金额超过500元|提交组长处理|立即\n涉及产品质量安全问题|提交组长处理|立即\n品牌方72小时内未回应|提交组长处理|72小时后"
+    },
+    {
+      id: "s7",
+      title: "协作与升级规范",
+      content: "协作规范|角色|职责|沟通方式\n组长|对外品牌对接、内部调度、特殊case决策|每日例会、一对一沟通\n售后专员|日常咨询 / 投诉处理|即时通讯、周例会\n品牌方|产品质量、售后服务|邮件、品牌群\n升级规范|升级流程|处理方式|时效要求\n第一步|专员处理|常规问题自行处理|24小时内\n第二步|组长介入|专员无法解决的问题|48小时内\n第三步|达人团队介入|组长无法解决的问题|72小时内\n第四步|法律途径|涉及法律问题|根据情况\n沟通工具|工具|用途|使用规范\n企业微信|日常沟通、客户联系|及时响应、专业用语\n品牌群|品牌方沟通、问题反馈|信息准确、留痕记录\n内部群|团队内部沟通、培训|积极参与、分享经验"
+    },
+    {
+      id: "s8",
+      title: "情绪管理与自我保护",
+      content: "情绪管理|技巧|说明|适用场景\n深呼吸法|深呼吸3-5次，缓解紧张情绪|情绪激动时\n积极暗示|提醒自己客户是对事不对人|被客户攻击时\n转移注意力|暂时离开工位，调整情绪|情绪难以控制时\n团队支持|向同事、组长倾诉|需要情感支持时\n自我保护|措施|说明|适用场景\n截图留证|保存所有沟通记录|可能涉及纠纷时\n设置边界|不与客户进行私人交流|客户要求私人联系方式时\n拒绝妥协|不做超出权限的承诺|客户要求特殊处理时\n寻求帮助|及时向组长汇报|遇到困难时\n心理支持|支持方式|说明|频率\n每日吐槽时间|15分钟可选参与|每日\n团队建设活动|增强团队凝聚力|每月\n专业心理辅导|提供专业心理支持|按需"
+    },
+    {
+      id: "s9",
+      title: "绩效考核与激励机制",
+      content: "绩效考核|指标|标准|权重\n首次响应时间|≤ 3分钟|20%\n问题解决率|≥ 85%（不升级到组长）|30%\n平均处理时长|≤ 24小时|20%\n客户满意度|≥ 90%（好评率）|20%\n品牌方投诉率|= 0|10%\n激励机制|奖励|条件|频率\n每月「服务之星」|客户好评最多者|每月\n季度最佳案例分享会|提交优秀案例|每季度\n品牌方参观学习机会|连续3个月KPI达标|每季度\n改进机制|措施|条件|频率\n组长一对一辅导|连续2个月KPI未达标|每月\n调整岗位或重新培训|连续3个月未达标|每季度\n每月case复盘会|汇总常见问题，更新手册|每月"
+    },
+    {
+      id: "s10",
+      title: "话术速查手册",
+      content: "话术速查|场景|话术模板\n安抚情绪|我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。\n投诉质疑品牌|您说得有道理，我这边帮您记录并反馈给品牌方。\n客户多次投诉|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n威胁曝光|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n要求找领导|我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，请问您方便接听电话的时间是？\n粉丝问「是不是很多人都遇到」|亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。\n被骂「骗子同伙」|我非常理解您的心情，我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？\n粉丝追问「为什么问这么多」|申请赔偿需要了解具体情况，这样我才能帮您申请到对应的补偿方案，这是正常流程，请理解。\n无法立即解决|您的情况我已经详细记录了，我会在[时间]前给您一个明确的回复，请耐心等待。\n结束语（任意场景）|您这个问题我一定会认真跟进到底的 💕 如有任何疑问随时联系我，祝您生活愉快！"
+    },
+    {
+      id: "scenarios",
+      title: "售后场景拆解",
+      icon: "🎯",
+      color: "orange",
+      content: "场景1|用竞品空瓶来「碰瓷」要求退款|高危|特征：用竞品空瓶冒充，威胁有录音|应对：不质疑、不承认、不拒绝，用「核实」拖延时间|核心教训：不要当场质疑，先内部查证据\n场景2|拒绝提供证据却发帖扩散|中危|特征：拒绝提供证据，已发帖|应对：说明需要证据的原因，提供品牌方联系方式|核心教训：被骂「骗子同伙」时保持专业温度\n场景3|开封后退全款、搬出「达人就要负责」|中危|特征：已开封使用，要求全款退|应对：用品牌方政策作为挡箭牌，给替代方案|核心教训：达人是销售渠道，不是无限责任主体\n场景4|购买后价格下降，要求退差价|低危|特征：其他平台价格更低|应对：说明渠道差异，提供补偿方案|核心教训：价格差异是正常的，重点在提供替代方案\n场景5|过敏后要求巨额赔偿|高危|特征：要求医药费、精神损失费|应对：先关心，再按流程处理，不承诺赔偿|核心教训：承诺超出权限是售后最大禁忌"
+    },
+    {
+      id: "training",
+      title: "新人培训计划",
+      icon: "📚",
+      color: "green",
+      content: "培训计划|天数|内容|目标\n第1天|品牌认知与团队定位|明白自己是谁，知道边界在哪|掌握团队定位和四大黄金原则\n第2天|响应标准与CARP模型|3分钟内首次响应，30秒内分类判断|掌握CARP情绪处理模型\n第3天|退换货流程与品牌沟通|所有退换货必须通过品牌群申请|掌握退换货流程和品牌群沟通规范\n第4天|10种难缠客户分类应对|每种类型的特征、话术、避坑指南|掌握10种客户类型的应对策略\n第5天|话术模板实战练习|熟记15个核心话术|掌握常用话术模板\n第6天|情绪管理与自我保护|团队情绪管理和员工自我保护|掌握情绪管理技巧和自我保护措施\n第7天|考核与上岗|实操考核和上岗后成长路径|通过考核，准备独立上岗"
+    }
+  ];
+  
+  await saveSectionsData(defaultSections);
+  sectionsCache = defaultSections;
+  return defaultSections;
+}
+
+async function saveSectionsData(sections) {
+  localStorage.setItem("daogou_sections", JSON.stringify(sections));
+  sectionsCache = sections;
+  
+  try {
+    for (const section of sections) {
+      const { error } = await supabase.from('sections').upsert({
+        id: section.id,
+        title: section.title,
+        content: section.content,
+        icon: section.icon || '',
+        color: section.color || 'blue'
+      });
+      if (error) throw error;
+    }
+  } catch (e) {
+    console.log('Supabase save error:', e);
+  }
+}
+
+function apClearSectionForm() {
+  ["sec-title","sec-id","sec-icon","sec-content"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var col = document.getElementById("sec-color"); if(col) col.value="blue";
+}
+
+function apLoadSections() {
+  var el = document.getElementById("ap-sections-list");
+  if (!el) return;
+  var sections = getSectionsData();
+  if (sections.length === 0) { el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无板块，使用下方表单添加</p>'; return; }
+  var cm = {blue:"蓝色",green:"绿色",purple:"紫色",orange:"橙色",red:"红色"};
+  var h = '<div class="admin-card"><h3><span>\u1F4CB;</span> 已有的板块 (' + sections.length + ')</h3>';
+  sections.forEach(function(s, i) {
+    h += '<div class="section-item">';
+    h += '<div>';
+    h += '<div class="section-order">' + (i+1) + '</div>';
+    h += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ',\'title\',this.value)">';
+    h += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ',\'id\',this.value)">';
+    h += '<span style="font-size:12px;">' + (s.icon||'') + '</span>';
+    h += '<span style="font-size:11px;padding:2px 6px;background:#E8F0FE;border-radius:4px;color:#1A36A4;">' + (cm[s.color]||"蓝色") + '</span>';
+    h += '</div>';
+    h += '<div class="section-actions">';
+    h += '<button class="btn-sm btn-blue" onclick="apEditSectionContent(' + i + ')">编辑内容</button>';
+    h += '<button class="btn-sm btn-red" onclick="apDeleteSection(' + i + ')">\u1F5D1;</button>';
+    h += '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+// 编辑板块内容
+function apEditSectionContent(idx) {
+  var sections = getSectionsData();
+  var section = sections[idx];
+  if (!section) return;
+  
+  // 创建编辑面板
+  var editPanel = document.createElement("div");
+  editPanel.className = "section-edit-panel";
+  editPanel.innerHTML = `
+    <div class="edit-panel-header">
+      <h4>编辑板块：${section.title}</h4>
+      <button onclick="this.parentNode.parentNode.remove()" class="btn-sm btn-gray">关闭</button>
+    </div>
+    <div class="edit-panel-body">
+      <div class="form-group">
+        <label>板块标题</label>
+        <input type="text" id="edit-title-${idx}" value="${escHtml(section.title||'')}">
+      </div>
+      <div class="form-group">
+        <label>板块ID</label>
+        <input type="text" id="edit-id-${idx}" value="${escHtml(section.id||'')}">
+      </div>
+      <div class="form-group">
+        <label>板块内容（换行分隔，| 表示多列）</label>
+        <textarea id="edit-content-${idx}" class="editor-area">${escHtml(section.content||'')}</textarea>
+      </div>
+      <div class="form-actions">
+        <button onclick="apSaveSectionEdit(${idx})" class="btn-primary">保存修改</button>
+        <button onclick="this.parentNode.parentNode.parentNode.remove()" class="btn-gray">取消</button>
+      </div>
+    </div>
+  `;
+  
+  // 添加到页面
+  var sectionsList = document.getElementById("ap-sections-list");
+  if (sectionsList) {
+    sectionsList.parentNode.appendChild(editPanel);
+  }
+}
+
+// 保存板块编辑
+function apSaveSectionEdit(idx) {
+  var sections = getSectionsData();
+  var section = sections[idx];
+  if (!section) return;
+  
+  var title = document.getElementById(`edit-title-${idx}`).value.trim();
+  var id = document.getElementById(`edit-id-${idx}`).value.trim();
+  var content = document.getElementById(`edit-content-${idx}`).value.trim();
+  
+  if (!title || !id) {
+    alert("请输入板块标题和ID");
+    return;
+  }
+  
+  section.title = title;
+  section.id = id;
+  section.content = content;
+  
+  saveSectionsData(sections);
+  apLoadSections();
+  renderSections();
+  
+  // 关闭编辑面板
+  var editPanel = document.querySelector(".section-edit-panel");
+  if (editPanel) {
+    editPanel.remove();
+  }
+  
+  alert("板块内容已更新！刷新页面后生效。");
+  location.reload();
+}
+
+function apAddSection() {
+  var title = document.getElementById("sec-title").value.trim();
+  var sid = document.getElementById("sec-id").value.trim();
+  var icon = document.getElementById("sec-icon").value.trim() || "\u1F4CB;";
+  var color = document.getElementById("sec-color").value;
+  var content = document.getElementById("sec-content").value.trim();
+  if (!title || !sid) { alert("请输入板块标题和ID"); return; }
+  var sections = getSectionsData();
+  sections.push({title:title, id:sid, icon:icon, color:color, content:content});
+  saveSectionsData(sections);
+  apLoadSections();
+  apClearSectionForm();
+  // 重新渲染页面内容
+  renderSections();
+  alert("板块已添加！");
+}
+
+function apUpdateSection(idx, key, val) {
+  var sections = getSectionsData();
+  if (sections[idx]) sections[idx][key] = val;
+  saveSectionsData(sections);
+  // 重新渲染页面内容
+  renderSections();
+}
+
+function apDeleteSection(idx) {
+  if (!confirm("确定删除此板块？")) return;
+  var sections = getSectionsData();
+  sections.splice(idx, 1);
+  saveSectionsData(sections);
+  apLoadSections();
+}
+
+function getNavData() { var d = localStorage.getItem("daogou_nav"); return d ? JSON.parse(d) : []; }
+function saveNavData(n) { localStorage.setItem("daogou_nav", JSON.stringify(n)); }
+
+function apClearNavForm() {
+  ["nav-label","nav-href"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  var ord = document.getElementById("nav-order"); if(ord) ord.value="99";
+  var tp = document.getElementById("nav-type"); if(tp) tp.value="anchor";
+}
+
+function apLoadNav() {
+  var el = document.getElementById("ap-nav-list");
+  if (!el) return;
+  var nav = getNavData();
+  if (nav.length === 0) { el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无导航菜单项</p>'; return; }
+  var h = '<div class="admin-card"><h3><span>\u1F5D1;</span> 导航菜单 (' + nav.length + ')</h3>';
+  nav.forEach(function(n, i) {
+    h += '<div class="section-item">';
+    h += '<div class="section-order">' + (n.order||99) + '</div>';
+    h += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ',\'label\',this.value)">';
+    h += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ',\'href\',this.value)">';
+    h += '<button class="btn-sm btn-red" onclick="apDeleteNav(' + i + ')">\u1F5D1;</button>';
+    h += '</div>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+function apAddNavItem() {
+  var label = document.getElementById("nav-label").value.trim();
+  var href = document.getElementById("nav-href").value.trim();
+  var order = parseInt(document.getElementById("nav-order").value) || 99;
+  var type = document.getElementById("nav-type").value;
+  if (!label || !href) { alert("请输入菜单名称和跳转目标"); return; }
+  var nav = getNavData();
+  nav.push({label:label, href:href, order:order, type:type});
+  nav.sort(function(a,b){ return (a.order||99)-(b.order||99); });
+  saveNavData(nav);
+  apLoadNav();
+  apClearNavForm();
+  alert("菜单已添加！刷新页面后生效。");
+}
+
+function apUpdateNav(idx, key, val) {
+  var nav = getNavData();
+  if (nav[idx]) nav[idx][key] = val;
+  saveNavData(nav);
+}
+
+function apDeleteSection(idx) {
+  if (!confirm("确定删除此菜单？")) return;
+  var sections = getSectionsData();
+  sections.splice(idx, 1);
+  saveSectionsData(sections);
+  apLoadSections();
+  // 重新渲染页面内容
+  renderSections();
+}
+
+// 渲染板块内容
+function renderSections() {
+  var sections = getSectionsData();
+  sections.forEach(function(section) {
+    var sectionEl = document.getElementById(section.id);
+    if (!sectionEl) return;
+    
+    // 更新板块标题
+    var titleEl = sectionEl.querySelector(".section-title");
+    if (titleEl) titleEl.textContent = section.title;
+    
+    // 根据板块ID渲染不同的内容结构
+    switch(section.id) {
+      case "s1":
+        renderSection1(section, sectionEl);
+        break;
+      case "s2":
+        renderSection2(section, sectionEl);
+        break;
+      case "s3":
+        renderSection3(section, sectionEl);
+        break;
+      case "s4":
+        renderSection4(section, sectionEl);
+        break;
+      case "s5":
+        renderSection5(section, sectionEl);
+        break;
+      case "s6":
+        renderSection6(section, sectionEl);
+        break;
+      case "s7":
+        renderSection7(section, sectionEl);
+        break;
+      case "s8":
+        renderSection8(section, sectionEl);
+        break;
+      case "s9":
+        renderSection9(section, sectionEl);
+        break;
+      case "s10":
+        renderSection10(section, sectionEl);
+        break;
+      case "scenarios":
+        renderSectionScenarios(section, sectionEl);
+        break;
+      case "training":
+        renderSectionTraining(section, sectionEl);
+        break;
+    }
+  });
+}
+
+// 渲染板块1：团队定位与角色定义
+function renderSection1(section, sectionEl) {
+  var content = section.content.split("\n");
+  var teamArchContent = [];
+  var goldenRulesContent = [];
+  var inTeamArch = true;
+  
+  content.forEach(function(line) {
+    if (line.startsWith("四大黄金原则")) {
+      inTeamArch = false;
+      return;
+    }
+    if (inTeamArch) {
+      teamArchContent.push(line);
+    } else {
+      goldenRulesContent.push(line);
+    }
+  });
+  
+  // 更新团队架构表格
+  var tableEl = sectionEl.querySelector(".table-wrap table");
+  if (tableEl) {
+    var tbodyEl = tableEl.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      teamArchContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td><span class="badge badge-blue">${parts[1]}</span></td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新四大黄金原则
+  var rulesEl = sectionEl.querySelector(".grid-2");
+  if (rulesEl) {
+    rulesEl.innerHTML = "";
+    var dots = ["dot-red", "dot-orange", "dot-blue", "dot-gray"];
+    goldenRulesContent.forEach(function(line, index) {
+      if (index === 0) return; // 跳过表头
+      var parts = line.split("|");
+      if (parts.length >= 2) {
+        var ruleDiv = document.createElement("div");
+        ruleDiv.className = "priority-row";
+        ruleDiv.innerHTML = `
+          <div class="priority-dot ${dots[index-1]}"></div>
+          <div><strong>${parts[0]}</strong> — ${parts[1]}</div>
+        `;
+        rulesEl.appendChild(ruleDiv);
+      }
+    });
+  }
+}
+
+// 渲染板块2：服务标准动作
+function renderSection2(section, sectionEl) {
+  var content = section.content.split("\n");
+  var flowContent = [];
+  var scriptContent = [];
+  var inFlow = true;
+  
+  content.forEach(function(line) {
+    if (line.startsWith("首次响应话术模板")) {
+      inFlow = false;
+      return;
+    }
+    if (inFlow) {
+      flowContent.push(line);
+    } else {
+      scriptContent.push(line);
+    }
+  });
+  
+  // 更新流程表格
+  var tableEl = sectionEl.querySelector(".table-wrap table");
+  if (tableEl) {
+    var tbodyEl = tableEl.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      flowContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          var badgeClass = "badge-blue";
+          if (parts[0].includes("P1")) badgeClass = "badge-red";
+          if (parts[0].includes("P2")) badgeClass = "badge-yellow";
+          if (parts[0].includes("P4")) badgeClass = "badge-green";
+          var timeClass = "";
+          if (parts[2].includes("立即")) timeClass = " style=\"color:var(--danger)\"";
+          if (parts[2].includes("2小时")) timeClass = " style=\"color:var(--warning)\"";
+          tr.innerHTML = `
+            <td><span class="badge ${badgeClass}">${parts[0]}</span></td>
+            <td>${parts[1]}</td>
+            <td${timeClass}>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新话术模板
+  var scriptEls = sectionEl.querySelectorAll(".sub-card");
+  scriptContent.forEach(function(line, index) {
+    if (index === 0) return; // 跳过表头
+    if (scriptEls[index-1]) {
+      var parts = line.split("|");
+      if (parts.length >= 2) {
+        var titleEl = scriptEls[index-1].querySelector(".sub-card-title");
+        var scriptBoxEl = scriptEls[index-1].querySelector(".script-box p");
+        if (titleEl) titleEl.innerHTML = `<span class="icon">📋</span> ${parts[0]}`;
+        if (scriptBoxEl) scriptBoxEl.textContent = parts[1];
+      }
+    }
+  });
+}
+
+// 渲染板块3：CARP 标准处理模型
+function renderSection3(section, sectionEl) {
+  var content = section.content.split("\n");
+  var carpContent = [];
+  var forbiddenContent = [];
+  var requiredContent = [];
+  var inCarp = true;
+  var inForbidden = false;
+  
+  content.forEach(function(line) {
+    if (line.startsWith("禁止说的话")) {
+      inCarp = false;
+      inForbidden = true;
+      return;
+    }
+    if (line.startsWith("必须说出口")) {
+      inForbidden = false;
+      return;
+    }
+    if (inCarp) {
+      carpContent.push(line);
+    } else if (inForbidden) {
+      forbiddenContent.push(line);
+    } else {
+      requiredContent.push(line);
+    }
+  });
+  
+  // 更新CARP模型
+  var carpCards = sectionEl.querySelectorAll(".carp-card");
+  var carpLetters = ["C", "A", "R", "P"];
+  carpContent.forEach(function(line, index) {
+    if (index === 0) return; // 跳过表头
+    var parts = line.split("|");
+    if (parts.length >= 3 && carpCards[index-1]) {
+      var letterEl = carpCards[index-1].querySelector(".carp-letter");
+      var wordEl = carpCards[index-1].querySelector(".carp-word");
+      var descEl = carpCards[index-1].querySelector(".carp-desc");
+      if (letterEl) letterEl.textContent = carpLetters[index-1];
+      if (wordEl) wordEl.textContent = parts[1];
+      if (descEl) descEl.textContent = parts[2].replace(/\\n/g, "\n");
+    }
+  });
+  
+  // 更新禁止说的话
+  var forbiddenEl = sectionEl.querySelector(".alert-danger strong");
+  if (forbiddenEl) {
+    forbiddenEl.textContent = "❌ 禁止说的话：";
+    var textNode = document.createTextNode(" " + forbiddenContent.slice(1).join(" / "));
+    forbiddenEl.parentNode.appendChild(textNode);
+  }
+  
+  // 更新必须说出口
+  var requiredEl = sectionEl.querySelector(".alert-success strong");
+  if (requiredEl) {
+    requiredEl.textContent = "✅ 必须说出口（至少选一句）：";
+    var textNode = document.createTextNode(" " + requiredContent.slice(1).join(" / "));
+    requiredEl.parentNode.appendChild(textNode);
+  }
+}
+
+// 渲染板块4：10种难缠客户分类应对标准
+function renderSection4(section, sectionEl) {
+  var content = section.content.split("\n");
+  var tableEl = sectionEl.querySelector(".table-wrap table");
+  if (tableEl) {
+    var tbodyEl = tableEl.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 4) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+            <td><div class="script-box small">${parts[3]}</div></td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块5：退换货标准流程
+function renderSection5(section, sectionEl) {
+  var content = section.content.split("\n");
+  var returnContent = [];
+  var exchangeContent = [];
+  var refundContent = [];
+  var currentSection = "return";
+  
+  content.forEach(function(line) {
+    if (line.startsWith("换货")) {
+      currentSection = "exchange";
+      return;
+    }
+    if (line.startsWith("退款")) {
+      currentSection = "refund";
+      return;
+    }
+    if (line.startsWith("退换货流程")) return;
+    if (currentSection === "return") {
+      returnContent.push(line);
+    } else if (currentSection === "exchange") {
+      exchangeContent.push(line);
+    } else {
+      refundContent.push(line);
+    }
+  });
+  
+  // 更新退货流程
+  var returnTable = sectionEl.querySelectorAll(".table-wrap table")[0];
+  if (returnTable) {
+    var tbodyEl = returnTable.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      returnContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新换货流程
+  var exchangeTable = sectionEl.querySelectorAll(".table-wrap table")[1];
+  if (exchangeTable) {
+    var tbodyEl = exchangeTable.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      exchangeContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新退款流程
+  var refundTable = sectionEl.querySelectorAll(".table-wrap table")[2];
+  if (refundTable) {
+    var tbodyEl = refundTable.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      refundContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块6：特殊边界与升级机制
+function renderSection6(section, sectionEl) {
+  var content = section.content.split("\n");
+  var boundaryContent = [];
+  var upgradeContent = [];
+  var inBoundary = true;
+  
+  content.forEach(function(line) {
+    if (line.startsWith("升级机制")) {
+      inBoundary = false;
+      return;
+    }
+    if (inBoundary) {
+      boundaryContent.push(line);
+    } else {
+      upgradeContent.push(line);
+    }
+  });
+  
+  // 更新特殊边界表格
+  var boundaryTable = sectionEl.querySelectorAll(".table-wrap table")[0];
+  if (boundaryTable) {
+    var tbodyEl = boundaryTable.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      boundaryContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新升级机制表格
+  var upgradeTable = sectionEl.querySelectorAll(".table-wrap table")[1];
+  if (upgradeTable) {
+    var tbodyEl = upgradeTable.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      upgradeContent.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块7：协作与升级规范
+function renderSection7(section, sectionEl) {
+  var content = section.content.split("\n");
+  var协作Content = [];
+  var升级Content = [];
+  var沟通Content = [];
+  var currentSection = "协作";
+  
+  content.forEach(function(line) {
+    if (line.startsWith("升级规范")) {
+      currentSection = "升级";
+      return;
+    }
+    if (line.startsWith("沟通工具")) {
+      currentSection = "沟通";
+      return;
+    }
+    if (line.startsWith("协作规范")) return;
+    if (currentSection === "协作") {
+      协作Content.push(line);
+    } else if (currentSection === "升级") {
+      升级Content.push(line);
+    } else {
+      沟通Content.push(line);
+    }
+  });
+  
+  // 更新协作规范表格
+  var协作Table = sectionEl.querySelectorAll(".table-wrap table")[0];
+  if (协作Table) {
+    var tbodyEl = 协作Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      协作Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新升级规范表格
+  var升级Table = sectionEl.querySelectorAll(".table-wrap table")[1];
+  if (升级Table) {
+    var tbodyEl = 升级Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      升级Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新沟通工具表格
+  var沟通Table = sectionEl.querySelectorAll(".table-wrap table")[2];
+  if (沟通Table) {
+    var tbodyEl = 沟通Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      沟通Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块8：情绪管理与自我保护
+function renderSection8(section, sectionEl) {
+  var content = section.content.split("\n");
+  var情绪Content = [];
+  var自我Content = [];
+  var心理Content = [];
+  var currentSection = "情绪";
+  
+  content.forEach(function(line) {
+    if (line.startsWith("自我保护")) {
+      currentSection = "自我";
+      return;
+    }
+    if (line.startsWith("心理支持")) {
+      currentSection = "心理";
+      return;
+    }
+    if (line.startsWith("情绪管理")) return;
+    if (currentSection === "情绪") {
+      情绪Content.push(line);
+    } else if (currentSection === "自我") {
+      自我Content.push(line);
+    } else {
+      心理Content.push(line);
+    }
+  });
+  
+  // 更新情绪管理表格
+  var情绪Table = sectionEl.querySelectorAll(".table-wrap table")[0];
+  if (情绪Table) {
+    var tbodyEl = 情绪Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      情绪Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新自我保护表格
+  var自我Table = sectionEl.querySelectorAll(".table-wrap table")[1];
+  if (自我Table) {
+    var tbodyEl = 自我Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      自我Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新心理支持表格
+  var心理Table = sectionEl.querySelectorAll(".table-wrap table")[2];
+  if (心理Table) {
+    var tbodyEl = 心理Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      心理Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块9：绩效考核与激励机制
+function renderSection9(section, sectionEl) {
+  var content = section.content.split("\n");
+  var绩效Content = [];
+  var激励Content = [];
+  var改进Content = [];
+  var currentSection = "绩效";
+  
+  content.forEach(function(line) {
+    if (line.startsWith("激励机制")) {
+      currentSection = "激励";
+      return;
+    }
+    if (line.startsWith("改进机制")) {
+      currentSection = "改进";
+      return;
+    }
+    if (line.startsWith("绩效考核")) return;
+    if (currentSection === "绩效") {
+      绩效Content.push(line);
+    } else if (currentSection === "激励") {
+      激励Content.push(line);
+    } else {
+      改进Content.push(line);
+    }
+  });
+  
+  // 更新绩效考核表格
+  var绩效Table = sectionEl.querySelectorAll(".table-wrap table")[0];
+  if (绩效Table) {
+    var tbodyEl = 绩效Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      绩效Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新激励机制表格
+  var激励Table = sectionEl.querySelectorAll(".table-wrap table")[1];
+  if (激励Table) {
+    var tbodyEl = 激励Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      激励Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+  
+  // 更新改进机制表格
+  var改进Table = sectionEl.querySelectorAll(".table-wrap table")[2];
+  if (改进Table) {
+    var tbodyEl = 改进Table.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      改进Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 3) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${parts[0]}</td>
+            <td>${parts[1]}</td>
+            <td>${parts[2]}</td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块10：话术速查手册
+function renderSection10(section, sectionEl) {
+  var content = section.content.split("\n");
+  var话术Content = [];
+  
+  content.forEach(function(line) {
+    if (line.startsWith("话术速查")) return;
+    话术Content.push(line);
+  });
+  
+  // 更新话术速查表格
+  var tableEl = sectionEl.querySelector(".table-wrap table");
+  if (tableEl) {
+    var tbodyEl = tableEl.querySelector("tbody");
+    if (tbodyEl) {
+      tbodyEl.innerHTML = "";
+      话术Content.forEach(function(line, index) {
+        if (index === 0) return; // 跳过表头
+        var parts = line.split("|");
+        if (parts.length >= 2) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${parts[0]}</strong></td>
+            <td><div class="script-box small">${parts[1]}</div></td>
+          `;
+          tbodyEl.appendChild(tr);
+        }
+      });
+    }
+  }
+}
+
+// 渲染板块：售后场景拆解
+function renderSectionScenarios(section, sectionEl) {
+  var content = section.content.split("\n");
+  var caseCards = sectionEl.querySelectorAll(".case-card");
+  
+  content.forEach(function(line, index) {
+    if (index === 0) return; // 跳过表头
+    var parts = line.split("|");
+    if (parts.length >= 5 && caseCards[index-1]) {
+      var caseCard = caseCards[index-1];
+      var caseTitle = caseCard.querySelector(".case-title");
+      var caseLevel = caseCard.querySelector(".case-level");
+      var caseSummary = caseCard.querySelector(".case-summary p");
+      var caseRightBox = caseCard.querySelector(".case-right-box .script-box");
+      var caseLessonBox = caseCard.querySelector(".case-lesson-box p");
+      
+      if (caseTitle) caseTitle.textContent = parts[1];
+      if (caseLevel) {
+        caseLevel.textContent = parts[2];
+        caseLevel.style.color = parts[2] === "高危" ? "#C00000" : parts[2] === "中危" ? "#FF6B00" : "#375E10";
+        caseLevel.style.backgroundColor = parts[2] === "高危" ? "#FFF2F2" : parts[2] === "中危" ? "#FFF5E6" : "#EAF2E3";
+      }
+      if (caseSummary) caseSummary.textContent = "特征：" + parts[3] + " | 应对：" + parts[4];
+      if (caseRightBox) caseRightBox.innerHTML = parts[4];
+      if (caseLessonBox) caseLessonBox.textContent = parts[5];
+    }
+  });
+}
+
+// 渲染板块：新人培训计划
+function renderSectionTraining(section, sectionEl) {
+  var content = section.content.split("\n");
+  var trainCards = sectionEl.querySelectorAll(".train-card");
+  
+  content.forEach(function(line, index) {
+    if (index === 0) return; // 跳过表头
+    var parts = line.split("|");
+    if (parts.length >= 4 && trainCards[index-1]) {
+      var trainCard = trainCards[index-1];
+      var trainDay = trainCard.querySelector(".train-day");
+      var trainTitle = trainCard.querySelector(".train-title");
+      var trainSubtitle = trainCard.querySelector(".train-subtitle");
+      var trainItems = trainCard.querySelector(".train-items");
+      
+      if (trainDay) trainDay.textContent = parts[0];
+      if (trainTitle) trainTitle.textContent = parts[2];
+      if (trainSubtitle) trainSubtitle.textContent = parts[1];
+      if (trainItems) {
+        trainItems.innerHTML = `
+          <div class="train-item">
+            <div class="train-label">培训内容</div>
+            <div class="train-text">${parts[2]}</div>
+          </div>
+          <div class="train-item">
+            <div class="train-label">培训目标</div>
+            <div class="train-text">${parts[3]}</div>
+          </div>
+        `;
+      }
+    }
+  });
+}
+
+// 主页面内容管理
+function getMainContentData() {
+  var d = localStorage.getItem("daogou_main_content");
+  return d ? JSON.parse(d) : {
+    title: "达人售后团队完整服务流程执行方案",
+    desc: "融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制",
+    tag: "v2.0 · 2026年修订版",
+    meta1: "📋 共10种客户类型",
+    meta2: "⚡ CARP标准处理模型",
+    meta3: "🛡️ 四大黄金原则",
+    toolsTitle: "配套工作表格",
+    toolsDesc: "日常工作留痕 · 问题跟进记录 · 专业知识填补",
+    toolsIntro: "以下表格均为团队内部工作留痕工具，点击名称即可跳转至金山文档填写使用。使用时请遵守信息安全规范，勿泄露粉丝个人信息。"
+  };
+}
+
+function saveMainContentData(data) {
+  localStorage.setItem("daogou_main_content", JSON.stringify(data));
+  // 更新页面显示
+  updateMainContentDisplay(data);
+}
+
+function updateMainContentDisplay(data) {
+  // 更新页面标题
+  var titleEl = document.querySelector(".header h1");
+  if (titleEl) titleEl.textContent = data.title;
+  
+  // 更新页面描述
+  var descEl = document.querySelector(".header-desc");
+  if (descEl) descEl.textContent = data.desc;
+  
+  // 更新版本标签
+  var tagEl = document.querySelector(".header-tag");
+  if (tagEl) tagEl.textContent = data.tag;
+  
+  // 更新元数据
+  var metaEls = document.querySelectorAll(".header-meta span");
+  if (metaEls[0]) metaEls[0].textContent = data.meta1;
+  if (metaEls[1]) metaEls[1].textContent = data.meta2;
+  if (metaEls[2]) metaEls[2].textContent = data.meta3;
+  
+  // 更新工具表格部分
+  var toolsTitleEl = document.querySelector("#tools h2");
+  if (toolsTitleEl) toolsTitleEl.textContent = "📋 " + data.toolsTitle;
+  
+  var toolsDescEl = document.querySelector("#tools p");
+  if (toolsDescEl) toolsDescEl.textContent = data.toolsDesc;
+  
+  var toolsIntroEl = document.querySelector("#tools + .section-intro p");
+  if (toolsIntroEl) toolsIntroEl.textContent = data.toolsIntro;
+}
+
+function apLoadMainContent() {
+  var data = getMainContentData();
+  document.getElementById("main-title").value = data.title;
+  document.getElementById("main-desc").value = data.desc;
+  document.getElementById("main-tag").value = data.tag;
+  document.getElementById("main-meta1").value = data.meta1;
+  document.getElementById("main-meta2").value = data.meta2;
+  document.getElementById("main-meta3").value = data.meta3;
+  document.getElementById("tools-title").value = data.toolsTitle;
+  document.getElementById("tools-desc").value = data.toolsDesc;
+  document.getElementById("tools-intro").value = data.toolsIntro;
+}
+
+function apSaveMainContent() {
+  var data = {
+    title: document.getElementById("main-title").value.trim(),
+    desc: document.getElementById("main-desc").value.trim(),
+    tag: document.getElementById("main-tag").value.trim(),
+    meta1: document.getElementById("main-meta1").value.trim(),
+    meta2: document.getElementById("main-meta2").value.trim(),
+    meta3: document.getElementById("main-meta3").value.trim(),
+    toolsTitle: document.getElementById("tools-title").value.trim(),
+    toolsDesc: document.getElementById("tools-desc").value.trim(),
+    toolsIntro: document.getElementById("tools-intro").value.trim()
+  };
+  
+  saveMainContentData(data);
+  
+  var statusEl = document.getElementById("ap-main-status");
+  if (statusEl) {
+    statusEl.style.display = "block";
+    setTimeout(function() {
+      if (statusEl) statusEl.style.display = "none";
+    }, 3000);
+  }
+  
+  alert("主页面内容已更新！");
+}
+
+function apGotoAddCard() {
+  if (sessionStorage.getItem("daogou_role") !== "admin") { apShowPage(); return; }
+  apShowPage();
+  setTimeout(function() {
+    apTab(null, "ap-cards");
+    var ac = document.getElementById("ap-card-add");
+    if (ac) ac.scrollIntoView({behavior:"smooth", block:"start"});
+  }, 150);
+}
+
+function initSmoothNav() {
+  var navLinks = document.querySelectorAll('.nav a');
+  if (!navLinks.length) return;
+  function update() {
+    var sy = window.scrollY || window.pageYOffset;
+    var wh = window.innerHeight;
+    var dh = document.body.scrollHeight;
+    navLinks.forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (!href || !href.startsWith('#') || href === '#') return;
+      var t = document.querySelector(href);
+      if (!t) return;
+      var r = t.getBoundingClientRect();
+      var top = r.top + sy;
+      var bottom = top + r.height;
+      var active = (sy + wh >= dh - 50 && href !== '#top') || (sy >= top - 120 && sy < bottom - 120);
+      link.classList.toggle('active', active);
+    });
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#' || href === '#top') { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); return; }
+      if (href.startsWith('#')) { e.preventDefault(); var t = document.querySelector(href); if(t) { t.scrollIntoView({behavior:'smooth', block:'start'}); setTimeout(update, 500); } }
+    });
+  });
+}
+
+function init() {
+  loadAdminData();
+  var role = sessionStorage.getItem("daogou_role");
+  var ov = document.getElementById("pw-overlay");
+  var ap = document.getElementById("admin-page");
+  if (role === "admin") {
+    if (ov) ov.style.display = "none";
+    if (ap) ap.classList.add("active");
+  } else {
+    if (ov) ov.style.display = "block";
+    if (ap) ap.classList.remove("active");
+  }
+
+  // Bind pw-overlay tab buttons
+  var tabBtns = document.querySelectorAll("#pw-overlay .pw-tab");
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      showTab(this.getAttribute("data-tab"));
+    });
+  });
+
+  // Bind submit buttons
+  var btnTeam = document.getElementById("btn-team");
+  if (btnTeam) btnTeam.addEventListener("click", loginTeam);
+  var btnAdmin = document.getElementById("btn-admin");
+  if (btnAdmin) btnAdmin.addEventListener("click", loginAdmin);
+
+  // Enter key on inputs
+  var inpTeam = document.getElementById("pw-team");
+  if (inpTeam) inpTeam.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") loginTeam();
+  });
+  var inpAdmin = document.getElementById("pw-admin");
+  if (inpAdmin) inpAdmin.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") loginAdmin();
+  });
+
+  initSmoothNav();
+  // 初始化主页面内容
+  updateMainContentDisplay(getMainContentData());
+  // 初始化板块内容
+  renderSections();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+</script>
+
+</body>
+</html>
