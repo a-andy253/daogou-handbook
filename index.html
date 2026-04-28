@@ -3333,17 +3333,26 @@ function initApp() {
     var role = sessionStorage.getItem("daogou_role");
     var ov = document.getElementById("pw-overlay");
     var ap = document.getElementById("admin-page");
+    var mainContent = document.querySelector('.main');
     
+    console.log('=== Init App ===');
     console.log('Role:', role);
+    console.log('Overlay:', ov);
+    console.log('Admin Page:', ap);
+    console.log('Main Content:', mainContent);
     
     if (role === "admin") {
+      console.log('Admin login - hiding overlay, showing admin page');
       if (ov) ov.style.display = "none";
       if (ap) ap.classList.add("active");
       apLoadAll();
       initEditor();
     } else if (role === "team") {
+      console.log('Team login - hiding overlay only');
       if (ov) ov.style.display = "none";
+      if (ap) ap.classList.remove("active");
     } else {
+      console.log('No role - showing overlay');
       if (ov) ov.style.display = "flex";
       if (ap) ap.classList.remove("active");
     }
