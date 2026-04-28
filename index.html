@@ -984,6 +984,66 @@
 #admin-panel .btn-red:hover { background: #c0392b; }
 #admin-panel .admin-status { font-size: 12px; color: #888; margin-top: 8px; text-align: center; }
 #admin-close { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 18px; cursor: pointer; color: #999; width: auto; padding: 0; }
+
+/* Add section button */
+#add-section-bar {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99997;
+  background: #fff;
+  border-radius: 30px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border: 2px solid #1A36A4;
+}
+#add-section-bar button {
+  background: #1A36A4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+#add-section-bar button:hover { background: #2B5BE8; }
+
+/* Section type dropdown */
+#section-type-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  border: 2px solid #E8F0FE;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 99998;
+}
+#section-type-menu.show { display: block; }
+.section-type-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+}
+.section-type-item:hover { background: #F0F4FF; color: #1A36A4; }
+
+/* New section styles */
+.new-section {
+  border: 2px dashed #2E7D32 !important;
+  background: #F1F8E9 !important;
+  outline: none;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
 </style>
 
 <div id="pw-overlay">
@@ -1006,6 +1066,20 @@
       <button onclick="loginAdmin()">登录管理后台</button>
       <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
     </div>
+  </div>
+</div>
+
+<!-- Add Section Bar (Admin Only) -->
+<div id="add-section-bar">
+  <button onclick="toggleSectionMenu()">&#x2795; 添加板块</button>
+  <div id="section-type-menu">
+    <div class="section-type-item" onclick="addNewSection('card')">&#x1F4CC; 卡片区块</div>
+    <div class="section-type-item" onclick="addNewSection('alert')">&#x26A0; 提示框</div>
+    <div class="section-type-item" onclick="addNewSection('table')">&#x1F4CA; 表格区块</div>
+    <div class="section-type-item" onclick="addNewSection('flow')">&#x1F680; 流程区块</div>
+    <div class="section-type-item" onclick="addNewSection('quote')">&#x1F4DD; 引用框</div>
+    <div class="section-type-item" onclick="addNewSection('list')">&#x2714; 列表区块</div>
+    <div class="section-type-item" onclick="addNewSection('custom')">&#x1F3DB; 自定义内容</div>
   </div>
 </div>
 
@@ -1060,6 +1134,7 @@ function loginAdmin() {
   if (v === ADMIN_PW) {
     document.getElementById("pw-overlay").style.display = "none";
     document.getElementById("admin-panel").style.display = "block";
+    document.getElementById("add-section-bar").style.display = "block";
     sessionStorage.setItem("daogou_role", "admin");
     refreshStatus();
     initSingleEditMode();
@@ -1129,6 +1204,13 @@ function disableEditMode() {
 }
 
 function cancelEditMode() {
+  pendingNewSections.forEach(function(item) {
+    if (item.element && item.element.parentNode) {
+      item.element.parentNode.removeChild(item.element);
+    }
+  });
+  pendingNewSections = [];
+  
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
     var key = el.getAttribute('id') || el.textContent.substring(0, 50);
@@ -1157,7 +1239,15 @@ function saveEdits() {
     editedContent[key] = el.innerHTML;
   });
   
+  pendingNewSections.forEach(function(item) {
+    if (item.element) {
+      editedContent[item.key] = item.element.innerHTML;
+    }
+  });
+  
   localStorage.setItem('handbook_edits', JSON.stringify(editedContent));
+  
+  pendingNewSections = [];
   
   if (isEditMode) {
     disableEditMode();
@@ -1197,21 +1287,74 @@ function loadEdits() {
   }
 }
 
+var pendingNewSections = [];
+
+function toggleSectionMenu() {
+  var menu = document.getElementById('section-type-menu');
+  menu.classList.toggle('show');
+}
+
+function addNewSection(type) {
+  document.getElementById('section-type-menu').classList.remove('show');
+  
+  var main = document.querySelector('.main') || document.querySelector('.scenarios-section') || document.querySelector('.training-section') || document.body;
+  
+  var sectionTemplates = {
+    'card': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 新卡片</div><p>在此输入内容...</p></div>',
+    'alert': '<div class="alert alert-primary new-section" contenteditable="true"><strong>提示：</strong>在此输入提示内容...</div>',
+    'table': '<div class="table-wrap new-section"><table><thead><tr><th>标题1</th><th>标题2</th><th>标题3</th></tr></thead><tbody><tr><td contenteditable="true">内容1</td><td contenteditable="true">内容2</td><td contenteditable="true">内容3</td></tr></tbody></table></div>',
+    'flow': '<div class="flow new-section"><div class="flow-step" contenteditable="true">步骤1</div><span class="flow-arrow">→</span><div class="flow-step" contenteditable="true">步骤2</div><span class="flow-arrow">→</span><div class="flow-step" contenteditable="true">步骤3</div></div>',
+    'quote': '<div class="quote new-section" contenteditable="true">在此输入引用内容...</div>',
+    'list': '<ul class="list new-section"><li contenteditable="true">列表项1</li><li contenteditable="true">列表项2</li></ul>',
+    'custom': '<div class="section new-section" contenteditable="true"><h3>自定义标题</h3><p>在此输入自定义内容...</p></div>'
+  };
+  
+  var newElement = document.createElement('div');
+  newElement.innerHTML = sectionTemplates[type];
+  var newSection = newElement.firstElementChild;
+  
+  newSection.classList.add('new-section');
+  newSection.setAttribute('contenteditable', 'true');
+  newSection.style.border = '2px dashed #2E7D32';
+  newSection.style.background = '#F1F8E9';
+  
+  var sectionKey = 'new_section_' + Date.now();
+  originalContent[sectionKey] = newSection.innerHTML;
+  pendingNewSections.push({key: sectionKey, element: newSection});
+  
+  main.appendChild(newSection);
+  
+  bindEditEventsToEditableElements();
+  
+  document.getElementById("save-edit-btn").style.display = "block";
+  document.getElementById("cancel-edit-btn").style.display = "block";
+  document.getElementById("admin-status").innerHTML = "&#x2795; <span style='color:#2E7D32;'>新板块已添加</span>，编辑后保存";
+  
+  newSection.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
 function initSingleEditMode() {
+  bindEditEventsToEditableElements();
+}
+
+function bindEditEventsToEditableElements() {
   var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
   editableElements.forEach(function(el) {
-    el.addEventListener('dblclick', function(e) {
-      if (!isEditMode) {
-        enableSingleElementEdit(el);
-      }
-    });
-    
-    el.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      if (!isEditMode) {
-        enableSingleElementEdit(el);
-      }
-    });
+    if (!el.hasAttribute('data-edit-bound')) {
+      el.setAttribute('data-edit-bound', 'true');
+      el.addEventListener('dblclick', function(e) {
+        if (!isEditMode) {
+          enableSingleElementEdit(el);
+        }
+      });
+      
+      el.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        if (!isEditMode) {
+          enableSingleElementEdit(el);
+        }
+      });
+    }
   });
 }
 
@@ -1245,6 +1388,7 @@ var role = sessionStorage.getItem("daogou_role");
 if (role === "admin") {
   document.getElementById("pw-overlay").style.display = "none";
   document.getElementById("admin-panel").style.display = "block";
+  document.getElementById("add-section-bar").style.display = "block";
 } else if (role === "team" && teamActive) {
   document.getElementById("pw-overlay").style.display = "none";
 }
@@ -1257,6 +1401,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
   if (role === "admin") {
     initSingleEditMode();
+  }
+});
+
+// Close section menu when clicking outside
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('section-type-menu');
+  var btn = document.querySelector('#add-section-bar button');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('show');
   }
 });
 // Enter key
