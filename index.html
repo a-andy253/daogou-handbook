@@ -965,63 +965,169 @@
 
 /* Admin panel */
 #admin-panel {
-  display: none; position: fixed; top: 20px; right: 20px; z-index: 99998;
-  background: #fff; border-radius: 16px; padding: 24px; width: 320px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2); border: 2px solid #E8F0FE;
-}
-#admin-panel h3 { margin: 0 0 16px 0; color: #1A36A4; font-size: 16px; display: flex; align-items: center; gap: 6px; }
-#admin-panel label { font-size: 12px; color: #555; font-weight: 600; display: block; margin-bottom: 4px; }
-#admin-panel input {
-  width: 100%; padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px;
-  font-size: 14px; box-sizing: border-box; margin-bottom: 10px;
-}
-#admin-panel button {
-  width: 100%; padding: 10px; background: #1A36A4; color: #fff; border: none;
-  border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; margin-bottom: 6px;
-}
-#admin-panel button:hover { background: #2B5BE8; }
-#admin-panel .btn-red { background: #e74c3c; }
-#admin-panel .btn-red:hover { background: #c0392b; }
-#admin-panel .admin-status { font-size: 12px; color: #888; margin-top: 8px; text-align: center; }
-#admin-close { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 18px; cursor: pointer; color: #999; width: auto; padding: 0; }
-
-/* Add section button */
-#add-section-bar {
-  display: none;
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: none; 
+  position: fixed; 
+  top: 20px; 
+  right: 20px; 
   z-index: 99997;
-  background: #fff;
-  border-radius: 30px;
-  padding: 8px 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  border: 2px solid #1A36A4;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px; 
+  padding: 24px; 
+  width: 340px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15); 
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
-#add-section-bar button {
-  background: #1A36A4;
+
+#admin-panel h3 { 
+  margin: 0 0 16px 0; 
+  color: #1E40AF; 
+  font-size: 18px; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+  font-weight: 700;
+}
+
+#admin-panel .admin-section {
+  margin-bottom: 24px;
+}
+
+#admin-panel .admin-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#admin-panel label { 
+  font-size: 12px; 
+  color: #64748B; 
+  font-weight: 600; 
+  display: block; 
+  margin-bottom: 6px; 
+}
+
+#admin-panel input {
+  width: 100%; 
+  padding: 10px 14px; 
+  border: 1.5px solid #E2E8F0; 
+  border-radius: 8px;
+  font-size: 14px; 
+  box-sizing: border-box; 
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+#admin-panel input:focus {
+  outline: none;
+  border-color: #1E40AF;
+}
+
+#admin-panel button {
+  width: 100%; 
+  padding: 10px 20px; 
+  background: #1E40AF; 
+  color: #fff; 
+  border: none;
+  border-radius: 8px;
+  font-weight: 600; 
+  cursor: pointer; 
+  font-size: 14px; 
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+#admin-panel button:hover { 
+  background: #1E3A8A; 
+  transform: translateY(-1px);
+}
+
+#admin-panel button:active {
+  transform: scale(0.98);
+}
+
+#admin-panel .btn-red { 
+  background: #DC2626; 
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+#admin-panel .btn-red:hover { 
+  background: #B91C1C; 
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+}
+
+#admin-panel .admin-status { 
+  font-size: 12px; 
+  color: #888; 
+  margin-top: 8px; 
+  text-align: center; 
+}
+
+#admin-close { 
+  position: absolute; 
+  top: 12px; 
+  right: 14px; 
+  background: none; 
+  border: none; 
+  font-size: 18px; 
+  cursor: pointer; 
+  color: #999; 
+  width: auto; 
+  padding: 0;
+}
+
+/* Add section button - now in header */
+#add-section-btn {
+  display: none;
+  background: #1E40AF;
   color: #fff;
   border: none;
   padding: 10px 20px;
-  border-radius: 20px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
-#add-section-bar button:hover { background: #2B5BE8; }
+
+#add-section-btn:hover {
+  background: #1E3A8A;
+  transform: translateY(-1px);
+}
+
+#add-section-btn:active {
+  transform: scale(0.98);
+}
+
+.nav-inner {
+  display: flex;
+  gap: 4px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
 
 /* Section type dropdown */
 #section-type-menu {
   display: none;
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  border: 2px solid #E8F0FE;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  border: 1px solid #E2E8F0;
   padding: 8px 0;
   min-width: 180px;
   z-index: 99998;
@@ -1032,8 +1138,12 @@
   cursor: pointer;
   font-size: 13px;
   color: #333;
+  transition: all 0.15s;
 }
-.section-type-item:hover { background: #F0F4FF; color: #1A36A4; }
+.section-type-item:hover { 
+  background: #F0F4FF; 
+  color: #1E40AF;
+}
 
 /* New section styles */
 .new-section {
@@ -1069,34 +1179,26 @@
   </div>
 </div>
 
-<!-- Add Section Bar (Admin Only) -->
-<div id="add-section-bar">
-  <button onclick="toggleSectionMenu()">&#x2795; 添加板块</button>
-  <div id="section-type-menu">
-    <div class="section-type-item" onclick="addNewSection('card')">&#x1F4CC; 卡片区块</div>
-    <div class="section-type-item" onclick="addNewSection('alert')">&#x26A0; 提示框</div>
-    <div class="section-type-item" onclick="addNewSection('table')">&#x1F4CA; 表格区块</div>
-    <div class="section-type-item" onclick="addNewSection('flow')">&#x1F680; 流程区块</div>
-    <div class="section-type-item" onclick="addNewSection('quote')">&#x1F4DD; 引用框</div>
-    <div class="section-type-item" onclick="addNewSection('list')">&#x2714; 列表区块</div>
-    <div class="section-type-item" onclick="addNewSection('custom')">&#x1F3DB; 自定义内容</div>
-  </div>
-</div>
-
 <!-- Admin Panel -->
 <div id="admin-panel">
   <button id="admin-close" onclick="closeAdmin()">&#x2715; 关闭</button>
   <h3>&#x1F6E1; 管理后台</h3>
-  <label>新团队密码</label>
-  <input type="password" id="new-team-pw" placeholder="留空则保持不变">
-  <button onclick="updateTeamPw()">&#x2705; 保存新密码</button>
-  <button class="btn-red" onclick="revokeAccess()">&#x274C; 取消团队访问权限</button>
-  <hr style="margin:16px 0; border-color:#E8F0FE;">
-  <h4 style="font-size:14px; color:#1A36A4; margin-bottom:10px;">&#x270F;&#xFE0F; 页面编辑</h4>
-  <button id="edit-mode-btn" onclick="toggleEditMode()" style="background:#2E7D32;">&#x270F;&#xFE0F; 开启编辑模式</button>
-  <button id="save-edit-btn" onclick="saveEdits()" style="background:#FF8F00; display:none;">&#x1F4BE; 保存修改</button>
-  <button id="cancel-edit-btn" onclick="cancelEditMode()" style="background:#757575; display:none;">&#x274C; 取消编辑</button>
-  <div class="admin-status" id="admin-status"></div>
+  
+  <div class="admin-section">
+    <div class="admin-section-title">团队权限</div>
+    <label>新团队密码</label>
+    <input type="password" id="new-team-pw" placeholder="留空则保持不变">
+    <button onclick="updateTeamPw()">&#x2705; 保存新密码</button>
+    <button class="btn-red" onclick="confirmRevokeAccess()">&#x274C; 取消团队访问权限</button>
+  </div>
+  
+  <div class="admin-section">
+    <div class="admin-section-title">页面编辑</div>
+    <button id="edit-mode-btn" onclick="toggleEditMode()">开启编辑模式</button>
+    <button id="save-edit-btn" onclick="saveEdits()" style="display:none;">保存修改</button>
+    <button id="cancel-edit-btn" onclick="cancelEditMode()" style="display:none;">取消编辑</button>
+    <div class="admin-status" id="admin-status"></div>
+  </div>
 </div>
 
 <script>
@@ -1134,7 +1236,7 @@ function loginAdmin() {
   if (v === ADMIN_PW) {
     document.getElementById("pw-overlay").style.display = "none";
     document.getElementById("admin-panel").style.display = "block";
-    document.getElementById("add-section-bar").style.display = "block";
+    document.getElementById("add-section-btn").style.display = "block";
     sessionStorage.setItem("daogou_role", "admin");
     refreshStatus();
     initSingleEditMode();
@@ -1149,6 +1251,14 @@ function updateTeamPw() {
   if (np) {
     teamPw = np;
     document.getElementById("admin-status").textContent = "密码已更新，当前团队密码：" + teamPw;
+  }
+}
+
+function confirmRevokeAccess() {
+  if (confirm("确定要取消团队访问权限吗？此操作不可恢复")) {
+    teamActive = false;
+    document.getElementById("admin-status").textContent = "团队访问权限已取消！成员无法登录。";
+    document.getElementById("new-team-pw").value = "";
   }
 }
 
@@ -1388,7 +1498,7 @@ var role = sessionStorage.getItem("daogou_role");
 if (role === "admin") {
   document.getElementById("pw-overlay").style.display = "none";
   document.getElementById("admin-panel").style.display = "block";
-  document.getElementById("add-section-bar").style.display = "block";
+  document.getElementById("add-section-btn").style.display = "block";
 } else if (role === "team" && teamActive) {
   document.getElementById("pw-overlay").style.display = "none";
 }
@@ -1407,9 +1517,18 @@ document.addEventListener('DOMContentLoaded', function() {
 // Close section menu when clicking outside
 document.addEventListener('click', function(e) {
   var menu = document.getElementById('section-type-menu');
-  var btn = document.querySelector('#add-section-bar button');
+  var btn = document.querySelector('#add-section-btn');
   if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
     menu.classList.remove('show');
+  }
+});
+
+// Close admin panel when clicking outside
+document.addEventListener('click', function(e) {
+  var panel = document.getElementById('admin-panel');
+  var btn = document.getElementById('admin-close');
+  if (panel && panel.style.display === "block" && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
+    panel.style.display = "none";
   }
 });
 // Enter key
@@ -1440,19 +1559,33 @@ document.addEventListener('click', function(e) {
 <!-- ===== NAV ===== -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#tools" class="primary-nav">&#x1F4CB; 工作表格</a>
-    <a href="#s1">团队定位</a>
-    <a href="#s2">服务标准</a>
-    <a href="#s3">CARP模型</a>
-    <a href="#s4">10种类型</a>
-    <a href="#s5">退换货</a>
-    <a href="#s6">特殊边界</a>
-    <a href="#s7">协作升级</a>
-    <a href="#s8">情绪管理</a>
-    <a href="#s9">绩效考核</a>
-    <a href="#s10">话术速查</a>
-    <a href="#scenarios">售后场景</a>
-    <a href="#training">新人培训</a>
+    <div class="nav-links">
+      <a href="#tools" class="primary-nav">&#x1F4CB; 工作表格</a>
+      <a href="#s1">团队定位</a>
+      <a href="#s2">服务标准</a>
+      <a href="#s3">CARP模型</a>
+      <a href="#s4">10种类型</a>
+      <a href="#s5">退换货</a>
+      <a href="#s6">特殊边界</a>
+      <a href="#s7">协作升级</a>
+      <a href="#s8">情绪管理</a>
+      <a href="#s9">绩效考核</a>
+      <a href="#s10">话术速查</a>
+      <a href="#scenarios">售后场景</a>
+      <a href="#training">新人培训</a>
+    </div>
+    <div style="position: relative;">
+      <button id="add-section-btn" onclick="toggleSectionMenu()">&#x2795; 添加板块</button>
+      <div id="section-type-menu">
+        <div class="section-type-item" onclick="addNewSection('card')">&#x1F4CC; 卡片区块</div>
+        <div class="section-type-item" onclick="addNewSection('alert')">&#x26A0; 提示框</div>
+        <div class="section-type-item" onclick="addNewSection('table')">&#x1F4CA; 表格区块</div>
+        <div class="section-type-item" onclick="addNewSection('flow')">&#x1F680; 流程区块</div>
+        <div class="section-type-item" onclick="addNewSection('quote')">&#x1F4DD; 引用框</div>
+        <div class="section-type-item" onclick="addNewSection('list')">&#x2714; 列表区块</div>
+        <div class="section-type-item" onclick="addNewSection('custom')">&#x1F3DB; 自定义内容</div>
+      </div>
+    </div>
   </div>
 </nav>
 
