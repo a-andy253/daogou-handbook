@@ -1062,6 +1062,7 @@ function loginAdmin() {
     document.getElementById("admin-panel").style.display = "block";
     sessionStorage.setItem("daogou_role", "admin");
     refreshStatus();
+    initSingleEditMode();
   } else {
     document.getElementById("err-admin").style.display = "block";
     document.getElementById("pw-admin").value = "";
@@ -1139,8 +1140,10 @@ function cancelEditMode() {
     el.style.background = '';
   });
   
-  isEditMode = false;
-  document.getElementById("edit-mode-btn").style.display = "block";
+  if (isEditMode) {
+    isEditMode = false;
+    document.getElementById("edit-mode-btn").style.display = "block";
+  }
   document.getElementById("save-edit-btn").style.display = "none";
   document.getElementById("cancel-edit-btn").style.display = "none";
   document.getElementById("admin-status").innerHTML = "已取消修改";
@@ -1156,12 +1159,28 @@ function saveEdits() {
   
   localStorage.setItem('handbook_edits', JSON.stringify(editedContent));
   
-  disableEditMode();
+  if (isEditMode) {
+    disableEditMode();
+  } else {
+    disableSingleEdit();
+  }
   document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:#2E7D32;'>修改已保存</span>";
   
   setTimeout(function() {
     refreshStatus();
   }, 3000);
+}
+
+function disableSingleEdit() {
+  var editableElements = document.querySelectorAll('[contenteditable="true"]');
+  editableElements.forEach(function(el) {
+    el.setAttribute('contenteditable', 'false');
+    el.style.border = '';
+    el.style.background = '';
+  });
+  
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
 }
 
 function loadEdits() {
@@ -1176,6 +1195,44 @@ function loadEdits() {
       }
     });
   }
+}
+
+function initSingleEditMode() {
+  var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
+  editableElements.forEach(function(el) {
+    el.addEventListener('dblclick', function(e) {
+      if (!isEditMode) {
+        enableSingleElementEdit(el);
+      }
+    });
+    
+    el.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      if (!isEditMode) {
+        enableSingleElementEdit(el);
+      }
+    });
+  });
+}
+
+function enableSingleElementEdit(el) {
+  el.setAttribute('contenteditable', 'true');
+  el.style.border = '2px dashed #2E7D32';
+  el.style.background = '#F1F8E9';
+  el.style.outline = 'none';
+  
+  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  if (!originalContent[key]) {
+    originalContent[key] = el.innerHTML;
+  }
+  
+  document.getElementById("save-edit-btn").style.display = "block";
+  document.getElementById("cancel-edit-btn").style.display = "block";
+  document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:#2E7D32;'>正在编辑</span>，点击保存或取消";
+}
+
+function isAnyElementEditing() {
+  return document.querySelector('[contenteditable="true"]') !== null;
 }
 
 function refreshStatus() {
@@ -1194,6 +1251,14 @@ if (role === "admin") {
 
 // Load saved edits on page load
 loadEdits();
+
+// Initialize single element edit mode for admin
+document.addEventListener('DOMContentLoaded', function() {
+  var role = sessionStorage.getItem("daogou_role");
+  if (role === "admin") {
+    initSingleEditMode();
+  }
+});
 // Enter key
 ["pw-team","pw-admin"].forEach(function(id) {
   document.getElementById(id).addEventListener("keydown", function(e) {
