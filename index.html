@@ -6,8 +6,19 @@
 <title>达人售后团队完整服务流程执行方案 v2.0</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = window.supabase ? window.supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8ja176nauxrr93a8_syy_x191atn') : null;
+let supabase = null;
 let sectionsData = null;
+
+// Initialize supabase after DOM is ready
+function initSupabase() {
+  try {
+    if (window.supabase && window.supabase.createClient) {
+      supabase = window.supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8ja176nauxrr93a8_syy_x191atn');
+    }
+  } catch (e) {
+    console.log('Supabase init error:', e);
+  }
+}
 
 // Initialize data from localStorage first
 function initData() {
@@ -3315,6 +3326,7 @@ function openAddSection() {
 
 // ========== Init ==========
 document.addEventListener("DOMContentLoaded", function() {
+  initSupabase();
   initData();
   loadAdminData();
   
