@@ -963,26 +963,85 @@
 .pw-error { color: #ff6b6b; font-size: 13px; display: none; }
 .pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
 
-/* Admin panel */
+/* 统一视觉风格变量 */
+:root {
+  --shadow-base: 0 2px 8px rgba(26, 54, 164, 0.04);
+  --shadow-hover: 0 8px 24px rgba(26, 54, 164, 0.12);
+  --border-light: #E8F0FE;
+  --border-hover: #2B5BE8;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 优化卡片/面板样式 */
+.card, .tool-card, .train-card, .case-card {
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-base);
+  transition: var(--transition-base);
+}
+.card:hover, .tool-card:hover, .train-card:hover, .case-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* 优化按钮样式 */
+button {
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: var(--transition-base);
+}
+button:not(.btn-red):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(26, 54, 164, 0.1);
+}
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* 优化密码弹窗 */
+#pw-overlay {
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  backdrop-filter: blur(8px);
+}
+#pw-overlay input {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+#pw-overlay input:focus {
+  border-color: #F7C948;
+  box-shadow: 0 0 0 4px rgba(247, 201, 72, 0.2);
+}
+
+/* 优化编辑模式高亮样式 */
+.editable-active, .new-section {
+  border: 2px dashed #2B5BE8 !important;
+  background: rgba(43, 91, 232, 0.03) !important;
+}
+
+/* Admin panel - 抽屉式设计 */
 #admin-panel {
   display: none; 
   position: fixed; 
-  top: 20px; 
-  right: 20px; 
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  width: 360px;
   z-index: 99997;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px; 
-  padding: 24px; 
-  width: 340px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.15); 
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: #fff; 
+  border-radius: 0;
+  border-left: 1px solid var(--border-light);
+  padding: 32px 24px;
+  box-shadow: -8px 0 24px rgba(0,0,0,0.08);
+  overflow-y: auto;
 }
 
 #admin-panel h3 { 
-  margin: 0 0 16px 0; 
-  color: #1E40AF; 
+  margin: 0 0 24px 0; 
+  color: #1A36A4; 
   font-size: 18px; 
   display: flex; 
   align-items: center; 
@@ -991,14 +1050,14 @@
 }
 
 #admin-panel .admin-section {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 #admin-panel .admin-section-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #475569;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -1008,46 +1067,49 @@
   color: #64748B; 
   font-weight: 600; 
   display: block; 
-  margin-bottom: 6px; 
+  margin-bottom: 8px; 
 }
 
 #admin-panel input {
   width: 100%; 
-  padding: 10px 14px; 
-  border: 1.5px solid #E2E8F0; 
-  border-radius: 8px;
+  padding: 12px 16px; 
+  border: 1px solid var(--border-light); 
+  border-radius: var(--radius-sm);
   font-size: 14px; 
   box-sizing: border-box; 
-  margin-bottom: 12px;
-  transition: border-color 0.2s;
+  margin-bottom: 16px;
+  transition: var(--transition-base);
+  background: #f8fafc;
 }
 
 #admin-panel input:focus {
   outline: none;
-  border-color: #1E40AF;
+  border-color: var(--border-hover);
+  background: #fff;
 }
 
 #admin-panel button {
   width: 100%; 
-  padding: 10px 20px; 
-  background: #1E40AF; 
+  padding: 12px 20px; 
+  background: #1A36A4; 
   color: #fff; 
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-weight: 600; 
   cursor: pointer; 
   font-size: 14px; 
-  margin-bottom: 8px;
-  transition: all 0.2s;
+  margin-bottom: 10px;
+  transition: var(--transition-base);
 }
 
 #admin-panel button:hover { 
-  background: #1E3A8A; 
+  background: #2B5BE8; 
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 54, 164, 0.15);
 }
 
 #admin-panel button:active {
-  transform: scale(0.98);
+  transform: translateY(0);
 }
 
 #admin-panel .btn-red { 
@@ -1145,42 +1207,30 @@
   color: #1E40AF;
 }
 
-/* New section styles */
-.new-section {
-  border: 2px dashed #2E7D32 !important;
-  background: #F1F8E9 !important;
-  outline: none;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-/* Floating edit controls */
+/* 编辑控制栏 - 固定底部条设计 */
 #edit-controls {
   display: none;
   position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 99999;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  border: 1px solid #E2E8F0;
-  padding: 8px;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-#edit-controls.show {
-  display: flex;
+  border-top: 1px solid var(--border-light);
+  padding: 12px 24px;
+  gap: 16px;
+  justify-content: flex-end;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
 }
 
 #edit-controls button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-base);
 }
 
 #edit-controls .btn-save {
@@ -1189,8 +1239,7 @@
 }
 
 #edit-controls .btn-save:hover {
-  background: #1E40AF;
-  transform: translateY(-1px);
+  background: #2B5BE8;
 }
 
 #edit-controls .btn-cancel {
@@ -1200,11 +1249,53 @@
 
 #edit-controls .btn-cancel:hover {
   background: #E2E8F0;
-  transform: translateY(-1px);
 }
 
-#edit-controls button:active {
-  transform: scale(0.98);
+/* 管理入口悬浮按钮 */
+#admin-trigger {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99996;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #1A36A4;
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(26, 54, 164, 0.2);
+  font-size: 22px;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+#admin-trigger:hover {
+  transform: scale(1.05);
+  background: #2B5BE8;
+  box-shadow: 0 6px 16px rgba(26, 54, 164, 0.25);
+}
+
+#admin-trigger.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 抽屉蒙层 */
+.admin-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99996;
+}
+
+.admin-overlay.show {
+  display: block;
 }
 
 /* Editable element styles */
@@ -1261,9 +1352,9 @@
   <button class="btn-cancel" onclick="cancelSingleEdit()">&#x274C; 取消编辑</button>
 </div>
 
-<!-- Admin Panel -->
+<!-- Admin Panel - 抽屉式 -->
 <div id="admin-panel">
-  <button id="admin-close" onclick="closeAdmin()">&#x2715; 关闭</button>
+  <button id="admin-close" onclick="closeAdmin()">&#x2715;</button>
   <h3>&#x1F6E1; 管理后台</h3>
   
   <div class="admin-section">
@@ -1282,6 +1373,12 @@
     <div class="admin-status" id="admin-status"></div>
   </div>
 </div>
+
+<!-- 管理入口悬浮按钮 -->
+<button id="admin-trigger" onclick="openAdminPanel()">&#x2699;</button>
+
+<!-- 抽屉蒙层 -->
+<div class="admin-overlay" onclick="closeAdmin()"></div>
 
 <script>
 var ADMIN_PW = "admin2026";
@@ -1317,7 +1414,7 @@ function loginAdmin() {
   var v = document.getElementById("pw-admin").value;
   if (v === ADMIN_PW) {
     document.getElementById("pw-overlay").style.display = "none";
-    document.getElementById("admin-panel").style.display = "block";
+    document.getElementById("admin-trigger").classList.add("show");
     document.getElementById("add-section-btn").style.display = "block";
     sessionStorage.setItem("daogou_role", "admin");
     refreshStatus();
@@ -1326,6 +1423,20 @@ function loginAdmin() {
     document.getElementById("err-admin").style.display = "block";
     document.getElementById("pw-admin").value = "";
   }
+}
+
+// 打开管理员面板（抽屉）
+function openAdminPanel() {
+  document.getElementById("admin-panel").style.display = "block";
+  document.querySelector(".admin-overlay").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+// 关闭管理员面板（抽屉）
+function closeAdmin() {
+  document.getElementById("admin-panel").style.display = "none";
+  document.querySelector(".admin-overlay").classList.remove("show");
+  document.body.style.overflow = "";
 }
 
 function updateTeamPw() {
@@ -1580,22 +1691,9 @@ function enableSingleElementEdit(el) {
   el.focus();
 }
 
-// 显示悬浮编辑控制按钮
+// 显示编辑控制栏（固定底部）
 function showEditControls(el) {
   var controls = document.getElementById('edit-controls');
-  var rect = el.getBoundingClientRect();
-  
-  // 计算按钮位置：在编辑元素上方居中
-  var left = rect.left + (rect.width / 2) - 100;
-  var top = rect.top - 60;
-  
-  // 确保按钮在视窗内
-  if (left < 20) left = 20;
-  if (left > window.innerWidth - 220) left = window.innerWidth - 220;
-  if (top < 80) top = rect.bottom + 10;
-  
-  controls.style.left = left + 'px';
-  controls.style.top = top + 'px';
   controls.classList.add('show');
 }
 
@@ -1662,7 +1760,7 @@ function refreshStatus() {
 var role = sessionStorage.getItem("daogou_role");
 if (role === "admin") {
   document.getElementById("pw-overlay").style.display = "none";
-  document.getElementById("admin-panel").style.display = "block";
+  document.getElementById("admin-trigger").classList.add("show");
   document.getElementById("add-section-btn").style.display = "block";
 } else if (role === "team" && teamActive) {
   document.getElementById("pw-overlay").style.display = "none";
@@ -1685,15 +1783,6 @@ document.addEventListener('click', function(e) {
   var btn = document.querySelector('#add-section-btn');
   if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
     menu.classList.remove('show');
-  }
-});
-
-// Close admin panel when clicking outside
-document.addEventListener('click', function(e) {
-  var panel = document.getElementById('admin-panel');
-  var btn = document.getElementById('admin-close');
-  if (panel && panel.style.display === "block" && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
-    panel.style.display = "none";
   }
 });
 
