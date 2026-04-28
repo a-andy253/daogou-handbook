@@ -1154,6 +1154,82 @@
   padding: 20px;
   margin-bottom: 20px;
 }
+
+/* Floating edit controls */
+#edit-controls {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  border: 1px solid #E2E8F0;
+  padding: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#edit-controls.show {
+  display: flex;
+}
+
+#edit-controls button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#edit-controls .btn-save {
+  background: #1A36A4;
+  color: #fff;
+}
+
+#edit-controls .btn-save:hover {
+  background: #1E40AF;
+  transform: translateY(-1px);
+}
+
+#edit-controls .btn-cancel {
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+#edit-controls .btn-cancel:hover {
+  background: #E2E8F0;
+  transform: translateY(-1px);
+}
+
+#edit-controls button:active {
+  transform: scale(0.98);
+}
+
+/* Editable element styles */
+.editable-active {
+  border: 2px dashed #2E7D32 !important;
+  background: #F1F8E9 !important;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  #edit-controls {
+    bottom: 20px !important;
+    top: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 40px);
+    justify-content: center;
+  }
+  
+  #edit-controls button {
+    flex: 1;
+    min-width: 100px;
+  }
+}
 </style>
 
 <div id="pw-overlay">
@@ -1177,6 +1253,12 @@
       <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
     </div>
   </div>
+</div>
+
+<!-- Floating Edit Controls -->
+<div id="edit-controls">
+  <button class="btn-save" onclick="saveSingleEdit()">&#x2705; 保存编辑</button>
+  <button class="btn-cancel" onclick="cancelSingleEdit()">&#x274C; 取消编辑</button>
 </div>
 
 <!-- Admin Panel -->
@@ -1448,44 +1530,127 @@ function initSingleEditMode() {
 }
 
 function bindEditEventsToEditableElements() {
-  var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
+  var editableElements = document.querySelectorAll('.card, .case-card, .train-card, .tool-card, .script-box');
   editableElements.forEach(function(el) {
     if (!el.hasAttribute('data-edit-bound')) {
       el.setAttribute('data-edit-bound', 'true');
+      
       el.addEventListener('dblclick', function(e) {
-        if (!isEditMode) {
-          enableSingleElementEdit(el);
-        }
+        e.preventDefault();
+        e.stopPropagation();
+        enableSingleElementEdit(el);
       });
       
       el.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-        if (!isEditMode) {
-          enableSingleElementEdit(el);
-        }
+        e.stopPropagation();
+        enableSingleElementEdit(el);
       });
     }
   });
 }
 
+// 当前正在编辑的元素
+var currentEditingElement = null;
+
+// 启用单个元素编辑模式
 function enableSingleElementEdit(el) {
-  el.setAttribute('contenteditable', 'true');
-  el.style.border = '2px dashed #2E7D32';
-  el.style.background = '#F1F8E9';
-  el.style.outline = 'none';
+  // 如果有其他元素正在编辑，先取消
+  if (currentEditingElement && currentEditingElement !== el) {
+    cancelSingleEdit();
+  }
   
+  // 设置当前编辑元素
+  currentEditingElement = el;
+  
+  // 启用编辑状态
+  el.setAttribute('contenteditable', 'true');
+  el.classList.add('editable-active');
+  
+  // 保存原始内容
   var key = el.getAttribute('id') || el.textContent.substring(0, 50);
   if (!originalContent[key]) {
     originalContent[key] = el.innerHTML;
   }
   
-  document.getElementById("save-edit-btn").style.display = "block";
-  document.getElementById("cancel-edit-btn").style.display = "block";
-  document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:#2E7D32;'>正在编辑</span>，点击保存或取消";
+  // 显示悬浮编辑控制按钮
+  showEditControls(el);
+  
+  // 聚焦到编辑元素
+  el.focus();
+}
+
+// 显示悬浮编辑控制按钮
+function showEditControls(el) {
+  var controls = document.getElementById('edit-controls');
+  var rect = el.getBoundingClientRect();
+  
+  // 计算按钮位置：在编辑元素上方居中
+  var left = rect.left + (rect.width / 2) - 100;
+  var top = rect.top - 60;
+  
+  // 确保按钮在视窗内
+  if (left < 20) left = 20;
+  if (left > window.innerWidth - 220) left = window.innerWidth - 220;
+  if (top < 80) top = rect.bottom + 10;
+  
+  controls.style.left = left + 'px';
+  controls.style.top = top + 'px';
+  controls.classList.add('show');
+}
+
+// 保存单个元素的编辑
+function saveSingleEdit() {
+  if (!currentEditingElement) return;
+  
+  var el = currentEditingElement;
+  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  
+  // 保存到localStorage
+  var edits = JSON.parse(localStorage.getItem('handbook_edits') || '{}');
+  edits[key] = el.innerHTML;
+  localStorage.setItem('handbook_edits', JSON.stringify(edits));
+  
+  // 关闭编辑状态
+  disableSingleElementEdit();
+}
+
+// 取消单个元素的编辑
+function cancelSingleEdit() {
+  if (!currentEditingElement) return;
+  
+  var el = currentEditingElement;
+  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  
+  // 恢复原始内容
+  if (originalContent[key]) {
+    el.innerHTML = originalContent[key];
+  }
+  
+  // 关闭编辑状态
+  disableSingleElementEdit();
+}
+
+// 禁用单个元素编辑模式
+function disableSingleElementEdit() {
+  if (!currentEditingElement) return;
+  
+  var el = currentEditingElement;
+  
+  // 移除编辑状态
+  el.setAttribute('contenteditable', 'false');
+  el.classList.remove('editable-active');
+  
+  // 隐藏悬浮控制按钮
+  var controls = document.getElementById('edit-controls');
+  controls.classList.remove('show');
+  
+  // 清除当前编辑元素
+  currentEditingElement = null;
 }
 
 function isAnyElementEditing() {
-  return document.querySelector('[contenteditable="true"]') !== null;
+  return currentEditingElement !== null;
 }
 
 function refreshStatus() {
@@ -1506,10 +1671,10 @@ if (role === "admin") {
 // Load saved edits on page load
 loadEdits();
 
-// Initialize single element edit mode for admin
+// Initialize single element edit mode for all users
 document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
-  if (role === "admin") {
+  if (role === "admin" || role === "team") {
     initSingleEditMode();
   }
 });
@@ -1531,6 +1696,19 @@ document.addEventListener('click', function(e) {
     panel.style.display = "none";
   }
 });
+
+// 点击页面其他区域自动取消编辑
+document.addEventListener('click', function(e) {
+  var controls = document.getElementById('edit-controls');
+  
+  // 如果正在编辑，且点击的不是编辑元素、不是编辑控制按钮、不是编辑控制按钮的子元素
+  if (currentEditingElement && 
+      !currentEditingElement.contains(e.target) && 
+      !controls.contains(e.target)) {
+    cancelSingleEdit();
+  }
+});
+
 // Enter key
 ["pw-team","pw-admin"].forEach(function(id) {
   document.getElementById(id).addEventListener("keydown", function(e) {
