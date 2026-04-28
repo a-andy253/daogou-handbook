@@ -6,7 +6,7 @@
 <title>达人售后团队完整服务流程执行方案 v2.0</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = window.supabase ? window.supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8Ja176nauxRR93A8_syYg_xa191aTN') : null;
+const supabase = window.supabase ? window.supabase.createClient('https://fmaepubfaqkljowxyhmj.supabase.co', 'sb_publishable_i8ja176nauxrr93a8_syy_x191atn') : null;
 let sectionsData = null;
 
 // Initialize data from localStorage first
@@ -19,14 +19,14 @@ function initData() {
     sectionsData = [
       {id: "s1", title: "团队定位与角色定义", content: "团队架构|角色|人数|核心职责\n组长（Andy）|1人|对外品牌对接、内部调度、特殊case决策\n售后专员 A / B / C|3人|日常咨询 / 投诉处理（按品牌分组）\n售后专员 D / E / F / G|4人|复杂case跟进、退换货协调、客情维护\n四大黄金原则|不承诺|未经品牌方确认，不对粉丝做实质性承诺\n|不传话|传话必须留记录，不得口头承诺替代正式流程\n|不让情绪升级|客户情绪上来时，你永远是降温的那一方\n|保护自己|恶意攻击截图留证，情绪激动时等冷静再处理"},
       {id: "s2", title: "服务标准动作（基础 SOP）", content: "接收消息标准流程|标签|说明|处理时效\n[P1] 紧急投诉|威胁曝光 / 产品质量安全|立即上报组长\n[P2] 重要投诉|退换货申请 / 产品质疑|2小时内处理\n[P3] 普通咨询|使用咨询 / 肤质建议|24小时内回复\n[P4] 常规|表扬 / 常规咨询|下一个工作日\n首次响应话术模板|模板A — 正常咨询|亲爱的[粉丝名字]，感谢您的留言～我是[达人名]直播间的售后小助手，很高兴为您服务！您的问题我已经收到了，我这边帮您查询一下，稍后给您准确回复哦 ☺️\n|模板B — 投诉/情绪类|[粉丝名字]，我非常理解您现在的心情，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理，有任何进展我都会及时告知您。请您放心，这件事我一定会认真对待的 🙏\n|模板C — 威胁类（不卑不亢）|您好，我完全理解您希望问题得到解决的心情。我这边会认真记录您反馈的情况，并协助品牌方尽快给您一个处理方案。您的诉求我们会如实转达，同时也希望您能给我们一点处理时间，好吗？"},
-      {id: "s3", title: "CARP 标准处理模型（所有投诉必走）", content: "CARP模型|C|Control · 掌控节奏|不被客户情绪带着走\n语速放慢，回复间隔适当\n耐心读完所有消息再判断情绪\n|A|Acknowledge · 认可情绪|说出\"我完全理解您的感受\"\n\"换作是我也会着急\"\n\"您的心情我非常理解\"\n|R|Refocus · 转向解决|把话题从\"谁对谁错\"\n拉回到\"怎么解决\"\n|P|Problem Solve · 着手解决|有方案 → 立即给出时间节点\n无方案 → 承诺跟进，绝不不了了之\n禁止说的话|您不要这么激动|这有什么可生气的|您先冷静一下\n必须说出口|我完全理解您的感受|换作是我也会着急|您的心情我非常理解"},
+      {id: "s3", title: "CARP 标准处理模型（所有投诉必走）", content: "CARP模型|C|Control · 掌控节奏|不被客户情绪带着走\n语速放慢，回复间隔适当\n耐心读完所有消息再判断情绪\n|A|Acknowledge · 认可情绪|说出“我完全理解您的感受”\n“换作是我也会着急”\n“您的心情我非常理解”\n|R|Refocus · 转向解决|把话题从“谁对谁错”拉回到“怎么解决”\n|P|Problem Solve · 着手解决|有方案 → 立即给出时间节点\n无方案 → 承诺跟进，绝不不了了之\n禁止说的话|您不要这么激动|这有什么可生气的|您先冷静一下\n必须说出口|我完全理解您的感受|换作是我也会着急|您的心情我非常理解"},
       {id: "s4", title: "10种难缠客户分类应对标准", content: "客户类型|特征|应对策略|话术模板\n愤怒投诉型|情绪激动，语言激烈|先认可情绪，再转向解决|我完全理解您的感受，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理。\n威胁曝光型|威胁要曝光、投诉平台|保持冷静，不被威胁影响|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n反复投诉型|同一问题多次投诉|记录历史，全面分析|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n要求赔偿型|直接要求赔偿金额|了解诉求，按流程处理|您的诉求我已经记录下来了，我会帮您向品牌方申请，尽快给您回复。\n质疑品牌型|质疑产品质量、品牌信誉|客观回应，不偏袒品牌|您的反馈我已经记录下来了，我会如实转达给品牌方，同时也会帮您跟进处理。\n拖延沟通型|回复慢，不配合提供信息|设定时间，明确要求|为了尽快帮您解决问题，还请您提供一下相关信息，我们会在收到信息后立即处理。\n对比竞品型|拿竞品对比，质疑产品价值|强调产品优势，提供解决方案|感谢您的反馈，我们的产品在[优势]方面有独特之处，针对您的问题，我可以为您提供[解决方案]。\n要求特殊处理型|要求超出常规流程的处理|解释流程，寻求替代方案|非常理解您的需求，不过我们的处理流程是[流程说明]，我可以帮您[替代方案]。\n语言攻击型|使用侮辱性语言|保持专业，不被影响|我非常理解您现在的心情，我们会认真对待您的反馈，争取尽快给您一个满意的处理方案。\n信息不全型|提供信息不完整，无法处理|引导提供信息，耐心等待|为了帮您更好地解决问题，还请您提供一下[所需信息]，我们会在收到信息后立即处理。"},
       {id: "s5", title: "退换货标准流程", content: "退换货流程|步骤|说明|时效\n退货|1. 确认问题|了解退货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交退货申请|72小时内\n|4. 安排退货|提供退货地址，指导退货流程|96小时内\n|5. 确认退款|确认收到退货，安排退款|120小时内\n换货|1. 确认问题|了解换货原因，核实产品情况|24小时内\n|2. 收集证据|要求提供产品照片、视频等证据|48小时内\n|3. 品牌确认|向品牌方提交换货申请|72小时内\n|4. 安排换货|提供换货地址，指导换货流程|96小时内\n|5. 确认收货|确认收到新货，完成换货|120小时内\n退款|1. 确认问题|了解退款原因，核实情况|24小时内\n|2. 收集证据|要求提供相关证据|48小时内\n|3. 品牌确认|向品牌方提交退款申请|72小时内\n|4. 确认退款|确认退款到账|96小时内"},
       {id: "s6", title: "特殊边界与升级机制", content: "特殊边界|情况|处理方式|升级条件\n产品质量问题|产品出现质量问题|收集证据，向品牌方反馈|24小时内无响应\n过敏问题|使用产品后出现过敏|收集证据，建议就医|情况严重时\n假货质疑|粉丝质疑产品是假货|引导提供证据，向品牌方反馈|无法自证时\n价格争议|粉丝认为价格过高|解释价格构成，提供优惠信息|无法解决时\n物流问题|物流延迟、丢失|联系物流，跟进情况|72小时内无进展\n升级机制|升级条件|升级流程|处理时效\n同一问题被投诉2次以上|提交组长处理|24小时内\n粉丝威胁曝光 / 投诉平台 / 报警|提交组长处理|立即\n处理时间超过48小时未解决|提交组长处理|48小时后\n涉及金额超过500元|提交组长处理|立即\n涉及产品质量安全问题|提交组长处理|立即\n品牌方72小时内未回应|提交组长处理|72小时后"},
       {id: "s7", title: "协作与升级规范", content: "协作规范|角色|职责|沟通方式\n组长|对外品牌对接、内部调度、特殊case决策|每日例会、一对一沟通\n售后专员|日常咨询 / 投诉处理|即时通讯、周例会\n品牌方|产品质量、售后服务|邮件、品牌群\n升级规范|升级流程|处理方式|时效要求\n第一步|专员处理|常规问题自行处理|24小时内\n第二步|组长介入|专员无法解决的问题|48小时内\n第三步|达人团队介入|组长无法解决的问题|72小时内\n第四步|法律途径|涉及法律问题|根据情况\n沟通工具|工具|用途|使用规范\n企业微信|日常沟通、客户联系|及时响应、专业用语\n品牌群|品牌方沟通、问题反馈|信息准确、留痕记录\n内部群|团队内部沟通、培训|积极参与、分享经验"},
       {id: "s8", title: "情绪管理与自我保护", content: "情绪管理|技巧|说明|适用场景\n深呼吸法|深呼吸3-5次，缓解紧张情绪|情绪激动时\n积极暗示|提醒自己客户是对事不对人|被客户攻击时\n转移注意力|暂时离开工位，调整情绪|情绪难以控制时\n团队支持|向同事、组长倾诉|需要情感支持时\n自我保护|措施|说明|适用场景\n截图留证|保存所有沟通记录|可能涉及纠纷时\n设置边界|不与客户进行私人交流|客户要求私人联系方式时\n拒绝妥协|不做超出权限的承诺|客户要求特殊处理时\n寻求帮助|及时向组长汇报|遇到困难时\n心理支持|支持方式|说明|频率\n每日吐槽时间|15分钟可选参与|每日\n团队建设活动|增强团队凝聚力|每月\n专业心理辅导|提供专业心理支持|按需"},
       {id: "s9", title: "绩效考核与激励机制", content: "绩效考核|指标|标准|权重\n首次响应时间|≤ 3分钟|20%\n问题解决率|≥ 85%（不升级到组长）|30%\n平均处理时长|≤ 24小时|20%\n客户满意度|≥ 90%（好评率）|20%\n品牌方投诉率|= 0|10%\n激励机制|奖励|条件|频率\n每月「服务之星」|客户好评最多者|每月\n季度最佳案例分享会|提交优秀案例|每季度\n品牌方参观学习机会|连续3个月KPI达标|每季度\n改进机制|措施|条件|频率\n组长一对一辅导|连续2个月KPI未达标|每月\n调整岗位或重新培训|连续3个月未达标|每季度\n每月case复盘会|汇总常见问题，更新手册|每月"},
-      {id: "s10", title: "话术速查手册", content: "话术速查|场景|话术模板\n安抚情绪|我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。\n投诉质疑品牌|您说得有道理，我这边帮您记录并反馈给品牌方。\n客户多次投诉|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n威胁曝光|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n要求找领导|我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，请问您方便接听电话的时间是？\n粉丝问「是不是很多人都遇到」|亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。\n被骂「骗子同伙」|我非常理解您的心情，我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？\n粉丝追问「为什么问这么多」|申请赔偿需要了解具体情况，这样我才能帮您申请到对应的补偿方案，这是正常流程，请理解。\n无法立即解决|您的情况我已经详细记录了，我会在[时间]前给您一个明确的回复，请耐心等待。\n结束语（任意场景）|您这个问题我一定会认真跟进到底的 💕 如有任何疑问随时联系我，祝您生活愉快！"},
+      {id: "s10", title: "话术速查手册", content: "话术速查|场景|话术模板\n安抚情绪|我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。\n投诉质疑品牌|您说得有道理，我这边帮您记录并反馈给品牌方。\n客户多次投诉|感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。\n威胁曝光|我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。\n要求找领导|我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，请问您方便接听电话的时间是？\n粉丝问“是不是很多人都遇到”|亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。\n被骂“骗子同伙”|我非常理解您的心情，我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？\n粉丝追问“为什么问这么多”|申请赔偿需要了解具体情况，这样我才能帮您申请到对应的补偿方案，这是正常流程，请理解。\n无法立即解决|您的情况我已经详细记录下来了，我会在[时间]前给您一个明确的回复，请耐心等待。\n结束语（任意场景）|您这个问题我一定会认真跟进到底的 💕 如有任何疑问随时联系我，祝您生活愉快！"},
       {id: "scenarios", title: "售后场景拆解", icon: "🎯", color: "orange", content: "场景1|用竞品空瓶来「碰瓷」要求退款|高危|特征：用竞品空瓶冒充，威胁有录音|应对：不质疑、不承认、不拒绝，用「核实」拖延时间|核心教训：不要当场质疑，先内部查证据\n场景2|拒绝提供证据却发帖扩散|中危|特征：拒绝提供证据，已发帖|应对：说明需要证据的原因，提供品牌方联系方式|核心教训：被骂「骗子同伙」时保持专业温度\n场景3|开封后退全款、搬出「达人就要负责」|中危|特征：已开封使用，要求全款退|应对：用品牌方政策作为挡箭牌，给替代方案|核心教训：达人是销售渠道，不是无限责任主体\n场景4|购买后价格下降，要求退差价|低危|特征：其他平台价格更低|应对：说明渠道差异，提供补偿方案|核心教训：价格差异是正常的，重点在提供替代方案\n场景5|过敏后要求巨额赔偿|高危|特征：要求医药费、精神损失费|应对：先关心，再按流程处理，不承诺赔偿|核心教训：承诺超出权限是售后最大禁忌"},
       {id: "training", title: "新人培训计划", icon: "📚", color: "green", content: "培训计划|天数|内容|目标\n第1天|品牌认知与团队定位|明白自己是谁，知道边界在哪|掌握团队定位和四大黄金原则\n第2天|响应标准与CARP模型|3分钟内首次响应，30秒内分类判断|掌握CARP情绪处理模型\n第3天|退换货流程与品牌沟通|所有退换货必须通过品牌群申请|掌握退换货流程和品牌群沟通规范\n第4天|10种难缠客户分类应对|每种类型的特征、话术、避坑指南|掌握10种客户类型的应对策略\n第5天|话术模板实战练习|熟记15个核心话术|掌握常用话术模板\n第6天|情绪管理与自我保护|团队情绪管理和员工自我保护|掌握情绪管理技巧和自我保护措施\n第7天|考核与上岗|实操考核和上岗后成长路径|通过考核，准备独立上岗"}
     ];
@@ -1196,10 +1196,6 @@ async function saveToSupabase() {
 .pw-error { color: #ff6b6b; font-size: 13px; display: none; }
 .pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
 
-r: #999; width: auto; padding: 0; }
-
-.tool-card-add:hover { background: #E8F0FF !important; transform: scale(1.02); transition: all 0.2s; }
-
 </style>
 
 </head>
@@ -1379,13 +1375,13 @@ r: #999; width: auto; padding: 0; }
 
 >
 <div class="header">
-  <div class="header-tag">v2.0 · 2026年修订版</div>
-  <h1>达人售后团队完整服务流程执行方案</h1>
-  <p class="header-desc">融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制</p>
+  <div class="header-tag" data-editable="header_tag">v2.0 · 2026年修订版</div>
+  <h1 data-editable="header_title">达人售后团队完整服务流程执行方案</h1>
+  <p class="header-desc" data-editable="header_desc">融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制</p>
   <div class="header-meta">
-    <span>📋 共10种客户类型</span>
-    <span>⚡ CARP标准处理模型</span>
-    <span>🛡️ 四大黄金原则</span>
+    <span data-editable="header_meta_1">📋 共10种客户类型</span>
+    <span data-editable="header_meta_2">⚡ CARP标准处理模型</span>
+    <span data-editable="header_meta_3">🛡️ 四大黄金原则</span>
   </div>
 </div>
 ->
@@ -2897,373 +2893,33 @@ r: #999; width: auto; padding: 0; }
 
 
 <script>
-// ========== Content Editor System ==========
-var EDITOR_PW = "admin2026";
-
-function initEditor() {
-  if (sessionStorage.getItem("daogou_role") !== "admin") return;
-  // Load saved content
-  var saved = localStorage.getItem("daogou_content_v2");
-  if (saved) applyContent(JSON.parse(saved));
-  showEditorBar();
-}
-
-function showEditorBar() {
-  var bar = document.createElement("div");
-  bar.id = "editor-bar";
-  bar.innerHTML = '<span>&#x270F; 管理模式</span>'
-    + '<button onclick="enterEditMode()">&#x1F4DD; 编辑内容</button>'
-    + '<button onclick="apGotoAddCard();">&#x2795; 添加卡片</button>'
-    + '<button onclick="openAddSection()">&#x1F4C1; 添加板块</button>'
-    + '<button class="btn-save" onclick="saveAll()">&#x1F4BE; 保存修改</button>'
-    + '<button class="btn-exit" onclick="exitEditMode()">&#x274C; 退出编辑</button>';
-  document.body.appendChild(bar);
-}
-
-
-
-
-
-
-
-
-
-
-// ========== Init ==========
-document.addEventListener("DOMContentLoaded", initEditor);
-
-// Style for editor bar
-var editorStyle = document.createElement("style");
-editorStyle.textContent = `
-#editor-bar {
-  position: fixed; bottom: 20px; right: 20px; z-index: 99998;
-  background: #1A36A4; color: #fff; padding: 12px 16px; border-radius: 16px;
-  display: flex; gap: 8px; align-items: center; flex-wrap: wrap; max-width: 600px;
-  box-shadow: 0 4px 20px rgba(26,54,164,0.4);
-  font-size: 13px;
-}
-#editor-bar span { font-weight: 700; margin-right: 4px; }
-#editor-bar button {
-  background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 6px 12px;
-  border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
-  transition: background 0.2s; white-space: nowrap;
-}
-#editor-bar button:hover { background: rgba(255,255,255,0.4); }
-#editor-bar .btn-save { background: #F7C948; color: #1A36A4; }
-#editor-bar .btn-exit { background: #e74c3c; }
-#add-overlay { font-family: inherit; }
-#add-panel {
-  background: #fff; border-radius: 16px; padding: 28px; width: 420px;
-  max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-}
-#add-panel h3 { margin: 0 0 16px 0; color: #1A36A4; font-size: 18px; }
-#add-panel label { display: block; font-size: 12px; color: #555; font-weight: 600; margin-bottom: 4px; margin-top: 10px; }
-#add-panel input, #add-panel textarea {
-  width: 100%; padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px;
-  font-size: 14px; box-sizing: border-box; font-family: inherit;
-}
-#add-panel textarea { resize: vertical; }
-#add-panel .btn-row { display: flex; gap: 8px; margin-top: 16px; }
-#add-panel button { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
-#add-panel button:first-child { background: #1A36A4; color: #fff; }
-#add-panel .btn-cancel { background: #f0f0f0; color: #555; }
-[data-editable]:hover { background: rgba(43,91,232,0.05); }
-`;
-document.head.appendChild(editorStyle);
-
-// Call initEditor after admin login
-var origLoginAdmin = loginAdmin;
-window.loginAdmin = function() {
-  origLoginAdmin();
-  setTimeout(initEditor, 100);
-};
-
-pt>
-
-
-<script>
-// ========== Admin Page System ==========
+// ========== Login System ==========
 var ADMIN_PW = "admin2026";
 var teamPw = "daogou2026";
 var teamActive = true;
 
-function apTab(btn, panelId) {
-  document.querySelectorAll(".admin-tab").forEach(function(b){ b.classList.remove("active"); });
-  if (btn) btn.classList.add("active");
-  document.querySelectorAll(".admin-panel").forEach(function(p){ p.classList.remove("active"); });
-  var panel = document.getElementById(panelId);
-  if (panel) panel.classList.add("active");
-}
-
-function apShowPage() {
-  var role = sessionStorage.getItem("daogou_role");
-  if (role !== "admin") {
-    var ov = document.getElementById("pw-overlay");
-    if (ov) { ov.style.display = "flex"; showTab("admin"); var inp = document.getElementById("pw-admin"); if(inp) inp.focus(); }
-    return;
-  }
-  document.getElementById("admin-page").classList.add("active");
-  apLoadAll();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function apLogout() {
-  sessionStorage.removeItem("daogou_role");
-  sessionStorage.removeItem("daogou_access");
-  var ap = document.getElementById("admin-page");
-  if (ap) ap.classList.remove("active");
-  var ov = document.getElementById("pw-overlay");
-  if (ov) { ov.style.display = "flex"; showTab("team"); }
-}
-
-function apLoadAll() {
-  var t1 = document.getElementById("ap-team-pw"); if (t1) t1.value = teamPw;
-  var t2 = document.getElementById("ap-admin-pw"); if (t2) t2.value = ADMIN_PW;
-  var statusEl = document.getElementById("ap-access-status");
-  if (statusEl) statusEl.innerHTML = teamActive ? "&#x2705; 团队访问权限：正常" : "&#x274C; 团队访问权限：已取消";
-  var rBtn = document.getElementById("btn-revoke"); if (rBtn) rBtn.style.display = teamActive ? "inline-block" : "none";
-  var eBtn = document.getElementById("btn-enable"); if (eBtn) eBtn.style.display = teamActive ? "none" : "inline-block";
-  apLoadCards();
-  apLoadSections();
-  apLoadNav();
-}
-
-function apSaveTeamPw() {
-  var v = document.getElementById("ap-team-pw").value.trim();
-  if (!v) { alert("请输入新密码"); return; }
-  teamPw = v; saveAdminData();
-  var s = document.getElementById("ap-team-status"); if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
-}
-
-function apSaveAdminPw() {
-  var v = document.getElementById("ap-admin-pw").value.trim();
-  if (!v) { alert("请输入新密码"); return; }
-  ADMIN_PW = v; saveAdminData();
-  var s = document.getElementById("ap-team-status"); if (s) { s.style.display = "block"; setTimeout(function(){ if(s) s.style.display="none"; }, 3000); }
-}
-
-function apRevokeAccess() {
-  if (!confirm("确定取消团队访问权限？所有普通成员将无法登录。")) return;
-  teamActive = false; saveAdminData(); apLoadAll();
-}
-
-function apEnableAccess() {
-  teamActive = true; saveAdminData(); apLoadAll();
-}
-
 function saveAdminData() {
-  localStorage.setItem("daogou_admin_data", JSON.stringify({ADMIN_PW, teamPw, teamActive}));
+  localStorage.setItem("daogou_admin_data", JSON.stringify({ADMIN_PW:ADMIN_PW, teamPw:teamPw, teamActive:teamActive}));
 }
 
 function loadAdminData() {
   var d = localStorage.getItem("daogou_admin_data");
-  if (d) { var o = JSON.parse(d); ADMIN_PW = o.ADMIN_PW || ADMIN_PW; teamPw = o.teamPw || teamPw; teamActive = o.teamActive !== undefined ? o.teamActive : true; }
-}
-
-function apClearCardForm() {
-  ["ca-title","ca-icon","ca-desc","ca-link","ca-tags"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
-  var sel = document.getElementById("ca-section"); if(sel) sel.value="";
-}
-
-function apClearSectionForm() {
-  ["sec-title","sec-id","sec-icon","sec-content"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
-  var col = document.getElementById("sec-color"); if(col) col.value="blue";
-}
-
-function apClearNavForm() {
-  ["nav-label","nav-href"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
-  var ord = document.getElementById("nav-order"); if(ord) ord.value="99";
-  var tp = document.getElementById("nav-type"); if(tp) tp.value="anchor";
-}
-
-function apLoadCards() {
-  var el = document.getElementById("ap-cards-list");
-  if (!el) return;
-  var cards = getCardsData();
-  if (cards.length === 0) {
-    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无卡片，点击下方表单添加</p>';
-    return;
+  if (d) { 
+    try { 
+      var o = JSON.parse(d); 
+      ADMIN_PW = o.ADMIN_PW || ADMIN_PW; 
+      teamPw = o.teamPw || teamPw; 
+      teamActive = o.teamActive !== undefined ? o.teamActive : true; 
+    } catch(e){} 
   }
-  var html = '<div class="admin-card"><h3><span>&#x1F4CB;</span> 已有的卡片 (' + cards.length + ')</h3>';
-  cards.forEach(function(c, i) {
-    html += '<div class="tool-item">';
-    html += '<div class="tool-preview">';
-    html += '<div class="tool-icon">' + (c.icon||'') + '</div>';
-    html += '<div class="tool-title">' + (c.title||'') + '</div>';
-    html += '<div class="tool-desc">' + (c.desc||'') + '</div>';
-    html += '<div class="tool-tags">';
-    if (c.tags) c.tags.split(',').forEach(function(t){ html += '<span class="tool-tag">' + t.trim() + '</span>'; });
-    html += '</div></div>';
-    html += '<div class="tool-actions">';
-    html += '<button class="btn-sm btn-red" onclick="apDeleteCard(' + i + ')">&#x1F5D1; 删除</button>';
-    html += '</div></div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
 }
 
-function apAddCard() {
-  var title = document.getElementById("ca-title").value.trim();
-  var icon = document.getElementById("ca-icon").value.trim() || "&#x1F4CB;";
-  var desc = document.getElementById("ca-desc").value.trim();
-  var section = document.getElementById("ca-section").value;
-  var link = document.getElementById("ca-link").value.trim();
-  var tags = document.getElementById("ca-tags").value.trim();
-  if (!title) { alert("请输入卡片标题"); return; }
-  if (!link) { alert("请输入跳转链接"); return; }
-  var cards = getCardsData();
-  cards.push({title, icon, desc, section, link, tags});
-  saveCardsData(cards);
-  apLoadCards();
-  apClearCardForm();
-  alert("卡片已添加！刷新页面后生效。");
-}
-
-function apDeleteCard(idx) {
-  if (!confirm("确定删除此卡片？")) return;
-  var cards = getCardsData();
-  cards.splice(idx, 1);
-  saveCardsData(cards);
-  apLoadCards();
-}
-
-function getCardsData() {
-  var d = localStorage.getItem("daogou_cards");
-  return d ? JSON.parse(d) : [];
-}
-function saveCardsData(c) {
-  localStorage.setItem("daogou_cards", JSON.stringify(c));
-}
-
-function apLoadSections() {
-  var el = document.getElementById("ap-sections-list");
-  if (!el) return;
-  var sections = getSectionsData();
-  if (sections.length === 0) {
-    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无板块，使用下方表单添加新板块</p>';
-    return;
-  }
-  var colorMap = {blue:"蓝色",green:"绿色",purple:"紫色",orange:"橙色",red:"红色"};
-  var html = '<div class="admin-card"><h3><span>&#x1F4CB;</span> 已有的板块 (' + sections.length + ')</h3>';
-  sections.forEach(function(s, i) {
-    html += '<div class="section-item">';
-    html += '<div class="section-order">' + (i+1) + '</div>';
-    html += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ','title',this.value)">';
-    html += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ','id',this.value)">';
-    html += '<span style="font-size:12px;">' + (s.icon||'&#x1F4CB;') + '</span>';
-    html += '<span style="font-size:11px;padding:2px 6px;background:#E8F0FE;border-radius:4px;color:#1A36A4;">' + (colorMap[s.color]||"蓝色") + '</span>';
-    html += '<button class="btn-sm btn-red" onclick="apDeleteSection(' + i + ')">&#x1F5D1;</button>';
-    html += '</div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
-}
-
-function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-
-function apAddSection() {
-  var title = document.getElementById("sec-title").value.trim();
-  var sid = document.getElementById("sec-id").value.trim();
-  var icon = document.getElementById("sec-icon").value.trim() || "&#x1F4CB;";
-  var color = document.getElementById("sec-color").value;
-  var content = document.getElementById("sec-content").value.trim();
-  if (!title || !sid) { alert("请输入板块标题和ID"); return; }
-  var sections = getSectionsData();
-  sections.push({title, id: sid, icon, color, content});
-  saveSectionsData(sections);
-  apLoadSections();
-  apClearSectionForm();
-  alert("板块已添加！刷新页面后生效。");
-}
-
-function apUpdateSection(idx, key, val) {
-  var sections = getSectionsData();
-  if (sections[idx]) sections[idx][key] = val;
-  saveSectionsData(sections);
-}
-
-function apDeleteSection(idx) {
-  if (!confirm("确定删除此板块？")) return;
-  var sections = getSectionsData();
-  sections.splice(idx, 1);
-  saveSectionsData(sections);
-  apLoadSections();
-}
-
-function getSectionsData() {
-  if (!sectionsData) {
-    initData();
-  }
-  return sectionsData;
-}
-
-function saveSectionsData(sections) {
-  sectionsData = sections;
-  localStorage.setItem("daogou_sections", JSON.stringify(sectionsData));
-  // Save to Supabase in background
-  saveToSupabase();
-}
-
-function apLoadNav() {
-  var el = document.getElementById("ap-nav-list");
-  if (!el) return;
-  var nav = getNavData();
-  if (nav.length === 0) {
-    el.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无导航菜单项</p>';
-    return;
-  }
-  var html = '<div class="admin-card"><h3><span>&#x1F5D1;</span> 导航菜单 (' + nav.length + ')</h3>';
-  nav.forEach(function(n, i) {
-    html += '<div class="section-item">';
-    html += '<div class="section-order">' + (n.order||99) + '</div>';
-    html += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ','label',this.value)">';
-    html += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ','href',this.value)">';
-    html += '<button class="btn-sm btn-red" onclick="apDeleteNav(' + i + ')">&#x1F5D1;</button>';
-    html += '</div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
-}
-
-function apAddNavItem() {
-  var label = document.getElementById("nav-label").value.trim();
-  var href = document.getElementById("nav-href").value.trim();
-  var order = parseInt(document.getElementById("nav-order").value) || 99;
-  var type = document.getElementById("nav-type").value;
-  if (!label || !href) { alert("请输入菜单名称和跳转目标"); return; }
-  var nav = getNavData();
-  nav.push({label, href, order, type});
-  nav.sort(function(a,b){ return (a.order||99)-(b.order||99); });
-  saveNavData(nav);
-  apLoadNav();
-  apClearNavForm();
-  alert("菜单已添加！刷新页面后生效。");
-}
-
-function apUpdateNav(idx, key, val) {
-  var nav = getNavData();
-  if (nav[idx]) nav[idx][key] = val;
-  saveNavData(nav);
-}
-
-function apDeleteNav(idx) {
-  if (!confirm("确定删除此菜单？")) return;
-  var nav = getNavData();
-  nav.splice(idx, 1);
-  saveNavData(nav);
-  apLoadNav();
-}
-
-function getNavData() { var d = localStorage.getItem("daogou_nav"); return d ? JSON.parse(d) : []; }
-function saveNavData(n) { localStorage.setItem("daogou_nav", JSON.stringify(n)); }
-
-// ========== Login ==========
 function showTab(tab) {
-  var teamTab = document.getElementById("tab-team");
-  var adminTab = document.getElementById("tab-admin");
-  if (!teamTab || !adminTab) return;
-  teamTab.style.display = tab === "team" ? "flex" : "none";
-  adminTab.style.display = tab === "admin" ? "flex" : "none";
+  var tt = document.getElementById("tab-team");
+  var at = document.getElementById("tab-admin");
+  if (!tt || !at) return;
+  tt.style.display = tab === "team" ? "block" : "none";
+  at.style.display = tab === "admin" ? "block" : "none";
   var btns = document.querySelectorAll("#pw-tabs button");
   btns.forEach(function(b){ b.classList.remove("active"); });
   if (tab === "team" && btns[0]) btns[0].classList.add("active");
@@ -3271,9 +2927,9 @@ function showTab(tab) {
 }
 
 function loginTeam() {
-  var v = document.getElementById("pw-team");
-  if (!v) return;
-  v = v.value;
+  var el = document.getElementById("pw-team");
+  if (!el) return;
+  var v = el.value;
   if (!teamActive) {
     var err = document.getElementById("err-team");
     if (err) { err.textContent = "当前团队权限已被管理员取消"; err.style.display = "block"; }
@@ -3290,87 +2946,6 @@ function loginTeam() {
 }
 
 function loginAdmin() {
-  var v = document.getElementById("pw-admin");
-  if (!v) return;
-  v = v.value;
-  if (v === ADMIN_PW) {
-    sessionStorage.setItem("daogou_role", "admin");
-    var ov = document.getElementById("pw-overlay");
-    if (ov) ov.style.display = "none";
-    var ap = document.getElementById("admin-page");
-    if (ap) { ap.classList.add("active"); apLoadAll(); }
-    window.scrollTo({top: 0, behavior: "instant"});
-  } else {
-    var err = document.getElementById("err-admin");
-    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
-  }
-}
-
-// Restore session
-(function(){
-  loadAdminData();
-  var role = sessionStorage.getItem("daogou_role");
-  if (role === "admin") {
-    var ov = document.getElementById("pw-overlay");
-    if (ov) ov.style.display = "none";
-    var ap = document.getElementById("admin-page");
-    if (ap) ap.classList.add("active");
-  } else if (role === "team" && teamActive) {
-    var ov = document.getElementById("pw-overlay");
-    if (ov) ov.style.display = "none";
-  }
-})();
-
-// Enter key support
-["pw-team","pw-admin"].forEach(function(id) {
-  var el = document.getElementById(id);
-  if (el) {
-    el.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        if (id === "pw-team") loginTeam(); else loginAdmin();
-      }
-    });
-  }
-});
-
-// ========== Shortcut to add card ==========
-function apGotoAddCard() {
-  if (sessionStorage.getItem("daogou_role") !== "admin") {
-    apShowPage(); return;
-  }
-  apShowPage();
-  setTimeout(function() {
-    apTab(null, "ap-cards");
-    var ac = document.getElementById("ap-card-add");
-    if (ac) ac.scrollIntoView({behavior:"smooth", block:"start"});
-  }, 150);
-}
-</script>
-</body>
-</html>
-
-<script>
-
-(function(){
-var ADMIN_PW = "admin2026";
-var teamPw = "daogou2026";
-var teamActive = true;
-
-function saveAdminData() {
-  localStorage.setItem("daogou_admin_data", JSON.stringify({ADMIN_PW:ADMIN_PW, teamPw:teamPw, teamActive:teamActive}));
-}
-
-function loadAdminData() {
-  var d = localStorage.getItem("daogou_admin_data");
-  if (d) { try { var o = JSON.parse(d); ADMIN_PW = o.ADMIN_PW || ADMIN_PW; teamPw = o.teamPw || teamPw; teamActive = o.teamActive !== undefined ? o.teamActive : true; } catch(e){} }
-}
-
-
-    if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
-  }
-}
-
-function loginAdmin() {
   var el = document.getElementById("pw-admin");
   if (!el) return;
   var v = el.value;
@@ -3382,6 +2957,7 @@ function loginAdmin() {
     if (ap) ap.classList.add("active");
     apLoadAll();
     window.scrollTo({top:0, behavior:"instant"});
+    initEditor();
   } else {
     var err = document.getElementById("err-admin");
     if (err) { err.style.display = "block"; err.textContent = "密码错误，请重试"; }
@@ -3515,7 +3091,16 @@ function apDeleteCard(idx) {
   apLoadCards();
 }
 
+function getSectionsData() { 
+  var d = localStorage.getItem("daogou_sections");
+  return d ? JSON.parse(d) : []; 
+}
 
+function saveSectionsData(s) { 
+  localStorage.setItem("daogou_sections", JSON.stringify(s));
+  sectionsData = s;
+  saveToSupabase();
+}
 
 function apClearSectionForm() {
   ["sec-title","sec-id","sec-icon","sec-content"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
@@ -3532,8 +3117,8 @@ function apLoadSections() {
   sections.forEach(function(s, i) {
     h += '<div class="section-item">';
     h += '<div class="section-order">' + (i+1) + '</div>';
-    h += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ','title',this.value)">';
-    h += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ','id',this.value)">';
+    h += '<input type="text" value="' + escHtml(s.title||'') + '" onchange="apUpdateSection(' + i + ',\'title\',this.value)">';
+    h += '<input type="text" value="' + escHtml(s.id||'') + '" placeholder="id" style="max-width:120px;" onchange="apUpdateSection(' + i + ',\'id\',this.value)">';
     h += '<span style="font-size:12px;">' + (s.icon||'') + '</span>';
     h += '<span style="font-size:11px;padding:2px 6px;background:#E8F0FE;border-radius:4px;color:#1A36A4;">' + (cm[s.color]||"蓝色") + '</span>';
     h += '<button class="btn-sm btn-red" onclick="apDeleteSection(' + i + ')">\u1F5D1;</button>';
@@ -3590,8 +3175,8 @@ function apLoadNav() {
   nav.forEach(function(n, i) {
     h += '<div class="section-item">';
     h += '<div class="section-order">' + (n.order||99) + '</div>';
-    h += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ','label',this.value)">';
-    h += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ','href',this.value)">';
+    h += '<input type="text" value="' + escHtml(n.label||'') + '" style="flex:1;" onchange="apUpdateNav(' + i + ',\'label\',this.value)">';
+    h += '<input type="text" value="' + escHtml(n.href||'') + '" placeholder="href" style="max-width:150px;" onchange="apUpdateNav(' + i + ',\'href\',this.value)">';
     h += '<button class="btn-sm btn-red" onclick="apDeleteNav(' + i + ')">\u1F5D1;</button>';
     h += '</div>';
   });
@@ -3638,49 +3223,119 @@ function apGotoAddCard() {
   }, 150);
 }
 
-function initSmoothNav() {
-  var navLinks = document.querySelectorAll('.nav a');
-  if (!navLinks.length) return;
-  function update() {
-    var sy = window.scrollY || window.pageYOffset;
-    var wh = window.innerHeight;
-    var dh = document.body.scrollHeight;
-    navLinks.forEach(function(link) {
-      var href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-      var t = document.querySelector(href);
-      if (!t) return;
-      var r = t.getBoundingClientRect();
-      var top = r.top + sy;
-      var bottom = top + r.height;
-      var active = (sy + wh >= dh - 50 && href !== '#top') || (sy >= top - 120 && sy < bottom - 120);
-      link.classList.toggle('active', active);
-    });
-  }
-  window.addEventListener('scroll', update, {passive:true});
-  update();
-  navLinks.forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      var href = link.getAttribute('href');
-      if (!href || href === '#' || href === '#top') { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); return; }
-      if (href.startsWith('#')) { e.preventDefault(); var t = document.querySelector(href); if(t) { t.scrollIntoView({behavior:'smooth', block:'start'}); setTimeout(update, 500); } }
+// ========== Content Editor System ==========
+var EDITOR_PW = "admin2026";
+
+function initEditor() {
+  if (sessionStorage.getItem("daogou_role") !== "admin") return;
+  // Load saved content
+  var saved = localStorage.getItem("daogou_content_v2");
+  if (saved) applyContent(JSON.parse(saved));
+  showEditorBar();
+}
+
+function showEditorBar() {
+  var bar = document.createElement("div");
+  bar.id = "editor-bar";
+  bar.innerHTML = '<span>&#x270F; 管理模式</span>'
+    + '<button onclick="enterEditMode()">&#x1F4DD; 编辑内容</button>'
+    + '<button onclick="apGotoAddCard();">&#x2795; 添加卡片</button>'
+    + '<button onclick="openAddSection()">&#x1F4C1; 添加板块</button>'
+    + '<button class="btn-save" onclick="saveAll()">&#x1F4BE; 保存修改</button>'
+    + '<button class="btn-exit" onclick="exitEditMode()">&#x274C; 退出编辑</button>';
+  document.body.appendChild(bar);
+}
+
+function enterEditMode() {
+  document.querySelectorAll('[data-editable]').forEach(function(el) {
+    el.contentEditable = true;
+    el.style.border = '2px dashed #2B5BE8';
+    el.style.padding = '4px 8px';
+    el.style.borderRadius = '4px';
+    el.style.cursor = 'text';
+    el.addEventListener('blur', function() {
+      saveEditableContent(el);
     });
   });
 }
 
-function init() {
+function exitEditMode() {
+  document.querySelectorAll('[data-editable]').forEach(function(el) {
+    el.contentEditable = false;
+    el.style.border = 'none';
+    el.style.padding = '';
+    el.style.borderRadius = '';
+    el.style.cursor = 'default';
+  });
+}
+
+function saveEditableContent(el) {
+  var contentKey = el.getAttribute('data-editable');
+  var content = el.textContent || '';
+  
+  var savedContent = localStorage.getItem('daogou_content_v2');
+  var contentObj = savedContent ? JSON.parse(savedContent) : {};
+  contentObj[contentKey] = content;
+  localStorage.setItem('daogou_content_v2', JSON.stringify(contentObj));
+}
+
+function applyContent(contentObj) {
+  for (var key in contentObj) {
+    var el = document.querySelector('[data-editable="' + key + '"]');
+    if (el) {
+      el.textContent = contentObj[key];
+    }
+  }
+}
+
+function saveAll() {
+  var allContent = {};
+  document.querySelectorAll('[data-editable]').forEach(function(el) {
+    var key = el.getAttribute('data-editable');
+    allContent[key] = el.textContent || '';
+  });
+  localStorage.setItem('daogou_content_v2', JSON.stringify(allContent));
+  alert('所有修改已保存！');
+}
+
+function openAddSection() {
+  alert('添加板块功能已在管理后台的「板块内容」标签页中实现。');
+  apShowPage();
+  setTimeout(function() {
+    apTab(null, 'ap-content');
+  }, 150);
+}
+
+
+
+
+
+
+
+
+
+
+// ========== Init ==========
+document.addEventListener("DOMContentLoaded", function() {
   initData();
   loadAdminData();
+  
   var role = sessionStorage.getItem("daogou_role");
   var ov = document.getElementById("pw-overlay");
   var ap = document.getElementById("admin-page");
+  
   if (role === "admin") {
     if (ov) ov.style.display = "none";
     if (ap) ap.classList.add("active");
+    apLoadAll();
+    initEditor();
+  } else if (role === "team") {
+    if (ov) ov.style.display = "none";
   } else {
     if (ov) ov.style.display = "flex";
     if (ap) ap.classList.remove("active");
   }
+  
   ["pw-team","pw-admin"].forEach(function(id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -3688,16 +3343,47 @@ function init() {
       if (e.key === "Enter") { id === "pw-team" ? loginTeam() : loginAdmin(); }
     });
   });
-  initSmoothNav();
-}
+});
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
+// Style for editor bar
+var editorStyle = document.createElement("style");
+editorStyle.textContent = `
+#editor-bar {
+  position: fixed; bottom: 20px; right: 20px; z-index: 99998;
+  background: #1A36A4; color: #fff; padding: 12px 16px; border-radius: 16px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap; max-width: 600px;
+  box-shadow: 0 4px 20px rgba(26,54,164,0.4);
+  font-size: 13px;
 }
+#editor-bar span { font-weight: 700; margin-right: 4px; }
+#editor-bar button {
+  background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 6px 12px;
+  border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
+  transition: background 0.2s; white-space: nowrap;
+}
+#editor-bar button:hover { background: rgba(255,255,255,0.4); }
+#editor-bar .btn-save { background: #F7C948; color: #1A36A4; }
+#editor-bar .btn-exit { background: #e74c3c; }
+#add-overlay { font-family: inherit; }
+#add-panel {
+  background: #fff; border-radius: 16px; padding: 28px; width: 420px;
+  max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+#add-panel h3 { margin: 0 0 16px 0; color: #1A36A4; font-size: 18px; }
+#add-panel label { display: block; font-size: 12px; color: #555; font-weight: 600; margin-bottom: 4px; margin-top: 10px; }
+#add-panel input, #add-panel textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid #E8F0FE; border-radius: 8px;
+  font-size: 14px; box-sizing: border-box; font-family: inherit;
+}
+#add-panel textarea { resize: vertical; }
+#add-panel .btn-row { display: flex; gap: 8px; margin-top: 16px; }
+#add-panel button { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
+#add-panel button:first-child { background: #1A36A4; color: #fff; }
+#add-panel .btn-cancel { background: #f0f0f0; color: #555; }
+[data-editable]:hover { background: rgba(43,91,232,0.05); }
+`;
+document.head.appendChild(editorStyle);
 
-})();
 
 </script>
 </body>
