@@ -3327,33 +3327,41 @@ function openAddSection() {
 
 // ========== Init ==========
 document.addEventListener("DOMContentLoaded", function() {
-  initSupabase();
-  initData();
-  loadAdminData();
+  try {
+    initSupabase();
+    initData();
+    loadAdminData();
+    
+    var role = sessionStorage.getItem("daogou_role");
+    var ov = document.getElementById("pw-overlay");
+    var ap = document.getElementById("admin-page");
+    
+    console.log('Role:', role);
+    console.log('Overlay:', ov);
+    console.log('Admin page:', ap);
+    
+    if (role === "admin") {
+      if (ov) ov.style.display = "none";
+      if (ap) ap.classList.add("active");
+      apLoadAll();
+      initEditor();
+    } else if (role === "team") {
+      if (ov) ov.style.display = "none";
+    } else {
+      if (ov) ov.style.display = "flex";
+      if (ap) ap.classList.remove("active");
+    }
   
-  var role = sessionStorage.getItem("daogou_role");
-  var ov = document.getElementById("pw-overlay");
-  var ap = document.getElementById("admin-page");
-  
-  if (role === "admin") {
-    if (ov) ov.style.display = "none";
-    if (ap) ap.classList.add("active");
-    apLoadAll();
-    initEditor();
-  } else if (role === "team") {
-    if (ov) ov.style.display = "none";
-  } else {
-    if (ov) ov.style.display = "flex";
-    if (ap) ap.classList.remove("active");
-  }
-  
-  ["pw-team","pw-admin"].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") { id === "pw-team" ? loginTeam() : loginAdmin(); }
+    ["pw-team","pw-admin"].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") { id === "pw-team" ? loginTeam() : loginAdmin(); }
+      });
     });
-  });
+  } catch (e) {
+    console.error('Init error:', e);
+  }
 });
 
 // Style for editor bar
