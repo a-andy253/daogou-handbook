@@ -1130,9 +1130,9 @@ button:active {
 }
 
 #admin-close { 
-  position: fixed; 
+  position: absolute; 
   top: 24px; 
-  right: 384px; 
+  right: 24px; 
   background-color: #dc2626; 
   border-radius: 50%;
   border-width: 0px;
@@ -1142,14 +1142,13 @@ button:active {
   font-size: 14px; 
   cursor: pointer; 
   color: #fff; 
-  width: 40px; 
-  height: 40px;
+  width: 32px; 
+  height: 32px;
   padding: 0;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99998;
 }
 
 /* 保存新密码按钮 */
@@ -1374,7 +1373,7 @@ button#edit-mode-btn {
 
 <!-- Admin Panel - 抽屉式 -->
 <div id="admin-panel">
-  <h3>&#x1F6E1; 管理后台</h3>
+  <h3 style="padding-right: 48px;">&#x1F6E1; 管理后台</h3>
   <button id="admin-close" onclick="closeAdmin()">&#x2715;</button>
   
   <div class="admin-section">
