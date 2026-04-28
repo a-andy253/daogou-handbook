@@ -1178,7 +1178,6 @@ async function saveToSupabase() {
   background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
   display: flex; align-items: center; justify-content: center;
   z-index: 99999; flex-direction: column; gap: 16px;
-  display: flex;
 }
 #pw-overlay .lock-icon { font-size: 56px; margin-bottom: 6px; }
 #pw-overlay h2 { color: #fff; font-size: 22px; margin: 0; font-weight: 700; }
@@ -3326,7 +3325,7 @@ function openAddSection() {
 
 
 // ========== Init ==========
-document.addEventListener("DOMContentLoaded", function() {
+function initApp() {
   try {
     initSupabase();
     initData();
@@ -3337,8 +3336,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var ap = document.getElementById("admin-page");
     
     console.log('Role:', role);
-    console.log('Overlay:', ov);
-    console.log('Admin page:', ap);
     
     if (role === "admin") {
       if (ov) ov.style.display = "none";
@@ -3362,7 +3359,14 @@ document.addEventListener("DOMContentLoaded", function() {
   } catch (e) {
     console.error('Init error:', e);
   }
-});
+}
+
+// Try to init when DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
 
 // Style for editor bar
 var editorStyle = document.createElement("style");
