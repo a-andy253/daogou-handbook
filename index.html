@@ -1017,6 +1017,11 @@
   <input type="password" id="new-team-pw" placeholder="留空则保持不变">
   <button onclick="updateTeamPw()">&#x2705; 保存新密码</button>
   <button class="btn-red" onclick="revokeAccess()">&#x274C; 取消团队访问权限</button>
+  <hr style="margin:16px 0; border-color:#E8F0FE;">
+  <h4 style="font-size:14px; color:#1A36A4; margin-bottom:10px;">&#x270F;&#xFE0F; 页面编辑</h4>
+  <button id="edit-mode-btn" onclick="toggleEditMode()" style="background:#2E7D32;">&#x270F;&#xFE0F; 开启编辑模式</button>
+  <button id="save-edit-btn" onclick="saveEdits()" style="background:#FF8F00; display:none;">&#x1F4BE; 保存修改</button>
+  <button id="cancel-edit-btn" onclick="cancelEditMode()" style="background:#757575; display:none;">&#x274C; 取消编辑</button>
   <div class="admin-status" id="admin-status"></div>
 </div>
 
@@ -1024,6 +1029,8 @@
 var ADMIN_PW = "admin2026";
 var teamPw = "daogou2026";
 var teamActive = true;
+var isEditMode = false;
+var originalContent = {};
 
 function showTab(tab) {
   document.getElementById("tab-team").style.display = tab === "team" ? "flex" : "none";
@@ -1079,6 +1086,98 @@ function closeAdmin() {
   document.getElementById("admin-panel").style.display = "none";
 }
 
+function toggleEditMode() {
+  isEditMode = !isEditMode;
+  if (isEditMode) {
+    enableEditMode();
+  } else {
+    disableEditMode();
+  }
+}
+
+function enableEditMode() {
+  document.getElementById("edit-mode-btn").style.display = "none";
+  document.getElementById("save-edit-btn").style.display = "block";
+  document.getElementById("cancel-edit-btn").style.display = "block";
+  
+  var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
+  editableElements.forEach(function(el) {
+    el.setAttribute('contenteditable', 'true');
+    el.style.border = '2px dashed #2E7D32';
+    el.style.background = '#F1F8E9';
+    el.style.outline = 'none';
+    originalContent[el.getAttribute('id') || el.textContent.substring(0, 50)] = el.innerHTML;
+  });
+  
+  document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:#2E7D32;'>编辑模式已开启</span>，点击任意内容即可修改";
+}
+
+function disableEditMode() {
+  document.getElementById("edit-mode-btn").style.display = "block";
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
+  
+  var editableElements = document.querySelectorAll('[contenteditable="true"]');
+  editableElements.forEach(function(el) {
+    el.setAttribute('contenteditable', 'false');
+    el.style.border = '';
+    el.style.background = '';
+  });
+  
+  document.getElementById("admin-status").innerHTML = "编辑模式已关闭";
+}
+
+function cancelEditMode() {
+  var editableElements = document.querySelectorAll('[contenteditable="true"]');
+  editableElements.forEach(function(el) {
+    var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+    if (originalContent[key]) {
+      el.innerHTML = originalContent[key];
+    }
+    el.setAttribute('contenteditable', 'false');
+    el.style.border = '';
+    el.style.background = '';
+  });
+  
+  isEditMode = false;
+  document.getElementById("edit-mode-btn").style.display = "block";
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
+  document.getElementById("admin-status").innerHTML = "已取消修改";
+}
+
+function saveEdits() {
+  var editedContent = {};
+  var editableElements = document.querySelectorAll('[contenteditable="true"]');
+  editableElements.forEach(function(el) {
+    var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+    editedContent[key] = el.innerHTML;
+  });
+  
+  localStorage.setItem('handbook_edits', JSON.stringify(editedContent));
+  
+  disableEditMode();
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:#2E7D32;'>修改已保存</span>";
+  
+  setTimeout(function() {
+    refreshStatus();
+  }, 3000);
+}
+
+function loadEdits() {
+  var savedEdits = localStorage.getItem('handbook_edits');
+  if (savedEdits) {
+    var edits = JSON.parse(savedEdits);
+    var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
+    editableElements.forEach(function(el) {
+      var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+      if (edits[key]) {
+        el.innerHTML = edits[key];
+      }
+    });
+  }
+}
+
 function refreshStatus() {
   var s = teamActive ? "团队权限：&#x2705; 正常 | 当前密码：" + teamPw : "团队权限：&#x274C; 已取消";
   document.getElementById("admin-status").innerHTML = s;
@@ -1092,6 +1191,9 @@ if (role === "admin") {
 } else if (role === "team" && teamActive) {
   document.getElementById("pw-overlay").style.display = "none";
 }
+
+// Load saved edits on page load
+loadEdits();
 // Enter key
 ["pw-team","pw-admin"].forEach(function(id) {
   document.getElementById(id).addEventListener("keydown", function(e) {
