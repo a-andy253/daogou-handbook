@@ -2950,6 +2950,21 @@ function loginTeam() {
     var ap = document.getElementById("admin-page");
     if (ap) ap.classList.remove("active");
     document.body.style.overflow = "auto";
+    
+    var mainContent = document.querySelector('.main');
+    if (mainContent) {
+      mainContent.style.display = "block";
+      mainContent.style.visibility = "visible";
+      mainContent.style.opacity = "1";
+    }
+    
+    var header = document.querySelector('.header');
+    if (header) {
+      header.style.display = "block";
+      header.style.visibility = "visible";
+      header.style.opacity = "1";
+    }
+    
     window.scrollTo({top:0, behavior:"instant"});
   } else {
     var err = document.getElementById("err-team");
@@ -3338,27 +3353,33 @@ function initApp() {
     var ov = document.getElementById("pw-overlay");
     var ap = document.getElementById("admin-page");
     var mainContent = document.querySelector('.main');
+    var header = document.querySelector('.header');
     
     console.log('=== Init App ===');
     console.log('Role:', role);
     console.log('Overlay:', ov);
     console.log('Admin Page:', ap);
     console.log('Main Content:', mainContent);
+    console.log('Header:', header);
+    console.log('Body overflow:', document.body.style.overflow);
     
     if (role === "admin") {
       console.log('Admin login - hiding overlay, showing admin page');
       if (ov) ov.style.display = "none";
       if (ap) ap.classList.add("active");
+      document.body.style.overflow = "auto";
       apLoadAll();
       initEditor();
     } else if (role === "team") {
       console.log('Team login - hiding overlay only');
       if (ov) ov.style.display = "none";
       if (ap) ap.classList.remove("active");
+      document.body.style.overflow = "auto";
     } else {
       console.log('No role - showing overlay');
       if (ov) ov.style.display = "flex";
       if (ap) ap.classList.remove("active");
+      document.body.style.overflow = "hidden";
     }
   
     ["pw-team","pw-admin"].forEach(function(id) {
