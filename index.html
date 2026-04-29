@@ -1632,23 +1632,29 @@ function refreshStatus() {
   document.getElementById("admin-status").innerHTML = s;
 }
 
-// Restore session
-var role = sessionStorage.getItem("daogou_role");
-if (role === "admin") {
-  document.getElementById("pw-overlay").style.display = "none";
-  document.getElementById("admin-trigger").classList.add("show");
-  document.getElementById("add-section-btn").style.display = "block";
-} else if (role === "team" && teamActive) {
-  document.getElementById("pw-overlay").style.display = "none";
-}
-
-// Load saved edits on page load
-loadEdits();
-
-// Initialize single element edit mode for all users
+// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
-  if (role === "admin" || role === "team") {
+  
+  // Restore session
+  if (role === "admin") {
+    var pwOverlay = document.getElementById("pw-overlay");
+    var adminTrigger = document.getElementById("admin-trigger");
+    var addSectionBtn = document.getElementById("add-section-btn");
+    
+    if (pwOverlay) pwOverlay.style.display = "none";
+    if (adminTrigger) adminTrigger.classList.add("show");
+    if (addSectionBtn) addSectionBtn.style.display = "block";
+  } else if (role === "team" && teamActive) {
+    var pwOverlay = document.getElementById("pw-overlay");
+    if (pwOverlay) pwOverlay.style.display = "none";
+  }
+
+  // Load saved edits on page load
+  loadEdits();
+
+  // Initialize single element edit mode for admins
+  if (role === "admin") {
     initSingleEditMode();
   }
 });
