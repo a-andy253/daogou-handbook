@@ -1645,6 +1645,12 @@ function refreshStatus() {
 document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
   
+  // 强制隐藏蒙层，确保页面加载时蒙层不会挡住操作
+  var adminOverlay = document.querySelector(".admin-overlay");
+  if (adminOverlay) {
+    adminOverlay.classList.remove("show");
+  }
+  
   // Restore session
   if (role === "admin") {
     var pwOverlay = document.getElementById("pw-overlay");
