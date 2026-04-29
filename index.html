@@ -1098,14 +1098,14 @@
 #admin-close { 
   position: absolute; 
   top: 20px; 
-  left: 8px; 
+  right: 20px; 
   background: #F3F4F6;
   border-radius: 50%;
   border: none;
   font-size: 14px; 
   cursor: pointer; 
   color: var(--text-light); 
-  width: 309px; 
+  width: 28px; 
   height: 28px;
   padding: 0;
   display: flex;
@@ -1234,7 +1234,21 @@
   justify-content: center;
 }
 
+/* 抽屉蒙层 */
+.admin-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99990;
+}
 
+.admin-overlay.show {
+  display: block;
+}
 
 /* Editable element styles */
 .editable-active {
@@ -1315,6 +1329,9 @@
 <!-- 管理入口悬浮按钮 -->
 <button id="admin-trigger" onclick="openAdminPanel()">&#x2699;</button>
 
+<!-- 抽屉蒙层 -->
+<div class="admin-overlay" onclick="closeAdmin()"></div>
+
 <script>
 var ADMIN_PW = "admin2026";
 var teamPw = "daogou2026";
@@ -1365,12 +1382,14 @@ function loginAdmin() {
 // 打开管理员面板（抽屉）
 function openAdminPanel() {
   document.getElementById("admin-panel").style.display = "block";
+  document.querySelector(".admin-overlay").classList.add("show");
   document.body.style.overflow = "hidden";
 }
 
 // 关闭管理员面板（抽屉）
 function closeAdmin() {
   document.getElementById("admin-panel").style.display = "none";
+  document.querySelector(".admin-overlay").classList.remove("show");
   document.body.style.overflow = "";
 }
 
@@ -1398,10 +1417,6 @@ function revokeAccess() {
 
 function closeAdmin() {
   document.getElementById("admin-panel").style.display = "none";
-  document.body.style.overflow = "";
-  
-  // 如果当前处于编辑模式，关闭面板时不自动退出编辑模式
-  // 用户可以通过编辑控制按钮或管理面板中的按钮来退出编辑模式
 }
 
 function toggleEditMode() {
@@ -1415,18 +1430,26 @@ function toggleEditMode() {
 
 function enableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "none";
-  document.getElementById("save-edit-btn").style.display = "block";
-  document.getElementById("cancel-edit-btn").style.display = "block";
   document.getElementById("edit-controls").style.display = "flex";
+  
+  // 确保编辑模式时隐藏蒙层
+  var adminOverlay = document.querySelector('.admin-overlay');
+  if (adminOverlay) {
+    adminOverlay.classList.remove('show');
+  }
   
   document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:var(--primary);'>编辑模式已开启</span>，双击任意内容即可修改";
 }
 
 function disableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "block";
-  document.getElementById("save-edit-btn").style.display = "none";
-  document.getElementById("cancel-edit-btn").style.display = "none";
   document.getElementById("edit-controls").style.display = "none";
+  
+  // 确保退出编辑模式时隐藏蒙层
+  var adminOverlay = document.querySelector('.admin-overlay');
+  if (adminOverlay) {
+    adminOverlay.classList.remove('show');
+  }
   
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
@@ -1445,6 +1468,12 @@ function cancelEditMode() {
     }
   });
   pendingNewSections = [];
+  
+  // 确保取消编辑时隐藏蒙层
+  var adminOverlay = document.querySelector('.admin-overlay');
+  if (adminOverlay) {
+    adminOverlay.classList.remove('show');
+  }
   
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
@@ -1633,6 +1662,12 @@ function refreshStatus() {
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
+  
+  // 强制隐藏蒙层，确保页面加载时蒙层不会挡住操作
+  var adminOverlay = document.querySelector(".admin-overlay");
+  if (adminOverlay) {
+    adminOverlay.classList.remove("show");
+  }
   
   // Restore session
   if (role === "admin") {
