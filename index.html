@@ -6,25 +6,23 @@
 <title>达人售后团队完整服务流程执行方案 v2.0</title>
 <style>
   :root {
-    --primary: #2E74B5;
-    --primary-dark: #1F497D;
-    --primary-light: #D6E4F0;
-    --accent: #FFC000;
-    --accent-dark: #FF8C00;
-    --danger: #C00000;
-    --danger-bg: #FFF2F2;
-    --success: #375E10;
-    --success-bg: #EAF2E3;
-    --warning: #FF6B00;
-    --warning-bg: #FFF5E6;
-    --text: #1a1a1a;
-    --text-light: #666;
-    --bg: #F4F6F9;
+    --primary: #165DFF;
+    --primary-hover: #0D47A1;
+    --primary-light: #E8F0FF;
+    --danger: #DC2626;
+    --danger-hover: #B91C1C;
+    --success: #059669;
+    --text: #1F2937;
+    --text-light: #6B7280;
+    --text-muted: #9CA3AF;
+    --bg: #F9FAFB;
     --card-bg: #FFFFFF;
-    --border: #E0E6ED;
-    --radius: 16px;
-    --shadow: 0 2px 12px rgba(30, 73, 125, 0.08);
-    --shadow-hover: 0 8px 24px rgba(30, 73, 125, 0.15);
+    --border: #E5E7EB;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,79 +31,70 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.8;
+    line-height: 1.7;
     font-size: 15px;
   }
 
   /* ===== HEADER ===== */
   .header {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-    color: white;
-    padding: 60px 40px 50px;
-    position: relative;
-    overflow: hidden;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 24px 28px;
   }
-  .header::after {
-    content: '';
-    position: absolute;
-    right: -60px;
-    top: -60px;
-    width: 300px;
-    height: 300px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50%;
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
   }
-  .header::before {
-    content: '';
-    position: absolute;
-    right: 80px;
-    bottom: -80px;
-    width: 200px;
-    height: 200px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 50%;
+  .header-content {
+    flex: 1;
   }
   .header-tag {
     display: inline-block;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 4px 14px;
-    border-radius: 20px;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
   }
   .header-desc {
-    font-size: 15px;
-    opacity: 0.85;
+    font-size: 14px;
+    color: var(--text-light);
     max-width: 600px;
-    line-height: 1.7;
+    line-height: 1.6;
+  }
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
   }
   .header-meta {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
-    gap: 24px;
+    gap: 20px;
     font-size: 13px;
-    opacity: 0.7;
+    color: var(--text-muted);
   }
 
   /* ===== NAV ===== */
   .nav {
-    background: white;
+    background: var(--card-bg);
     border-bottom: 1px solid var(--border);
-    padding: 0 40px;
+    padding: 0 24px;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -114,16 +103,22 @@
     gap: 4px;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
   }
   .nav a {
     display: inline-block;
-    padding: 14px 16px;
+    padding: 12px 14px;
     color: var(--text-light);
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
     white-space: nowrap;
   }
   .nav a:hover, .nav a.active {
@@ -174,18 +169,21 @@
   .card {
     background: var(--card-bg);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 20px;
     margin-bottom: 16px;
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
-    transition: box-shadow 0.2s;
+    transition: var(--transition);
   }
-  .card:hover { box-shadow: var(--shadow-hover); }
+  .card:hover { 
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+  }
   .card-title {
-    font-size: 17px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -193,26 +191,26 @@
   .card-title .num {
     background: var(--primary-light);
     color: var(--primary);
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     flex-shrink: 0;
   }
   .card-title .tag {
     font-size: 11px;
     font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
   }
-  .tag-danger { background: #FFE7E7; color: var(--danger); }
-  .tag-warning { background: #FFF4E0; color: var(--warning); }
-  .tag-success { background: var(--success-bg); color: var(--success); }
+  .tag-danger { background: #FEF2F2; color: var(--danger); }
+  .tag-warning { background: #FFFBEB; color: #D97706; }
+  .tag-success { background: #ECFDF5; color: var(--success); }
   .tag-primary { background: var(--primary-light); color: var(--primary); }
 
   /* ===== ALERT ===== */
@@ -963,63 +961,46 @@
 .pw-error { color: #ff6b6b; font-size: 13px; display: none; }
 .pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
 
-/* 统一视觉风格变量 */
-:root {
-  --shadow-base: 0 2px 8px rgba(26, 54, 164, 0.04);
-  --shadow-hover: 0 8px 24px rgba(26, 54, 164, 0.12);
-  --border-light: #E8F0FE;
-  --border-hover: #2B5BE8;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 优化卡片/面板样式 */
-.card, .tool-card, .train-card, .case-card {
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-base);
-  transition: var(--transition-base);
-}
-.card:hover, .tool-card:hover, .train-card:hover, .case-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-}
-
-/* 优化按钮样式 */
-button {
-  border-radius: var(--radius-sm);
+/* 通用按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 14px;
   font-weight: 600;
-  transition: var(--transition-base);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
 }
-button:not(.btn-red):hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(26, 54, 164, 0.1);
+.btn-primary {
+  background: var(--primary);
+  color: white;
 }
-button:active {
-  transform: translateY(0);
-  box-shadow: none;
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+.btn-secondary {
+  background: #F3F4F6;
+  color: var(--text-light);
+}
+.btn-secondary:hover {
+  background: #E5E7EB;
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover {
+  background: var(--danger-hover);
 }
 
-/* 优化密码弹窗 */
-#pw-overlay {
-  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
-  backdrop-filter: blur(8px);
-}
-#pw-overlay input {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-#pw-overlay input:focus {
-  border-color: #F7C948;
-  box-shadow: 0 0 0 4px rgba(247, 201, 72, 0.2);
-}
-
-/* 优化编辑模式高亮样式 */
+/* 编辑模式高亮样式 */
 .editable-active, .new-section {
-  border: 2px dashed #2B5BE8 !important;
-  background: rgba(43, 91, 232, 0.03) !important;
+  border: 2px dashed var(--primary) !important;
+  background: rgba(22, 93, 255, 0.04) !important;
 }
 
 /* Admin panel - 抽屉式设计 */
@@ -1029,245 +1010,197 @@ button:active {
   top: 0; 
   right: 0; 
   bottom: 0; 
-  width: 360px;
+  width: 320px;
   z-index: 99997;
-  background: #fff; 
-  border-radius: 0;
-  border-left: 1px solid var(--border-light);
-  padding: 32px 24px;
-  box-shadow: -8px 0 24px rgba(0,0,0,0.08);
+  background: var(--card-bg); 
+  border-left: 1px solid var(--border);
+  padding: 24px;
   overflow-y: auto;
 }
 
 #admin-panel h3 { 
-  margin: 0 0 24px 0; 
-  color: #1A36A4; 
-  font-size: 18px; 
-  display: flex; 
-  align-items: center; 
-  gap: 8px;
-  font-weight: 700;
+  margin: 0 0 20px 0; 
+  color: var(--text); 
+  font-size: 16px; 
+  font-weight: 600;
+  padding-right: 36px;
 }
 
 #admin-panel .admin-section {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 #admin-panel .admin-section-title {
   font-size: 12px;
-  font-weight: 700;
-  color: #475569;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 12px;
 }
 
 #admin-panel label { 
   font-size: 12px; 
-  color: #64748B; 
-  font-weight: 600; 
+  color: var(--text-light); 
+  font-weight: 500; 
   display: block; 
-  margin-bottom: 8px; 
+  margin-bottom: 6px; 
 }
 
 #admin-panel input {
   width: 100%; 
-  padding: 12px 16px; 
-  border: 1px solid var(--border-light); 
+  padding: 10px 14px; 
+  border: 1px solid var(--border); 
   border-radius: var(--radius-sm);
   font-size: 14px; 
   box-sizing: border-box; 
-  margin-bottom: 16px;
-  transition: var(--transition-base);
-  background: #f8fafc;
+  margin-bottom: 12px;
+  transition: var(--transition);
+  background: var(--bg);
 }
 
 #admin-panel input:focus {
   outline: none;
-  border-color: var(--border-hover);
-  background: #fff;
+  border-color: var(--primary);
 }
 
 #admin-panel button {
   width: 100%; 
-  padding: 12px 20px; 
-  background: #1A36A4; 
-  color: #fff; 
+  padding: 10px 16px; 
+  background: var(--primary); 
+  color: white; 
   border: none;
   border-radius: var(--radius-sm);
-  font-weight: 600; 
+  font-weight: 500; 
   cursor: pointer; 
   font-size: 14px; 
-  margin-bottom: 10px;
-  transition: var(--transition-base);
+  margin-bottom: 8px;
+  transition: var(--transition);
 }
 
 #admin-panel button:hover { 
-  background: #2B5BE8; 
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(26, 54, 164, 0.15);
-}
-
-#admin-panel button:active {
-  transform: translateY(0);
+  background: var(--primary-hover);
 }
 
 #admin-panel .btn-red { 
-  background: #DC2626; 
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  background: var(--danger);
 }
 
 #admin-panel .btn-red:hover { 
-  background: #B91C1C; 
-  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+  background: var(--danger-hover);
 }
 
 #admin-panel .admin-status { 
   font-size: 12px; 
-  color: #888; 
-  margin-top: 8px; 
+  color: var(--text-muted); 
+  margin-top: 12px; 
   text-align: center; 
 }
 
 #admin-close { 
   position: absolute; 
-  top: 24px; 
-  right: 24px; 
-  background-color: #dc2626; 
+  top: 20px; 
+  right: 20px; 
+  background: #F3F4F6;
   border-radius: 50%;
-  border-width: 0px;
-  border-style: solid;
-  border-color: rgb(239, 68, 68);
-  font-family: Helvetica, Arial, sans-serif;
+  border: none;
   font-size: 14px; 
   cursor: pointer; 
-  color: #fff; 
-  width: 32px; 
-  height: 32px;
+  color: var(--text-light); 
+  width: 28px; 
+  height: 28px;
   padding: 0;
-  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: var(--transition);
 }
 
-/* 保存新密码按钮 */
-#admin-panel > .admin-section:nth-child(2) > button:first-of-type {
-  background-color: #183f69;
+#admin-close:hover {
+  background: #E5E7EB;
+  color: var(--text);
 }
 
-/* 开启编辑模式按钮 */
-button#edit-mode-btn {
-  background-color: #19406b;
-}
-
-/* Add section button - now in header */
+/* Add section button */
 #add-section-btn {
   display: none;
-  background: #1E40AF;
-  color: #fff;
+  background: var(--primary);
+  color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 #add-section-btn:hover {
-  background: #1E3A8A;
-  transform: translateY(-1px);
-}
-
-#add-section-btn:active {
-  transform: scale(0.98);
-}
-
-.nav-inner {
-  display: flex;
-  gap: 4px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-links {
-  display: flex;
-  gap: 4px;
-  flex: 1;
+  background: var(--primary-hover);
 }
 
 /* Section type dropdown */
 #section-type-menu {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   right: 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-  border: 1px solid #E2E8F0;
-  padding: 8px 0;
-  min-width: 180px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hover);
+  border: 1px solid var(--border);
+  padding: 4px 0;
+  min-width: 160px;
   z-index: 99998;
 }
 #section-type-menu.show { display: block; }
 .section-type-item {
-  padding: 10px 16px;
+  padding: 10px 14px;
   cursor: pointer;
   font-size: 13px;
-  color: #333;
-  transition: all 0.15s;
+  color: var(--text);
+  transition: var(--transition);
 }
 .section-type-item:hover { 
-  background: #F0F4FF; 
-  color: #1E40AF;
+  background: var(--primary-light); 
+  color: var(--primary);
 }
 
-/* 编辑控制栏 - 固定底部条设计 */
+/* 编辑控制栏 - 悬浮设计 */
 #edit-controls {
   display: none;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 24px;
+  right: 24px;
   z-index: 99999;
-  background: #fff;
-  border-top: 1px solid var(--border-light);
-  padding: 12px 24px;
-  gap: 16px;
-  justify-content: flex-end;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  gap: 8px;
+  box-shadow: var(--shadow-hover);
 }
 
 #edit-controls button {
-  padding: 10px 20px;
+  padding: 10px 16px;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--transition-base);
+  transition: var(--transition);
 }
 
 #edit-controls .btn-save {
-  background: #1A36A4;
-  color: #fff;
+  background: var(--primary);
+  color: white;
 }
 
 #edit-controls .btn-save:hover {
-  background: #2B5BE8;
+  background: var(--primary-hover);
 }
 
 #edit-controls .btn-cancel {
-  background: #F1F5F9;
-  color: #64748B;
-}
-
-#edit-controls .btn-cancel:hover {
-  background: #E2E8F0;
+  background: #F3F4F6;
+  color: var(--text-light);
 }
 
 /* 管理入口悬浮按钮 */
@@ -1277,22 +1210,22 @@ button#edit-mode-btn {
   bottom: 24px;
   right: 24px;
   z-index: 99996;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #1A36A4;
-  color: #fff;
+  background: var(--primary);
+  color: white;
   border: none;
-  box-shadow: 0 4px 12px rgba(26, 54, 164, 0.2);
-  font-size: 22px;
+  box-shadow: var(--shadow);
+  font-size: 20px;
   cursor: pointer;
   transition: var(--transition-base);
 }
 
 #admin-trigger:hover {
   transform: scale(1.05);
-  background: #2B5BE8;
-  box-shadow: 0 6px 16px rgba(26, 54, 164, 0.25);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 #admin-trigger.show {
@@ -1405,6 +1338,8 @@ var teamPw = "daogou2026";
 var teamActive = true;
 var isEditMode = false;
 var originalContent = {};
+var pendingNewSections = [];
+var currentEditingElement = null;
 
 function showTab(tab) {
   document.getElementById("tab-team").style.display = tab === "team" ? "flex" : "none";
@@ -1495,33 +1430,22 @@ function toggleEditMode() {
 
 function enableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "none";
-  document.getElementById("save-edit-btn").style.display = "block";
-  document.getElementById("cancel-edit-btn").style.display = "block";
+  document.getElementById("edit-controls").style.display = "flex";
   
-  var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
-  editableElements.forEach(function(el) {
-    el.setAttribute('contenteditable', 'true');
-    el.style.border = '2px dashed #2E7D32';
-    el.style.background = '#F1F8E9';
-    el.style.outline = 'none';
-    originalContent[el.getAttribute('id') || el.textContent.substring(0, 50)] = el.innerHTML;
-  });
-  
-  document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:#2E7D32;'>编辑模式已开启</span>，点击任意内容即可修改";
+  document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:var(--primary);'>编辑模式已开启</span>，双击任意内容即可修改";
 }
 
 function disableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "block";
-  document.getElementById("save-edit-btn").style.display = "none";
-  document.getElementById("cancel-edit-btn").style.display = "none";
+  document.getElementById("edit-controls").style.display = "none";
   
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
     el.setAttribute('contenteditable', 'false');
-    el.style.border = '';
-    el.style.background = '';
+    el.classList.remove('editable-active');
   });
   
+  currentEditingElement = null;
   document.getElementById("admin-status").innerHTML = "编辑模式已关闭";
 }
 
@@ -1540,16 +1464,13 @@ function cancelEditMode() {
       el.innerHTML = originalContent[key];
     }
     el.setAttribute('contenteditable', 'false');
-    el.style.border = '';
-    el.style.background = '';
+    el.classList.remove('editable-active');
   });
   
-  if (isEditMode) {
-    isEditMode = false;
-    document.getElementById("edit-mode-btn").style.display = "block";
-  }
-  document.getElementById("save-edit-btn").style.display = "none";
-  document.getElementById("cancel-edit-btn").style.display = "none";
+  isEditMode = false;
+  document.getElementById("edit-mode-btn").style.display = "block";
+  document.getElementById("edit-controls").style.display = "none";
+  currentEditingElement = null;
   document.getElementById("admin-status").innerHTML = "已取消修改";
 }
 
@@ -1557,7 +1478,7 @@ function saveEdits() {
   var editedContent = {};
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
-    var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+    var key = el.getAttribute('id') || 'section_' + Date.now();
     editedContent[key] = el.innerHTML;
   });
   
@@ -1570,46 +1491,26 @@ function saveEdits() {
   localStorage.setItem('handbook_edits', JSON.stringify(editedContent));
   
   pendingNewSections = [];
-  
-  if (isEditMode) {
-    disableEditMode();
-  } else {
-    disableSingleEdit();
-  }
-  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:#2E7D32;'>修改已保存</span>";
+  isEditMode = false;
+  disableEditMode();
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>修改已保存</span>";
   
   setTimeout(function() {
     refreshStatus();
   }, 3000);
 }
 
-function disableSingleEdit() {
-  var editableElements = document.querySelectorAll('[contenteditable="true"]');
-  editableElements.forEach(function(el) {
-    el.setAttribute('contenteditable', 'false');
-    el.style.border = '';
-    el.style.background = '';
-  });
-  
-  document.getElementById("save-edit-btn").style.display = "none";
-  document.getElementById("cancel-edit-btn").style.display = "none";
-}
-
 function loadEdits() {
   var savedEdits = localStorage.getItem('handbook_edits');
   if (savedEdits) {
     var edits = JSON.parse(savedEdits);
-    var editableElements = document.querySelectorAll('.section, .card, .header, .tool-card, .train-card, .case-card');
-    editableElements.forEach(function(el) {
-      var key = el.getAttribute('id') || el.textContent.substring(0, 50);
-      if (edits[key]) {
-        el.innerHTML = edits[key];
+    document.querySelectorAll('[id]').forEach(function(el) {
+      if (edits[el.id]) {
+        el.innerHTML = edits[el.id];
       }
     });
   }
 }
-
-var pendingNewSections = [];
 
 function toggleSectionMenu() {
   var menu = document.getElementById('section-type-menu');
@@ -1619,38 +1520,27 @@ function toggleSectionMenu() {
 function addNewSection(type) {
   document.getElementById('section-type-menu').classList.remove('show');
   
-  var main = document.querySelector('.main') || document.querySelector('.scenarios-section') || document.querySelector('.training-section') || document.body;
+  var main = document.querySelector('.main') || document.body;
   
   var sectionTemplates = {
-    'card': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 新卡片</div><p>在此输入内容...</p></div>',
-    'alert': '<div class="alert alert-primary new-section" contenteditable="true"><strong>提示：</strong>在此输入提示内容...</div>',
-    'table': '<div class="table-wrap new-section"><table><thead><tr><th>标题1</th><th>标题2</th><th>标题3</th></tr></thead><tbody><tr><td contenteditable="true">内容1</td><td contenteditable="true">内容2</td><td contenteditable="true">内容3</td></tr></tbody></table></div>',
-    'flow': '<div class="flow new-section"><div class="flow-step" contenteditable="true">步骤1</div><span class="flow-arrow">→</span><div class="flow-step" contenteditable="true">步骤2</div><span class="flow-arrow">→</span><div class="flow-step" contenteditable="true">步骤3</div></div>',
-    'quote': '<div class="quote new-section" contenteditable="true">在此输入引用内容...</div>',
-    'list': '<ul class="list new-section"><li contenteditable="true">列表项1</li><li contenteditable="true">列表项2</li></ul>',
-    'custom': '<div class="section new-section" contenteditable="true"><h3>自定义标题</h3><p>在此输入自定义内容...</p></div>'
+    'text': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 文本板块</div><p>在此输入内容...</p></div>',
+    'card': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 卡片板块</div><p>在此输入内容...</p></div>',
+    'flow': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 流程板块</div><p>步骤1 → 步骤2 → 步骤3</p></div>',
+    'notice': '<div class="alert alert-primary new-section" contenteditable="true"><strong>📢 公告：</strong>在此输入公告内容...</div>'
   };
   
   var newElement = document.createElement('div');
-  newElement.innerHTML = sectionTemplates[type];
+  newElement.innerHTML = sectionTemplates[type] || sectionTemplates['text'];
   var newSection = newElement.firstElementChild;
   
   newSection.classList.add('new-section');
   newSection.setAttribute('contenteditable', 'true');
-  newSection.style.border = '2px dashed #2E7D32';
-  newSection.style.background = '#F1F8E9';
   
   var sectionKey = 'new_section_' + Date.now();
   originalContent[sectionKey] = newSection.innerHTML;
   pendingNewSections.push({key: sectionKey, element: newSection});
   
   main.appendChild(newSection);
-  
-  bindEditEventsToEditableElements();
-  
-  document.getElementById("save-edit-btn").style.display = "block";
-  document.getElementById("cancel-edit-btn").style.display = "block";
-  document.getElementById("admin-status").innerHTML = "&#x2795; <span style='color:#2E7D32;'>新板块已添加</span>，编辑后保存";
   
   newSection.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
@@ -1680,94 +1570,61 @@ function bindEditEventsToEditableElements() {
   });
 }
 
-// 当前正在编辑的元素
-var currentEditingElement = null;
-
-// 启用单个元素编辑模式
 function enableSingleElementEdit(el) {
-  // 如果有其他元素正在编辑，先取消
   if (currentEditingElement && currentEditingElement !== el) {
-    cancelSingleEdit();
+    disableSingleElementEdit();
   }
   
-  // 设置当前编辑元素
   currentEditingElement = el;
   
-  // 启用编辑状态
   el.setAttribute('contenteditable', 'true');
   el.classList.add('editable-active');
   
-  // 保存原始内容
-  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  var key = el.getAttribute('id') || 'el_' + Date.now();
   if (!originalContent[key]) {
     originalContent[key] = el.innerHTML;
   }
   
-  // 显示悬浮编辑控制按钮
-  showEditControls(el);
+  document.getElementById('edit-controls').style.display = 'flex';
   
-  // 聚焦到编辑元素
   el.focus();
 }
 
-// 显示编辑控制栏（固定底部）
-function showEditControls(el) {
-  var controls = document.getElementById('edit-controls');
-  controls.classList.add('show');
+function disableSingleElementEdit() {
+  if (!currentEditingElement) return;
+  
+  currentEditingElement.setAttribute('contenteditable', 'false');
+  currentEditingElement.classList.remove('editable-active');
+  currentEditingElement = null;
 }
 
-// 保存单个元素的编辑
 function saveSingleEdit() {
   if (!currentEditingElement) return;
   
   var el = currentEditingElement;
-  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  var key = el.getAttribute('id') || 'el_' + Date.now();
   
-  // 保存到localStorage
   var edits = JSON.parse(localStorage.getItem('handbook_edits') || '{}');
   edits[key] = el.innerHTML;
   localStorage.setItem('handbook_edits', JSON.stringify(edits));
   
-  // 关闭编辑状态
   disableSingleElementEdit();
+  document.getElementById('edit-controls').style.display = 'none';
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>修改已保存</span>";
 }
 
-// 取消单个元素的编辑
 function cancelSingleEdit() {
   if (!currentEditingElement) return;
   
   var el = currentEditingElement;
-  var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+  var key = el.getAttribute('id') || 'el_' + Date.now();
   
-  // 恢复原始内容
   if (originalContent[key]) {
     el.innerHTML = originalContent[key];
   }
   
-  // 关闭编辑状态
   disableSingleElementEdit();
-}
-
-// 禁用单个元素编辑模式
-function disableSingleElementEdit() {
-  if (!currentEditingElement) return;
-  
-  var el = currentEditingElement;
-  
-  // 移除编辑状态
-  el.setAttribute('contenteditable', 'false');
-  el.classList.remove('editable-active');
-  
-  // 隐藏悬浮控制按钮
-  var controls = document.getElementById('edit-controls');
-  controls.classList.remove('show');
-  
-  // 清除当前编辑元素
-  currentEditingElement = null;
-}
-
-function isAnyElementEditing() {
-  return currentEditingElement !== null;
+  document.getElementById('edit-controls').style.display = 'none';
 }
 
 function refreshStatus() {
@@ -1832,13 +1689,28 @@ document.addEventListener('click', function(e) {
 
 <!-- ===== HEADER ===== -->
 <div class="header">
-  <div class="header-tag">v2.0 · 2026年修订版</div>
-  <h1>达人售后团队完整服务流程执行方案</h1>
-  <p class="header-desc">融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制</p>
-  <div class="header-meta">
-    <span>📋 共10种客户类型</span>
-    <span>⚡ CARP标准处理模型</span>
-    <span>🛡️ 四大黄金原则</span>
+  <div class="header-inner">
+    <div class="header-content">
+      <div class="header-tag">v2.0 · 2026年修订版</div>
+      <h1>达人售后团队完整服务流程执行方案</h1>
+      <p class="header-desc">融合全球顶级客服体系（Zendesk / CARP / HEAT模型）+ 达人直播电商售后实战经验，专为 Andy 团队定制</p>
+      <div class="header-meta">
+        <span>📋 共10种客户类型</span>
+        <span>⚡ CARP标准处理模型</span>
+        <span>🛡️ 四大黄金原则</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="add-section-btn" onclick="toggleSectionMenu()" class="btn btn-primary" style="display: none;">
+        &#x2795; 添加板块
+      </button>
+      <div id="section-type-menu">
+        <div class="section-type-item" onclick="addNewSection('text')">📝 文本板块</div>
+        <div class="section-type-item" onclick="addNewSection('card')">🗂️ 卡片板块</div>
+        <div class="section-type-item" onclick="addNewSection('flow')">🔄 流程板块</div>
+        <div class="section-type-item" onclick="addNewSection('notice')">📢 公告板块</div>
+      </div>
+    </div>
   </div>
 </div>
 
