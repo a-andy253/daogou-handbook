@@ -1398,6 +1398,10 @@ function revokeAccess() {
 
 function closeAdmin() {
   document.getElementById("admin-panel").style.display = "none";
+  document.body.style.overflow = "";
+  
+  // 如果当前处于编辑模式，关闭面板时不自动退出编辑模式
+  // 用户可以通过编辑控制按钮或管理面板中的按钮来退出编辑模式
 }
 
 function toggleEditMode() {
@@ -1411,6 +1415,8 @@ function toggleEditMode() {
 
 function enableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "none";
+  document.getElementById("save-edit-btn").style.display = "block";
+  document.getElementById("cancel-edit-btn").style.display = "block";
   document.getElementById("edit-controls").style.display = "flex";
   
   document.getElementById("admin-status").innerHTML = "&#x270F;&#xFE0F; <span style='color:var(--primary);'>编辑模式已开启</span>，双击任意内容即可修改";
@@ -1418,6 +1424,8 @@ function enableEditMode() {
 
 function disableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "block";
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
   document.getElementById("edit-controls").style.display = "none";
   
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
