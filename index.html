@@ -1465,7 +1465,8 @@ function toggleEditMode() {
 
 function enableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "none";
-  document.getElementById("edit-controls").style.display = "flex";
+  document.getElementById("save-edit-btn").style.display = "block";
+  document.getElementById("cancel-edit-btn").style.display = "block";
   
   // 确保编辑模式时隐藏蒙层
   var adminOverlay = document.querySelector('.admin-overlay');
@@ -1478,7 +1479,8 @@ function enableEditMode() {
 
 function disableEditMode() {
   document.getElementById("edit-mode-btn").style.display = "block";
-  document.getElementById("edit-controls").style.display = "none";
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
   
   // 确保退出编辑模式时隐藏蒙层
   var adminOverlay = document.querySelector('.admin-overlay');
@@ -1522,7 +1524,8 @@ function cancelEditMode() {
   
   isEditMode = false;
   document.getElementById("edit-mode-btn").style.display = "block";
-  document.getElementById("edit-controls").style.display = "none";
+  document.getElementById("save-edit-btn").style.display = "none";
+  document.getElementById("cancel-edit-btn").style.display = "none";
   currentEditingElement = null;
   document.getElementById("admin-status").innerHTML = "已取消修改";
 }
@@ -1578,8 +1581,13 @@ function addNewSection(type) {
   var sectionTemplates = {
     'text': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 文本板块</div><p>在此输入内容...</p></div>',
     'card': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 卡片板块</div><p>在此输入内容...</p></div>',
-    'flow': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 流程板块</div><p>步骤1 → 步骤2 → 步骤3</p></div>',
-    'notice': '<div class="alert alert-primary new-section" contenteditable="true"><strong>📢 公告：</strong>在此输入公告内容...</div>'
+    'flow': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CC; 流程板块</div><div class="flow"><div class="flow-step">步骤1</div><div class="flow-arrow">→</div><div class="flow-step">步骤2</div><div class="flow-arrow">→</div><div class="flow-step">步骤3</div></div></div>',
+    'notice': '<div class="alert alert-primary new-section" contenteditable="true"><strong>📢 公告：</strong>在此输入公告内容...</div>',
+    'alert': '<div class="alert alert-primary new-section" contenteditable="true"><strong>⚠️ 提示：</strong>在此输入提示内容...</div>',
+    'table': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F4CA; 表格板块</div><div class="table-wrap"><table><thead><tr><th>列1</th><th>列2</th><th>列3</th></tr></thead><tbody><tr><td>内容1</td><td>内容2</td><td>内容3</td></tr><tr><td>内容4</td><td>内容5</td><td>内容6</td></tr></tbody></table></div></div>',
+    'quote': '<div class="quote new-section" contenteditable="true">在此输入引用内容...</div>',
+    'list': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x2714; 列表板块</div><ul class="list"><li>列表项1</li><li>列表项2</li><li>列表项3</li></ul></div>',
+    'custom': '<div class="card new-section" contenteditable="true"><div class="card-title">&#x1F3DB; 自定义板块</div><p>在此输入自定义内容...</p></div>'
   };
   
   var newElement = document.createElement('div');
@@ -1788,15 +1796,6 @@ document.addEventListener('click', function(e) {
       </div>
     </div>
     <div class="header-actions">
-      <button id="add-section-btn" onclick="toggleSectionMenu()" class="btn btn-primary" style="display: none;">
-        &#x2795; 添加板块
-      </button>
-      <div id="section-type-menu">
-        <div class="section-type-item" onclick="addNewSection('text')">📝 文本板块</div>
-        <div class="section-type-item" onclick="addNewSection('card')">🗂️ 卡片板块</div>
-        <div class="section-type-item" onclick="addNewSection('flow')">🔄 流程板块</div>
-        <div class="section-type-item" onclick="addNewSection('notice')">📢 公告板块</div>
-      </div>
     </div>
   </div>
 </div>
@@ -1820,15 +1819,17 @@ document.addEventListener('click', function(e) {
       <a href="#training">新人培训</a>
     </div>
     <div style="position: relative;">
-      <button id="add-section-btn" onclick="toggleSectionMenu()">&#x2795; 添加板块</button>
+      <button id="add-section-btn" onclick="toggleSectionMenu()" class="btn btn-primary" style="display: none;">
+        &#x2795; 添加板块
+      </button>
       <div id="section-type-menu">
-        <div class="section-type-item" onclick="addNewSection('card')">&#x1F4CC; 卡片区块</div>
-        <div class="section-type-item" onclick="addNewSection('alert')">&#x26A0; 提示框</div>
-        <div class="section-type-item" onclick="addNewSection('table')">&#x1F4CA; 表格区块</div>
-        <div class="section-type-item" onclick="addNewSection('flow')">&#x1F680; 流程区块</div>
-        <div class="section-type-item" onclick="addNewSection('quote')">&#x1F4DD; 引用框</div>
-        <div class="section-type-item" onclick="addNewSection('list')">&#x2714; 列表区块</div>
-        <div class="section-type-item" onclick="addNewSection('custom')">&#x1F3DB; 自定义内容</div>
+        <div class="section-type-item" onclick="addNewSection('card')">🗂️ 卡片板块</div>
+        <div class="section-type-item" onclick="addNewSection('alert')">⚠️ 提示框</div>
+        <div class="section-type-item" onclick="addNewSection('table')">📊 表格板块</div>
+        <div class="section-type-item" onclick="addNewSection('flow')">🔄 流程板块</div>
+        <div class="section-type-item" onclick="addNewSection('quote')">📝 引用框</div>
+        <div class="section-type-item" onclick="addNewSection('list')">✔️ 列表板块</div>
+        <div class="section-type-item" onclick="addNewSection('custom')">🏛️ 自定义内容</div>
       </div>
     </div>
   </div>
