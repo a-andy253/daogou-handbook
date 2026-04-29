@@ -1010,12 +1010,20 @@
   top: 0; 
   right: 0; 
   bottom: 0; 
-  width: 320px;
+  width: 80%;
+  max-width: 320px;
   z-index: 99997;
   background: var(--card-bg); 
   border-left: 1px solid var(--border);
   padding: 24px;
   overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+  #admin-panel {
+    width: 100%;
+    border-radius: 16px 0 0 16px;
+  }
 }
 
 #admin-panel h3 { 
@@ -1252,8 +1260,9 @@
 
 /* Editable element styles */
 .editable-active {
-  border: 2px dashed #2E7D32 !important;
-  background: #F1F8E9 !important;
+  border: 2px dashed var(--primary) !important;
+  background: rgba(22, 93, 255, 0.1) !important;
+  box-shadow: 0 0 0 4px rgba(22, 93, 255, 0.1) !important;
   outline: none;
 }
 
@@ -1272,6 +1281,28 @@
     flex: 1;
     min-width: 100px;
   }
+}
+
+/* 无障碍优化 - 键盘焦点样式 */
+button:focus, input:focus, .editable-active:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* 悬浮按钮提示 */
+#admin-trigger {
+  position: relative;
+}
+#admin-trigger:hover::after {
+  content: '管理面板';
+  position: absolute;
+  right: 56px;
+  background: var(--text);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 </style>
 
@@ -1330,12 +1361,18 @@
 <button id="admin-trigger" onclick="openAdminPanel()">&#x2699;</button>
 
 <!-- 抽屉蒙层 -->
-<div class="admin-overlay" onclick="closeAdmin()"></div>
+<div class="admin-overlay" id="admin-overlay"></div>
 
 <script>
-var ADMIN_PW = "admin2026";
-var teamPw = "daogou2026";
-var teamActive = true;
+var ADMIN_PW = localStorage.getItem('adminPw') || "admin2026";
+var teamPw = localStorage.getItem('teamPw') || "daogou2026";
+var teamActive = localStorage.getItem('teamActive') !== 'false';
+
+function initState() {
+  ADMIN_PW = localStorage.getItem('adminPw') || "admin2026";
+  teamPw = localStorage.getItem('teamPw') || "daogou2026";
+  teamActive = localStorage.getItem('teamActive') !== 'false';
+}
 var isEditMode = false;
 var originalContent = {};
 var pendingNewSections = [];
@@ -1397,26 +1434,24 @@ function updateTeamPw() {
   var np = document.getElementById("new-team-pw").value.trim();
   if (np) {
     teamPw = np;
-    document.getElementById("admin-status").textContent = "密码已更新，当前团队密码：" + teamPw;
+    localStorage.setItem('teamPw', np);
+    document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>密码已更新</span>";
   }
 }
 
 function confirmRevokeAccess() {
   if (confirm("确定要取消团队访问权限吗？此操作不可恢复")) {
     teamActive = false;
-    document.getElementById("admin-status").textContent = "团队访问权限已取消！成员无法登录。";
+    localStorage.setItem('teamActive', 'false');
+    document.getElementById("admin-status").innerHTML = "&#x274C; <span style='color:var(--danger);'>团队权限已取消</span>";
     document.getElementById("new-team-pw").value = "";
   }
 }
 
-function revokeAccess() {
-  teamActive = false;
-  document.getElementById("admin-status").textContent = "团队访问权限已取消！成员无法登录。";
-  document.getElementById("new-team-pw").value = "";
-}
-
-function closeAdmin() {
-  document.getElementById("admin-panel").style.display = "none";
+function restoreTeamAccess() {
+  teamActive = true;
+  localStorage.setItem('teamActive', 'true');
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>团队权限已恢复</span>";
 }
 
 function toggleEditMode() {
@@ -1661,6 +1696,9 @@ function refreshStatus() {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
+  // 初始化状态，从本地存储恢复
+  initState();
+  
   var role = sessionStorage.getItem("daogou_role");
   
   // 强制隐藏蒙层，确保页面加载时蒙层不会挡住操作
@@ -1698,6 +1736,16 @@ document.addEventListener('click', function(e) {
   var btn = document.querySelector('#add-section-btn');
   if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
     menu.classList.remove('show');
+  }
+  
+  // 点击蒙层（不在面板内）时关闭管理员面板
+  var adminPanel = document.getElementById('admin-panel');
+  var adminOverlay = document.getElementById('admin-overlay');
+  if (adminPanel && adminOverlay && 
+      adminPanel.style.display === 'block' && 
+      !adminPanel.contains(e.target) && 
+      e.target === adminOverlay) {
+    closeAdmin();
   }
 });
 
