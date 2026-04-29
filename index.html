@@ -1234,21 +1234,7 @@
   justify-content: center;
 }
 
-/* 抽屉蒙层 */
-.admin-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 99996;
-}
 
-.admin-overlay.show {
-  display: block;
-}
 
 /* Editable element styles */
 .editable-active {
@@ -1329,9 +1315,6 @@
 <!-- 管理入口悬浮按钮 -->
 <button id="admin-trigger" onclick="openAdminPanel()">&#x2699;</button>
 
-<!-- 抽屉蒙层 -->
-<div class="admin-overlay" onclick="closeAdmin()"></div>
-
 <script>
 var ADMIN_PW = "admin2026";
 var teamPw = "daogou2026";
@@ -1382,14 +1365,12 @@ function loginAdmin() {
 // 打开管理员面板（抽屉）
 function openAdminPanel() {
   document.getElementById("admin-panel").style.display = "block";
-  document.querySelector(".admin-overlay").classList.add("show");
   document.body.style.overflow = "hidden";
 }
 
 // 关闭管理员面板（抽屉）
 function closeAdmin() {
   document.getElementById("admin-panel").style.display = "none";
-  document.querySelector(".admin-overlay").classList.remove("show");
   document.body.style.overflow = "";
 }
 
@@ -1644,12 +1625,6 @@ function refreshStatus() {
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
   var role = sessionStorage.getItem("daogou_role");
-  
-  // 强制隐藏蒙层，确保页面加载时蒙层不会挡住操作
-  var adminOverlay = document.querySelector(".admin-overlay");
-  if (adminOverlay) {
-    adminOverlay.classList.remove("show");
-  }
   
   // Restore session
   if (role === "admin") {
