@@ -1459,7 +1459,7 @@ function cancelEditMode() {
   
   var editableElements = document.querySelectorAll('[contenteditable="true"]');
   editableElements.forEach(function(el) {
-    var key = el.getAttribute('id') || el.textContent.substring(0, 50);
+    var key = getElementKey(el);
     if (originalContent[key]) {
       el.innerHTML = originalContent[key];
     }
@@ -1570,6 +1570,15 @@ function bindEditEventsToEditableElements() {
   });
 }
 
+function getElementKey(el) {
+  if (el.getAttribute('id')) {
+    return el.getAttribute('id');
+  }
+  var parent = el.parentNode;
+  var index = Array.prototype.indexOf.call(parent.children, el);
+  return 'el_' + el.className.replace(/\s+/g, '_') + '_' + index;
+}
+
 function enableSingleElementEdit(el) {
   if (currentEditingElement && currentEditingElement !== el) {
     disableSingleElementEdit();
@@ -1580,7 +1589,7 @@ function enableSingleElementEdit(el) {
   el.setAttribute('contenteditable', 'true');
   el.classList.add('editable-active');
   
-  var key = el.getAttribute('id') || 'el_' + Date.now();
+  var key = getElementKey(el);
   if (!originalContent[key]) {
     originalContent[key] = el.innerHTML;
   }
@@ -1602,7 +1611,7 @@ function saveSingleEdit() {
   if (!currentEditingElement) return;
   
   var el = currentEditingElement;
-  var key = el.getAttribute('id') || 'el_' + Date.now();
+  var key = getElementKey(el);
   
   var edits = JSON.parse(localStorage.getItem('handbook_edits') || '{}');
   edits[key] = el.innerHTML;
@@ -1617,7 +1626,7 @@ function cancelSingleEdit() {
   if (!currentEditingElement) return;
   
   var el = currentEditingElement;
-  var key = el.getAttribute('id') || 'el_' + Date.now();
+  var key = getElementKey(el);
   
   if (originalContent[key]) {
     el.innerHTML = originalContent[key];
