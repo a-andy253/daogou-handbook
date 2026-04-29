@@ -1672,10 +1672,10 @@ document.addEventListener('click', function(e) {
 document.addEventListener('click', function(e) {
   var controls = document.getElementById('edit-controls');
   
-  // 如果正在编辑，且点击的不是编辑元素、不是编辑控制按钮、不是编辑控制按钮的子元素
+  // 如果正在编辑，且点击的不是编辑元素、不是编辑控制按钮
   if (currentEditingElement && 
       !currentEditingElement.contains(e.target) && 
-      !controls.contains(e.target)) {
+      (!controls || !controls.contains(e.target))) {
     cancelSingleEdit();
   }
 });
