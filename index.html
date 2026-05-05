@@ -1366,6 +1366,11 @@ button:focus, input:focus, .editable-active:focus {
     <button id="edit-mode-btn" onclick="toggleEditMode()">开启编辑模式</button>
     <button id="save-edit-btn" onclick="saveEdits()" style="display:none;">保存修改</button>
     <button id="cancel-edit-btn" onclick="cancelEditMode()" style="display:none;">取消编辑</button>
+    <div style="margin-top:12px;">
+      <button onclick="exportEdits()">&#x1F4E4; 导出编辑内容</button>
+      <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importEdits(event)">
+      <button onclick="document.getElementById('import-file').click()">&#x1F4E5; 导入编辑内容</button>
+    </div>
     <div class="admin-status" id="admin-status"></div>
   </div>
 </div>
@@ -1830,6 +1835,53 @@ document.addEventListener('click', function(e) {
     }
   });
 });
+
+function exportEdits() {
+  var data = {
+    edits: localStorage.getItem('edits'),
+    adminPw: localStorage.getItem('adminPw'),
+    teamPw: localStorage.getItem('teamPw'),
+    teamActive: localStorage.getItem('teamActive'),
+    exportTime: new Date().toISOString()
+  };
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'daogou-handbook-edits.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导出</span>";
+}
+
+function importEdits(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (data.edits) localStorage.setItem('edits', data.edits);
+      if (data.adminPw) localStorage.setItem('adminPw', data.adminPw);
+      if (data.teamPw) localStorage.setItem('teamPw', data.teamPw);
+      if (data.teamActive !== undefined) localStorage.setItem('teamActive', data.teamActive);
+      
+      // 重新初始化状态
+      initState();
+      loadEdits();
+      
+      document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导入，请刷新页面</span>";
+      alert("编辑内容已导入！建议刷新页面以应用更改。");
+    } catch (err) {
+      document.getElementById("admin-status").innerHTML = "&#x274C; <span style='color:var(--danger);'>导入失败：文件格式错误</span>";
+      alert("导入失败：无效的JSON文件");
+    }
+  };
+  reader.readAsText(file);
+}
+
 </script>
 
 
@@ -3761,6 +3813,53 @@ document.addEventListener('click', function(e) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     });
   });
+
+function exportEdits() {
+  var data = {
+    edits: localStorage.getItem('edits'),
+    adminPw: localStorage.getItem('adminPw'),
+    teamPw: localStorage.getItem('teamPw'),
+    teamActive: localStorage.getItem('teamActive'),
+    exportTime: new Date().toISOString()
+  };
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'daogou-handbook-edits.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导出</span>";
+}
+
+function importEdits(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (data.edits) localStorage.setItem('edits', data.edits);
+      if (data.adminPw) localStorage.setItem('adminPw', data.adminPw);
+      if (data.teamPw) localStorage.setItem('teamPw', data.teamPw);
+      if (data.teamActive !== undefined) localStorage.setItem('teamActive', data.teamActive);
+      
+      // 重新初始化状态
+      initState();
+      loadEdits();
+      
+      document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导入，请刷新页面</span>";
+      alert("编辑内容已导入！建议刷新页面以应用更改。");
+    } catch (err) {
+      document.getElementById("admin-status").innerHTML = "&#x274C; <span style='color:var(--danger);'>导入失败：文件格式错误</span>";
+      alert("导入失败：无效的JSON文件");
+    }
+  };
+  reader.readAsText(file);
+}
+
 </script>
 
 
@@ -3875,6 +3974,53 @@ function initFloatingBall() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initFloatingBall); 
+
+function exportEdits() {
+  var data = {
+    edits: localStorage.getItem('edits'),
+    adminPw: localStorage.getItem('adminPw'),
+    teamPw: localStorage.getItem('teamPw'),
+    teamActive: localStorage.getItem('teamActive'),
+    exportTime: new Date().toISOString()
+  };
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'daogou-handbook-edits.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导出</span>";
+}
+
+function importEdits(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (data.edits) localStorage.setItem('edits', data.edits);
+      if (data.adminPw) localStorage.setItem('adminPw', data.adminPw);
+      if (data.teamPw) localStorage.setItem('teamPw', data.teamPw);
+      if (data.teamActive !== undefined) localStorage.setItem('teamActive', data.teamActive);
+      
+      // 重新初始化状态
+      initState();
+      loadEdits();
+      
+      document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>编辑内容已导入，请刷新页面</span>";
+      alert("编辑内容已导入！建议刷新页面以应用更改。");
+    } catch (err) {
+      document.getElementById("admin-status").innerHTML = "&#x274C; <span style='color:var(--danger);'>导入失败：文件格式错误</span>";
+      alert("导入失败：无效的JSON文件");
+    }
+  };
+  reader.readAsText(file);
+}
+
 </script>
 </body>
 </html>
