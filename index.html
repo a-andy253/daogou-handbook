@@ -1342,6 +1342,18 @@ button:focus, input:focus, .editable-active:focus {
   <button id="admin-close" onclick="closeAdmin()">&#x2715;</button>
   
   <div class="admin-section">
+    <div class="admin-section-title">管理员密码</div>
+    <label>当前密码</label>
+    <input type="password" id="current-admin-pw" placeholder="请输入当前管理员密码">
+    <label>新密码</label>
+    <input type="password" id="new-admin-pw" placeholder="请输入新密码（至少4位）">
+    <label>确认新密码</label>
+    <input type="password" id="confirm-admin-pw" placeholder="请再次输入新密码">
+    <button onclick="updateAdminPw()">&#x2705; 修改管理员密码</button>
+    <div class="pw-error" id="err-admin-pw" style="display:none;"></div>
+  </div>
+
+  <div class="admin-section">
     <div class="admin-section-title">团队权限</div>
     <label>新团队密码</label>
     <input type="password" id="new-team-pw" placeholder="留空则保持不变">
@@ -1438,6 +1450,41 @@ function updateTeamPw() {
     localStorage.setItem('teamPw', np);
     document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>密码已更新</span>";
   }
+}
+
+function updateAdminPw() {
+  var currentPw = document.getElementById("current-admin-pw").value;
+  var newPw = document.getElementById("new-admin-pw").value;
+  var confirmPw = document.getElementById("confirm-admin-pw").value;
+  var errEl = document.getElementById("err-admin-pw");
+
+  errEl.style.display = "none";
+
+  if (currentPw !== ADMIN_PW) {
+    errEl.textContent = "当前密码错误";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (newPw.length < 4) {
+    errEl.textContent = "新密码至少需要4位";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (newPw !== confirmPw) {
+    errEl.textContent = "两次输入的新密码不一致";
+    errEl.style.display = "block";
+    return;
+  }
+
+  ADMIN_PW = newPw;
+  localStorage.setItem('adminPw', ADMIN_PW);
+  document.getElementById("current-admin-pw").value = "";
+  document.getElementById("new-admin-pw").value = "";
+  document.getElementById("confirm-admin-pw").value = "";
+  document.getElementById("admin-status").innerHTML = "&#x2705; <span style='color:var(--success);'>管理员密码已更新</span>";
+  alert("密码修改成功！");
 }
 
 function confirmRevokeAccess() {
