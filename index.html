@@ -225,7 +225,8 @@
   .alert-danger { background: var(--danger-bg); border-color: var(--danger); color: #8B0000; }
   .alert-warning { background: var(--warning-bg); border-color: var(--warning); color: #7A3800; }
   .alert-success { background: var(--success-bg); border-color: var(--success); color: #2D4A0C; }
-  .alert-primary { background: var(--primary-light); border-color: var(--primary); color: var(--primary-dark); }
+  .alert-primary { background: var(--primary-light); border-color: var(--primary); color: var(--text); }
+  .alert-primary strong { color: var(--text); }
   .alert strong { font-weight: 700; }
 
   /* ===== QUOTE ===== */
@@ -3579,10 +3580,16 @@ document.addEventListener('click', function(e) {
 
   window.addEventListener('scroll', () => {
     let current = '';
+    const scrollPosition = window.scrollY + window.innerHeight / 3;
+    
     sections.forEach(sec => {
-      const top = sec.offsetTop - 100;
-      if (scrollY >= top) current = sec.getAttribute('id');
+      const top = sec.offsetTop;
+      const bottom = top + sec.offsetHeight;
+      if (scrollPosition >= top && scrollPosition < bottom) {
+        current = sec.getAttribute('id');
+      }
     });
+    
     navLinks.forEach(a => {
       a.classList.remove('active');
       if (a.getAttribute('href') === '#' + current) a.classList.add('active');
