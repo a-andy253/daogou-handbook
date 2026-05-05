@@ -1560,9 +1560,11 @@ function loadEdits() {
   var savedEdits = localStorage.getItem('handbook_edits');
   if (savedEdits) {
     var edits = JSON.parse(savedEdits);
-    document.querySelectorAll('[id]').forEach(function(el) {
-      if (edits[el.id]) {
-        el.innerHTML = edits[el.id];
+    var editIds = Object.keys(edits);
+    editIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.innerHTML = edits[id];
       }
     });
   }
@@ -1611,22 +1613,27 @@ function initSingleEditMode() {
 }
 
 function bindEditEventsToEditableElements() {
-  var editableElements = document.querySelectorAll('.card, .case-card, .train-card, .tool-card, .script-box');
-  editableElements.forEach(function(el) {
-    if (!el.hasAttribute('data-edit-bound')) {
-      el.setAttribute('data-edit-bound', 'true');
-      
-      el.addEventListener('dblclick', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        enableSingleElementEdit(el);
-      });
-      
-      el.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        enableSingleElementEdit(el);
-      });
+  document.body.addEventListener('dblclick', function(e) {
+    var target = e.target.closest('.card, .case-card, .train-card, .tool-card, .script-box');
+    if (target) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!target.hasAttribute('data-edit-bound')) {
+        target.setAttribute('data-edit-bound', 'true');
+      }
+      enableSingleElementEdit(target);
+    }
+  });
+  
+  document.body.addEventListener('contextmenu', function(e) {
+    var target = e.target.closest('.card, .case-card, .train-card, .tool-card, .script-box');
+    if (target) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!target.hasAttribute('data-edit-bound')) {
+        target.setAttribute('data-edit-bound', 'true');
+      }
+      enableSingleElementEdit(target);
     }
   });
 }
@@ -1738,15 +1745,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Close section menu when clicking outside
+// 全局点击事件处理（合并优化）
 document.addEventListener('click', function(e) {
+  // 1. 关闭section菜单
   var menu = document.getElementById('section-type-menu');
   var btn = document.querySelector('#add-section-btn');
   if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
     menu.classList.remove('show');
   }
   
-  // 点击蒙层（不在面板内）时关闭管理员面板
+  // 2. 点击蒙层关闭管理员面板
   var adminPanel = document.getElementById('admin-panel');
   var adminOverlay = document.getElementById('admin-overlay');
   if (adminPanel && adminOverlay && 
@@ -1755,17 +1763,14 @@ document.addEventListener('click', function(e) {
       e.target === adminOverlay) {
     closeAdmin();
   }
-});
-
-// 点击页面其他区域自动取消编辑
-document.addEventListener('click', function(e) {
-  var controls = document.getElementById('edit-controls');
   
-  // 如果正在编辑，且点击的不是编辑元素、不是编辑控制按钮
-  if (currentEditingElement && 
-      !currentEditingElement.contains(e.target) && 
-      (!controls || !controls.contains(e.target))) {
-    cancelSingleEdit();
+  // 3. 点击页面其他区域自动取消编辑
+  if (currentEditingElement) {
+    var controls = document.getElementById('edit-controls');
+    if (!currentEditingElement.contains(e.target) && 
+        (!controls || !controls.contains(e.target))) {
+      cancelSingleEdit();
+    }
   }
 });
 
