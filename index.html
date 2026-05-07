@@ -2618,7 +2618,7 @@ function importEdits(event) {
           <thead><tr><th>时间</th><th>内容</th><th>主持人</th></tr></thead>
           <tbody>
             <tr><td>早上 9:00</td><td>昨日遗留case跟进 + 今日重点</td><td>各组员</td></tr>
-            <tr><td>下午 16:00</td><td>今日新case汇总 + 品牌方反馈同步</td><td>Andy / 组长</td></tr>
+            <tr><td>下午 16:00</td><td>（如有）每日新case汇总 + 品牌方反馈同步/每周一次问题汇总核对</td><td>Andy / 组长</td></tr>
             <tr><td>不定期</td><td>难缠case复盘讨论（存档形成话术库）</td><td>Andy</td></tr>
           </tbody>
         </table>
@@ -2644,7 +2644,7 @@ function importEdits(event) {
         <div class="sub-card-title"><span class="icon">📁</span> 存档格式建议</div>
         <div class="script-box" style="background:#F0F4FF;">
           <p>[日期]_[品牌名]_[粉丝ID]_[问题类型]_[处理结果]<br><br>
-          例：20260315_XX品牌_粉丝A_开封退货_处理：补偿50元券</p>
+          例：20260315_XX品牌_粉丝A_开封退货_处理：正常流程处理+情绪安抚</p>
         </div>
       </div>
     </div>
@@ -2660,8 +2660,8 @@ function importEdits(event) {
     <div class="grid-2">
       <div class="card">
         <div class="card-title">🧘 团队情绪管理（组长负责）</div>
-        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 每天设立"吐槽时间"（15分钟，可选参与）</div>
-        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 遇到恶意人身攻击可申请暂时离开工位</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 每天设立"吐槽时间"（15分钟，视情况安排，可选参与）</div>
+        <div class="prohibit-item"><span class="prohibit-ok">✓</span> 遇到恶意人身攻击，可申请15分钟暂时离开工位。</div>
         <div class="prohibit-item"><span class="prohibit-ok">✓</span> 每月一次心理疏导或团建</div>
       </div>
       <div class="card">
@@ -2679,9 +2679,9 @@ function importEdits(event) {
         <table>
           <thead><tr><th>陷阱</th><th>正确做法</th></tr></thead>
           <tbody>
-            <tr><td>粉丝说"你们达人怎么不管"</td><td>"我会把您的反馈转达给团队，我们一起解决"</td></tr>
+            <tr><td>粉丝说"你们达人怎么不管"</td><td>"了解具体是什么问题，告知所有问题我们都是会认真对待，只要是合情合理"</td></tr>
             <tr><td>粉丝说"别的品牌都给我退了"</td><td>"我理解，每个品牌政策不同，我会帮您尽力申请"</td></tr>
-            <tr><td>粉丝说"我录屏了/截图了"</td><td>"好的，您保留证据是您的权利，我们也会认真处理您的问题"</td></tr>
+            <tr><td>粉丝说"我录屏了/截图了"</td><td>"了解具体问题，并核对清楚，再给到回复！"</td></tr>
             <tr><td>粉丝深夜发消息</td><td>正常响应时间内处理，不需要立即回复</td></tr>
             <tr><td>粉丝连续多条轰炸式发消息</td><td>耐心逐条读完再回复，不要被带节奏，不要立即回怼</td></tr>
           </tbody>
@@ -2704,10 +2704,10 @@ function importEdits(event) {
           <thead><tr><th>指标</th><th>目标值</th><th>说明</th></tr></thead>
           <tbody>
             <tr><td>首次响应时间</td><td><span class="badge badge-green">≤ 3分钟</span></td><td>从收到消息到首次回复</td></tr>
-            <tr><td>问题解决率</td><td><span class="badge badge-green">≥ 85%</span></td><td>不升级到组长的问题比例</td></tr>
+            <tr><td>问题解决率</td><td><span class="badge badge-green">≥ 95%</span></td><td>不升级到组长的问题比例</td></tr>
             <tr><td>平均处理时长</td><td><span class="badge badge-green">≤ 24小时</span></td><td>从收到投诉到最终解决</td></tr>
-            <tr><td>客户满意度</td><td><span class="badge badge-green">≥ 90%</span></td><td>好评率（可设月度抽查）</td></tr>
-            <tr><td>品牌方投诉率</td><td><span class="badge badge-green">0</span></td><td>被品牌方投诉沟通方式不当</td></tr>
+            <tr><td>客户满意度</td><td><span class="badge badge-green">≥ 95%</span></td><td>好评率（可设月度抽查）</td></tr>
+            <tr><td>粉丝/品牌方投诉率</td><td><span class="badge badge-green">0</span></td><td>被粉丝/品牌方投诉沟通方式不当（不允许出现，出现有异议的投诉，说明缘由）</td></tr>
           </tbody>
         </table>
       </div>
@@ -2797,10 +2797,10 @@ function importEdits(event) {
           <thead><tr><th>场景</th><th>话术</th></tr></thead>
           <tbody>
             <tr><td>客户很生气</td><td>"我完全理解您的感受，换作是我也会着急。请您放心，我一定会认真处理这件事。"</td></tr>
-            <tr><td>客户质疑品牌</td><td>"您说得有道理，我这边帮您记录并反馈给品牌方。"</td></tr>
-            <tr><td>客户多次投诉</td><td>"感谢您再次联系我们，我理解您还没有得到满意的解决方案，我会亲自跟进。"</td></tr>
-            <tr><td>客户威胁曝光</td><td>"我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。"</td></tr>
-            <tr><td>客户要求找领导</td><td>"我完全理解您希望得到更多支持的心情。我会安排组长直接联系您，方案确认后，我们会通过大管家账号联系您。"</td></tr>
+            <tr><td>客户质疑品牌</td><td>"非常理解您的感受，我这边帮您记录并反馈给品牌方。稍后会给到你妥善的处理方案"</td></tr>
+            <tr><td>客户多次投诉</td><td>"不允许有"如出现，整理好完整的沟通内容和订单记录，由Andy全权处理"</td></tr>
+            <tr><td>客户威胁曝光</td><td>"我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈，争取尽快给您一个满意的处理方案。"（此类问题，多人协同处理/上报领导）</td></tr>
+            <tr><td>客户要求找领导</td><td>"我完全理解您希望得到更多支持的心情。我会反馈领导直接联系您，方案确认后，我们会通过大管家账号联系您。"</td></tr>
           </tbody>
         </table>
       </div>
