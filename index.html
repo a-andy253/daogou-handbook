@@ -1925,7 +1925,7 @@ function importEdits(event) {
       <a href="#skincare-sop">护肤SOP</a>
       <a href="#scenarios">售后场景</a>
       <a href="#training">新人培训</a>
-      <a href="#training" class="highlight">进阶培训</a>
+      <a href="#advance-training">进阶培训</a>
     </div>
     <div style="position: relative;">
       <button id="add-section-btn" onclick="toggleSectionMenu()" class="btn btn-primary" style="display: none;">
@@ -3724,16 +3724,23 @@ function importEdits(event) {
     </div>
   </div>
 
-  <div class="train-card" id="train11">
-    <div class="train-card-header">
-      <div class="train-icon">&#x1F9EE;</div>
-      <div class="train-meta">
-        <div class="train-day">第6天</div>
-        <div class="train-title">护肤专业知识体系</div>
-        <div class="train-subtitle">成分字典 + 肤质判断 + 产品搭配</div>
-      </div>
+  <!-- ===== ADVANCE TRAINING ===== -->
+  <div id="advance-training" class="section" style="margin-top:60px;">
+    <div class="section-header">
+      <div class="section-num">🔬</div>
+      <div class="section-title">进阶培训</div>
     </div>
-    <div class="train-items">
+    
+    <div class="train-card" id="train11">
+      <div class="train-card-header">
+        <div class="train-icon">&#x1F9EE;</div>
+        <div class="train-meta">
+          <div class="train-day">第6天</div>
+          <div class="train-title">护肤专业知识体系</div>
+          <div class="train-subtitle">成分字典 + 肤质判断 + 产品搭配</div>
+        </div>
+      </div>
+      <div class="train-items">
       <div class="train-item">
         <div class="train-label">&#x1F36D; 美白提亮成分</div>
         <div class="train-text"><strong>早间抗氧化：</strong>原型VC、VC衍生物、乙基VC、AA2G、麦角硫因、EUK134<br><strong>晚间淡黑：</strong>烟酰胺、377、传明酸、熊果苷，光甘草定、4MSK<br><strong>禁忌：</strong>不与高浓度酸、A醇同时叠加使用</div>
@@ -3768,7 +3775,7 @@ function importEdits(event) {
       </div>
     </div>
   </div>
-
+  
   <div class="train-card" id="train12">
     <div class="train-card-header">
       <div class="train-icon">&#x1F3AD;</div>
@@ -3805,8 +3812,6 @@ function importEdits(event) {
       </div>
     </div>
   </div>
-
-    </div>
   </section>
 <div class="footer">
   <p>达人售后团队完整服务流程执行方案 v2.0 · 专为 Andy 团队定制</p>
