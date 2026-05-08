@@ -930,37 +930,122 @@
 <style>
 #pw-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  background: url('https://neeko-copilot.bytedance.net/api/text2image?prompt=luxury%20skincare%20cream%20jar%20on%20pink%20marble%20surface%20with%20soft%20flowers%20and%20elegant%20lighting%20minimalist%20beauty%20product%20photography&image_size=landscape_16_9') no-repeat center center fixed;
+  background-size: cover;
   display: flex; align-items: center; justify-content: center;
-  z-index: 99999; flex-direction: column; gap: 16px;
+  z-index: 99999;
 }
-#pw-overlay .lock-icon { font-size: 56px; margin-bottom: 6px; }
-#pw-overlay h2 { color: #fff; font-size: 22px; margin: 0; font-weight: 700; }
-#pw-overlay p { color: rgba(255,255,255,0.7); margin: 0; font-size: 14px; }
-#pw-tabs { display: flex; gap: 8px; margin-top: 4px; }
+#pw-overlay::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(26, 54, 164, 0.4);
+}
+#pw-container {
+  position: relative; z-index: 1;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 380px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+#pw-overlay .lock-icon { 
+  font-size: 48px; 
+  text-align: center;
+  display: block;
+  margin-bottom: 12px;
+  color: #1A36A4;
+}
+#pw-overlay h2 { 
+  color: #1A36A4; 
+  font-size: 24px; 
+  margin: 0 0 8px 0; 
+  font-weight: 700;
+  text-align: center;
+}
+#pw-overlay p { 
+  color: #666; 
+  margin: 0 0 24px 0; 
+  font-size: 14px;
+  text-align: center;
+}
+#pw-tabs { 
+  display: flex; 
+  gap: 8px; 
+  justify-content: center;
+  margin-bottom: 24px; 
+}
 #pw-tabs button {
-  padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
-  border: 2px solid rgba(255,255,255,0.4); background: transparent; color: rgba(255,255,255,0.7);
-  border-radius: 20px; transition: all 0.2s;
+  padding: 10px 24px; 
+  font-size: 13px; 
+  font-weight: 600; 
+  cursor: pointer;
+  border: 2px solid rgba(26, 54, 164, 0.2); 
+  background: transparent; 
+  color: #666;
+  border-radius: 20px; 
+  transition: all 0.3s;
 }
 #pw-tabs button.active, #pw-tabs button:hover {
-  background: rgba(255,255,255,0.2); color: #fff; border-color: #fff;
+  background: #1A36A4; 
+  color: #fff; 
+  border-color: #1A36A4;
 }
-#pw-form-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 4px; }
+#pw-form-wrap { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 14px; 
+}
 #pw-form-wrap input {
-  padding: 12px 20px; font-size: 16px; border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 12px; background: rgba(255,255,255,0.1); color: #fff;
-  text-align: center; width: 240px; outline: none; transition: border 0.2s;
+  padding: 14px 24px; 
+  font-size: 15px; 
+  border: 2px solid #E8E8E8;
+  border-radius: 14px; 
+  background: rgba(255, 255, 255, 0.8); 
+  color: #333;
+  text-align: center; 
+  width: 100%; 
+  box-sizing: border-box;
+  outline: none; 
+  transition: all 0.3s;
 }
-#pw-form-wrap input::placeholder { color: rgba(255,255,255,0.5); }
-#pw-form-wrap input:focus { border-color: #F7C948; }
+#pw-form-wrap input::placeholder { color: #999; }
+#pw-form-wrap input:focus { 
+  border-color: #1A36A4; 
+  box-shadow: 0 0 0 3px rgba(26, 54, 164, 0.1);
+}
 #pw-form-wrap button {
-  padding: 12px 40px; font-size: 16px; font-weight: 700; background: #F7C948;
-  color: #1A36A4; border: none; border-radius: 12px; cursor: pointer; transition: transform 0.2s;
+  padding: 14px 48px; 
+  font-size: 15px; 
+  font-weight: 700; 
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%);
+  color: #fff; 
+  border: none; 
+  border-radius: 14px; 
+  cursor: pointer; 
+  transition: all 0.3s;
+  width: 100%;
 }
-#pw-form-wrap button:hover { transform: scale(1.05); }
-.pw-error { color: #ff6b6b; font-size: 13px; display: none; }
-.pw-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
+#pw-form-wrap button:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(26, 54, 164, 0.3);
+}
+.pw-error { 
+  color: #E53935; 
+  font-size: 13px; 
+  display: none;
+  text-align: center;
+  margin-top: 8px;
+}
+.pw-hint { 
+  color: #999; 
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+}
 
 /* 通用按钮样式 */
 .btn {
@@ -1308,24 +1393,26 @@ button:focus, input:focus, .editable-active:focus {
 </style>
 
 <div id="pw-overlay">
-  <div class="lock-icon">&#x1F512;</div>
-  <h2>导购客服工作手册</h2>
-  <p>请选择登录身份</p>
-  <div id="pw-tabs">
-    <button class="active" onclick="showTab('team')">团队成员</button>
-    <button onclick="showTab('admin')">管理员</button>
-  </div>
-  <div id="pw-form-wrap">
-    <div id="tab-team">
-      <input type="password" id="pw-team" placeholder="请输入团队密码" autocomplete="off">
-      <div class="pw-error" id="err-team">密码错误，请重试</div>
-      <button onclick="loginTeam()">进入手册</button>
+  <div id="pw-container">
+    <div class="lock-icon">&#x1F512;</div>
+    <h2>导购客服工作手册</h2>
+    <p>请选择登录身份</p>
+    <div id="pw-tabs">
+      <button class="active" onclick="showTab('team')">团队成员</button>
+      <button onclick="showTab('admin')">管理员</button>
     </div>
-    <div id="tab-admin" style="display:none;">
-      <input type="password" id="pw-admin" placeholder="请输入管理员密码" autocomplete="off">
-      <div class="pw-error" id="err-admin">密码错误，请重试</div>
-      <button onclick="loginAdmin()">登录管理后台</button>
-      <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
+    <div id="pw-form-wrap">
+      <div id="tab-team">
+        <input type="password" id="pw-team" placeholder="请输入团队密码" autocomplete="off">
+        <div class="pw-error" id="err-team">密码错误，请重试</div>
+        <button onclick="loginTeam()">进入手册</button>
+      </div>
+      <div id="tab-admin" style="display:none;">
+        <input type="password" id="pw-admin" placeholder="请输入管理员密码" autocomplete="off">
+        <div class="pw-error" id="err-admin">密码错误，请重试</div>
+        <button onclick="loginAdmin()">登录管理后台</button>
+        <div class="pw-hint">管理员可修改团队密码或取消团队访问权限</div>
+      </div>
     </div>
   </div>
 </div>
