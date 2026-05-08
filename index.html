@@ -930,15 +930,9 @@
 <style>
 #pw-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://neeko-copilot.bytedance.net/api/text2image?prompt=luxury%20skincare%20cream%20jar%20on%20pink%20marble%20surface%20with%20soft%20flowers%20gypsophila%20and%20elegant%20lighting%20minimalist%20beauty%20product%20photography%20pink%20background&image_size=landscape_16_9') no-repeat center center fixed;
-  background-size: cover;
+  background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 40%, #4A7AC4 70%, #1A36A4 100%);
   display: flex; align-items: center; justify-content: center;
   z-index: 99999;
-}
-#pw-overlay::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(26, 54, 164, 0.85);
 }
 #pw-container {
   position: relative; z-index: 1;
