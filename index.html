@@ -930,13 +930,16 @@
 <style>
 #pw-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E1 50%, #FFF0F5 100%);
   background: url('https://s41.ax1x.com/2026/05/08/peqToOx.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex; align-items: center; justify-content: center;
   z-index: 99999;
 }
-
+#pw-overlay::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(26, 54, 164, 0.6);
+}
 #pw-container {
   position: relative; z-index: 1;
   background: rgba(255, 255, 255, 0.9);
@@ -2011,6 +2014,7 @@ function importEdits(event) {
       <a href="#scenarios">售后场景</a>
       <a href="#training">新人培训</a>
       <a href="#advance-training">进阶培训</a>
+      <a href="#live-sop">直播售后SOP</a>
     </div>
     <div style="position: relative;">
       <button id="add-section-btn" onclick="toggleSectionMenu()" class="btn btn-primary" style="display: none;">
@@ -3893,6 +3897,384 @@ function importEdits(event) {
       <div class="train-item">
         <div class="train-label">&#x1F389; 通关奖励</div>
         <div class="train-text"><strong>全部通关：</strong>获得「售后小能手」称号，正式进入team群<br><strong>额外奖励：</strong>优秀新人可获得品牌方参观学习机会<br><strong>持续成长：</strong>每月「服务之星」评选，优先获得进阶培训名额</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="live-sop" style="margin-top:60px;">
+    <div class="section-header">
+      <div class="section-num">🎙️</div>
+      <div class="section-title">达人直播售后客服SOP v1.0</div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header" style="background: linear-gradient(135deg, #1A36A4 0%, #2B5BE8 100%); color: white;">
+        <strong>适用团队：</strong>达人合作方 · 直播售后客服团队<br>
+        <strong>核心定位：</strong>达人售后的最后一道防线，品牌客服做不到的，我们来兜底<br>
+        <strong>版本：</strong>v1.0 草稿（已按辩论意见修订）
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">一、团队使命与核心定位</div>
+      <div class="card-body">
+        <h4>1.1 我们是谁</h4>
+        <p>我们是 <strong>达人直播售后的综合服务层</strong>，不是任何一个品牌的客服代表。我们的客户是 <strong>粉丝</strong>，我们的责任是 <strong>守护达人口碑</strong>，我们的价值是 <strong>比品牌客服更专业、比平台客服更有人情味</strong>。</p>
+        
+        <h4>1.2 三条铁律</h4>
+        <ul>
+          <li>• <strong>粉丝的问题，就是我们的问题</strong>：不说"这不归我们管"，只说"我来帮你查"</li>
+          <li>• <strong>品牌客服给不了的，我们来补</strong>：品牌政策是底线，我们服务无上限</li>
+          <li>• <strong>每一件事都要有回音</strong>：没把握的事情，承诺查询时间，到点必须回复</li>
+        </ul>
+
+        <h4>1.3 和品牌客服的本质区别</h4>
+        <table class="data-table" style="width:100%;">
+          <tr><th>维度</th><th>品牌客服</th><th>我们的团队</th></tr>
+          <tr><td>服务范围</td><td>单品牌</td><td>全场所有品牌</td></tr>
+          <tr><td>售后政策</td><td>框死，无法变通</td><td>综合判断，灵活应对</td></tr>
+          <tr><td>专业深度</td><td>只懂自家产品</td><td>跨品牌成分/搭配/肤质判断</td></tr>
+          <tr><td>皮肤售后</td><td>无</td><td>有专业皮肤老师支撑</td></tr>
+          <tr><td>目标</td><td>处理投诉</td><td>解决粉丝实际问题 + 守护达人口碑</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">二、直播前：备战标准（每场必备）</div>
+      <div class="card-body">
+        <h4>2.1 选品背书清单（开播前必须完成）</h4>
+        <p>每场直播涉及 15～20 个品，客服必须在上播前掌握每个品的基础信息。</p>
+        <table class="data-table" style="width:100%;">
+          <tr><th>信息项</th><th>重要性</th><th>备注</th></tr>
+          <tr><td>产品名称 + 主打功效</td><td>必须</td><td>这是最基础的门面</td></tr>
+          <tr><td>主要活性成分</td><td>必须</td><td>判断过敏/搭配风险的核心</td></tr>
+          <tr><td>品牌售后政策</td><td>必须</td><td>哪些能退、哪些要证明</td></tr>
+          <tr><td>品牌对接人联系方式</td><td>必须</td><td>需要升级时的救命通道</td></tr>
+          <tr><td>禁用搭配提示</td><td>必须</td><td>哪些产品不建议和其他品叠用</td></tr>
+          <tr><td>特殊肤质提示</td><td>尽量</td><td>敏感肌/孕妇禁用成分等</td></tr>
+        </table>
+
+        <h4>禁用搭配预警示例：</h4>
+        <ul>
+          <li>• VC原型 + 果酸/水杨酸 → 不能同用</li>
+          <li>• 视黄醇 + 果酸 → 不能同用</li>
+          <li>• 含酒精产品 + 美白类 → 需提醒间隔使用</li>
+        </ul>
+
+        <h4>2.2 场次分工机制</h4>
+        <table class="data-table" style="width:100%;">
+          <tr><th>角色</th><th>职责</th></tr>
+          <tr><td>主岗客服</td><td>接收粉丝消息，按类型分流，基础问题直接回复</td></tr>
+          <tr><td>升级处理岗</td><td>接收主岗升级的复杂问题，对接品牌方/皮肤老师</td></tr>
+          <tr><td>记录岗</td><td>登记所有投诉和异常案例，用于播后复盘</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">三、直播中：服务节奏</div>
+      <div class="card-body">
+        <h4>3.1 消息分流标准</h4>
+        <p>粉丝发来消息 → 客服先判断类型 → 按类型走对应路径</p>
+        <table class="data-table" style="width:100%;">
+          <tr><th>消息类型</th><th>判断方式</th><th>处理路径</th></tr>
+          <tr><td>产品咨询</td><td>问能不能用/怎么搭配</td><td>基础回答或转皮肤老师</td></tr>
+          <tr><td>疑似过敏</td><td>出现泛红/刺痛/红肿等</td><td>走过敏处理流程</td></tr>
+          <tr><td>功效投诉</td><td>说没效果/没感觉</td><td>走功效投诉流程</td></tr>
+          <tr><td>退换货咨询</td><td>问能不能退/怎么退</td><td>确认品牌政策后回复</td></tr>
+          <tr><td>情绪投诉</td><td>带情绪/感叹号/多条轰炸</td><td>走CARP安抚流程</td></tr>
+        </table>
+
+        <h4>3.2 三条快速回复基准线</h4>
+        <ul>
+          <li><strong>基准线1（30秒内）：</strong>"小宝收到！您的情况我记下了，马上帮您处理～"</li>
+          <li><strong>基准线2（10分钟内）：</strong>需要查询产品信息/品牌政策的，在10分钟内给出初步答复</li>
+          <li><strong>基准线3（有答案才回复）：</strong>不知道的事情，不瞎猜，不套话术，直接说"我帮您确认一下，30分钟内回复您"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">四、直播后：三大核心场景处理流程</div>
+      <div class="card-body">
+        <h4>场景一：过敏/疑似过敏</h4>
+        <p>这是直播售后最高频、也最敏感的场景。处理不好直接损伤达人口碑。</p>
+
+        <h5>4.1.1 过敏分级判断</h5>
+        <table class="data-table" style="width:100%;">
+          <tr><th>等级</th><th>表现</th><th>处理原则</th></tr>
+          <tr><td>轻度</td><td>泛红、轻微刺痛、干燥</td><td>安抚 + 使用指导 + 跟进</td></tr>
+          <tr><td>中度</td><td>明显红肿、瘙痒、起疹</td><td>记录 + 品牌方反馈 + 跟进方案</td></tr>
+          <tr><td>重度</td><td>严重红肿、水泡、烂脸</td><td>立即升级 → 4小时内必须给出处理方案</td></tr>
+        </table>
+
+        <h5>4.1.2 处理流程</h5>
+        <div class="flow-diagram">
+          <div class="flow-step">粉丝反馈过敏症状</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">判断严重程度（轻度/中度/重度）</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <strong>① 轻度：</strong>安抚 + 告知建立耐受期正常现象 + 引导调整用法<br>
+            <strong>② 中度：</strong>记录详情 → 联系品牌方确认售后政策 → 回复粉丝<br>
+            <strong>③ 重度：</strong>立即升级 → 告知粉丝已升级处理 → 4小时内必须给方案
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">记录归档</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">72小时内跟进确认</div>
+        </div>
+
+        <h5>4.1.3 关键话术</h5>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>轻度安抚（功效产品/酸类专用）：</strong><br>
+          "小宝，我理解您现在的担心。功效产品在建立耐受期出现轻微泛红是正常现象，但如果您感觉不适，建议先暂停使用。您可以把具体使用情况和照片发给我，我帮您对接我们的专业皮肤老师，帮您做个分析，好吗？"
+        </div>
+        <div class="alert alert-warning" style="margin:12px 0;">
+          <strong>中度处理：</strong><br>
+          "小宝，您的情况我已经详细记录下来了。我这边马上联系品牌方确认处理方案，会在【48小时】内给您一个明确的答复，请保持关注抖音大管家号的消息，感谢您的耐心～"
+        </div>
+        <div class="alert alert-danger" style="margin:12px 0;">
+          <strong>重度升级：</strong><br>
+          "小宝，我了解您现在非常担心。我这边已经把您的情况作为紧急问题升级处理，我们的专业团队会直接和品牌方对接，预计【4小时】内给您一个妥善的处理方案。请您保持手机畅通，我们会主动联系您。"
+        </div>
+
+        <h4>场景二：功效投诉（没效果/效果不明显）</h4>
+        <p>功效是主观感受，客服不以"我觉得没效"为由直接拒绝。</p>
+
+        <h5>4.2.1 分周期判断</h5>
+        <table class="data-table" style="width:100%;">
+          <tr><th>使用时长</th><th>正常预期</th><th>客服动作</th></tr>
+          <tr><td>≤7天</td><td>正常，皮肤在建立耐受</td><td>告知正常周期，给使用建议</td></tr>
+          <tr><td>7-30天</td><td>轻微改善属正常，显著效果因人而异</td><td>了解使用频率和方法，给调整建议</td></tr>
+          <tr><td>≥30天</td><td>应有一定改善效果</td><td>升级到品牌方/皮肤老师做专业评估</td></tr>
+        </table>
+
+        <h5>4.2.2 处理话术</h5>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>还在建立耐受期：</strong><br>
+          "小宝，功效产品的起效通常需要4-8周的周期，您目前使用【X天】，皮肤还在建立耐受阶段，这是正常现象哦～建议继续使用【X周】观察，有任何不适随时联系我们。"
+        </div>
+        <div class="alert alert-warning" style="margin:12px 0;">
+          <strong>已过观察期：</strong><br>
+          "小宝，我了解您的感受。您使用的时间已经不短了，我这边把您的情况记录下来，反馈给我们的专业产品老师做一个评估，争取在【48小时】内给您一个专业的分析和建议，请保持关注～"
+        </div>
+
+        <h4>场景三：产品搭配咨询</h4>
+        <p>这是品牌客服最常推诿的场景，也是我们最能体现价值的场景。</p>
+
+        <h5>4.3.1 搭配风险速查（客服记忆版）</h5>
+        <table class="data-table" style="width:100%;">
+          <tr><th>成分A</th><th>成分B</th><th>风险</th><th>建议</th></tr>
+          <tr><td>VC原型</td><td>果酸/水杨酸</td><td>高</td><td>不同时间段使用，不建议同用</td></tr>
+          <tr><td>视黄醇</td><td>果酸/水杨酸</td><td>高</td><td>分开早晚，建议间隔至少30分钟</td></tr>
+          <tr><td>VC</td><td>视黄醇</td><td>中</td><td>分开早晚使用更安全</td></tr>
+          <tr><td>烟酰胺</td><td>酸类</td><td>低-中</td><td>理论可共存，建议观察皮肤反应</td></tr>
+          <tr><td>任意功效成分</td><td>防晒缺失</td><td>高</td><td>没有防晒，一切功效都是零</td></tr>
+        </table>
+
+        <h5>4.3.2 搭配问题处理原则</h5>
+        <table class="data-table" style="width:100%;">
+          <tr><th>场景</th><th>客服动作</th></tr>
+          <tr><td>能明确判断</td><td>直接给建议，告知原因</td></tr>
+          <tr><td>不能确定</td><td>不瞎说，承诺30分钟内查询后回复</td></tr>
+          <tr><td>需要皮肤老师判断</td><td>记录后转接专业皮肤团队</td></tr>
+        </table>
+
+        <h5>4.3.3 话术</h5>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>能判断的场景：</strong><br>
+          "小宝，根据您说的搭配，我帮您确认了：【A产品】和【B产品】叠用【是否有风险】，建议您【调整方式】，这样效果更好也更安全～"
+        </div>
+        <div class="alert alert-warning" style="margin:12px 0;">
+          <strong>无法判断的场景：</strong><br>
+          "小宝，您问的这个搭配问题非常专业，我这边需要确认一下成分信息，我帮您查清楚后30分钟内给您答复，请您留意抖音大管家号的消息好吗？"
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">五、CARP处理模型（所有投诉通用）</div>
+      <div class="card-body">
+        <p>每一次投诉都走这四步。</p>
+
+        <h4>C - Control 掌控节奏</h4>
+        <ul>
+          <li>• 不被客户情绪带着走</li>
+          <li>• 语速放慢，回复间隔适当</li>
+          <li>• 耐心读完所有消息再判断情绪</li>
+        </ul>
+
+        <h4>A - Acknowledge 认可情绪</h4>
+        <ul>
+          <li>• 情绪峰值期：沉默 + 等待 比任何话术都有用</li>
+          <li>• 不确定怎么说的时候 → 先不开口，等对方把话说完</li>
+          <li>• 避免套话：❌ 不说"我理解""换作是我也会着急"——这类话在情绪峰值期听起来像敷衍</li>
+          <li>• 实在要回应事实 → 先复述对方说的情况："您是说用了之后皮肤出现XX，对吗？"</li>
+        </ul>
+
+        <h4>R - Refocus 转向解决</h4>
+        <ul>
+          <li>• 把话题从"谁对谁错"拉回到"怎么解决"</li>
+        </ul>
+
+        <h4>P - Problem Solve 着手解决</h4>
+        <ul>
+          <li>• 有方案 → 立即给出时间节点</li>
+          <li>• 无方案 → 承诺跟进，绝不不了了之</li>
+        </ul>
+
+        <div class="alert alert-success" style="margin:12px 0;">
+          <strong>必须说出口：</strong><br>
+          ✅ 先复述事实："您是说……对吗？"（确认信息，体现你在认真听）<br>
+          ✅ 承诺时间节点："我会在X点前给您回复"<br>
+          ✅ 表明态度："我会帮您跟进到底"
+        </div>
+
+        <div class="alert alert-danger" style="margin:12px 0;">
+          <strong>禁止说出口：</strong><br>
+          ❌ "您不要这么激动"<br>
+          ❌ "这有什么可生气的"<br>
+          ❌ "您先冷静一下"<br>
+          ❌ "这不归我们管"<br>
+          ❌ "品牌规定就是这样"<br>
+          ❌ "我理解您的心情"（情绪峰值期属套话，听起来敷衍）<br>
+          ❌ "换作是我也会着急"（情绪峰值期属套话，听起来敷衍）<br>
+          ❌ "您的心情我非常理解"（情绪峰值期属套话，听起来敷衍）
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">六、10类难缠客户分类应对</div>
+      <div class="card-body">
+        <h4>6.1 愤怒投诉型（P1/P2）</h4>
+        <p><strong>特征：</strong>语气强硬、用感叹号、多条消息轰炸、要求立即处理</p>
+        <p><strong>流程：</strong>立即安抚 → 告知已记录 → 给出时间节点 → 跟进到解决</p>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>话术：</strong><br>
+          "我理解您的感受，请您放心。我会给您协调处理，预计【具体时间】内给您回复，留意抖音大管家号的消息～"
+        </div>
+        <p><strong>避坑：</strong></p>
+        <ul>
+          <li>❌ 不要争论谁对谁错</li>
+          <li>❌ 不要说"不归我们管"</li>
+          <li>❌ 不要用"规定"压客户</li>
+        </ul>
+
+        <h4>6.2 威胁曝光型（P1）</h4>
+        <p><strong>特征：</strong>"我要发帖曝光你" / "我要投诉到平台" / "我要告你们"</p>
+        <p><strong>原则：</strong>不因威胁而让步，态度不能变硬，不激化</p>
+        <div class="alert alert-warning" style="margin:12px 0;">
+          <strong>话术：</strong><br>
+          "我理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈。您反馈的情况我已经详细记录，会第一时间反馈，争取尽快给您一个满意的处理方案。请问您方便提供一下具体的订单信息吗？"
+        </div>
+        <p><strong>升级机制：</strong></p>
+        <div class="flow-diagram">
+          <div class="flow-step">粉丝威胁曝光</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">立即截图保存证据</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">2小时内上报组长</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">必要时提前与品牌方沟通预案</div>
+        </div>
+
+        <h4>6.3 政策边界型（原"无理取闹型"）</h4>
+        <p><strong>原则：</strong>先肯定 → 说明政策 → 给替代方案 → 表明立场（不对抗）</p>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>已开封想退货：</strong><br>
+          "我理解您用完后觉得不合适的心情。不过按照品牌的规定，无过敏问题，已开封产品不支持退换，涉及到产品安全问题，望理解。可以告诉我您详细的搭配流程和肤质情况，我帮您咨询产品老师做出调整方案。"
+        </div>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>已过期产品想退：</strong><br>
+          "小宝，产品过期确实比较尴尬。按照品牌方的售后政策，已过期的产品不在退换范围内。这个结果可能不是您期望的，我这边可以把您的反馈记录下来，反馈给品牌方看是否有其他解决方案，请您稍等！"
+        </div>
+
+        <h4>6.4 反复纠缠型</h4>
+        <p><strong>特征：</strong>同一问题投诉多次，每次都说没解决</p>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>话术：</strong><br>
+          "小宝，我查了一下您的记录，您之前反馈的问题我们【已做XX处理】。目前情况是【现状】，我这边会在【时间】前给您最终回复，请您耐心等待一下好吗？"
+        </div>
+
+        <h4>6.5 情感脆弱/哭诉委屈型</h4>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>话术：</strong><br>
+          "小宝，我能感受到您真的受了委屈。您说的情况我已经全部记下了，我会认真跟进处理。请您先别着急，我们一起来想办法！"
+        </div>
+        <p><strong>避坑：</strong></p>
+        <ul>
+          <li>❌ 不要打断对方</li>
+          <li>❌ 不要说"您想太多了"</li>
+          <li>❌ 不要说"这个情况不严重"</li>
+          <li>❌ 不要说"您的心情我非常理解"（情绪峰值期属套话，听起来敷衍）</li>
+        </ul>
+
+        <h4>6.6 专业质问型</h4>
+        <p><strong>特征：</strong>用专业术语质疑产品质量、成分、效果</p>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>话术：</strong><br>
+          "您说的这点我已经记下了，我这边马上核对相关的成分资料，确认后第一时间给您准确答复。"
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">七、升级机制</div>
+      <div class="card-body">
+        <table class="data-table" style="width:100%;">
+          <tr><th>场景</th><th>升级时限</th><th>升级对象</th><th>处理目标</th></tr>
+          <tr><td>严重过敏（重度）</td><td>立即，4小时内</td><td>组长+品牌方+皮肤老师</td><td>给出处理方案</td></tr>
+          <tr><td>粉丝威胁曝光</td><td>2小时内</td><td>组长</td><td>制定应对预案</td></tr>
+          <tr><td>功效投诉（30天以上）</td><td>48小时内</td><td>品牌方产品老师</td><td>专业评估+回复</td></tr>
+          <tr><td>搭配问题（无法判断）</td><td>30分钟内</td><td>产品老师/皮肤顾问</td><td>给出专业答复</td></tr>
+          <tr><td>客服被辱骂/骚扰</td><td>立即</td><td>组长</td><td>留存证据，必要时报警</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">八、客服自我保护机制</div>
+      <div class="card-body">
+        <h4>8.1 情绪隔离原则</h4>
+        <ul>
+          <li>• 每处理完一个P1/P2高情绪投诉，强制休息3分钟</li>
+          <li>• 不把客户的情绪内化为自己的情绪</li>
+          <li>• 遇到侮辱性语言，有权终止对话并上报组长</li>
+        </ul>
+
+        <h4>8.2 骚扰/恶意威胁的边界</h4>
+        <table class="data-table" style="width:100%;">
+          <tr><th>行为</th><th>客服权利</th></tr>
+          <tr><td>正常表达不满</td><td>正常处理</td></tr>
+          <tr><td>反复纠缠（同一问题3次以上）</td><td>告知将升级处理，联系组长</td></tr>
+          <tr><td>使用侮辱性/攻击性语言</td><td>有权终止对话，立即上报</td></tr>
+          <tr><td>威胁人身安全</td><td>立即终止对话，上报并留存证据</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-header">九、回复模板库</div>
+      <div class="card-body">
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>模板A — 正常咨询：</strong><br>
+          小宝～您说的情况我已经了解，我现在马上帮您查，等下立马回您哈～
+        </div>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>模板B — 投诉/情绪类：</strong><br>
+          小宝，您说的情况我已经记下了。我先帮您核实一下具体情况，有任何进展我会第一时间告知您。请您先别着急，我这边会持续跟进处理的
+        </div>
+        <div class="alert alert-warning" style="margin:12px 0;">
+          <strong>模板C — 威胁类（态度友好但底线清晰）：</strong><br>
+          您好，我完全理解您希望问题得到重视的心情。我们会认真对待每一位顾客的反馈。您反馈的情况我已经详细记录，会第一时间反馈，争取尽快给您一个满意的处理方案。
+        </div>
+        <div class="alert alert-info" style="margin:12px 0;">
+          <strong>模板D — 过敏安抚（功效产品/酸类专用）：</strong><br>
+          小宝，我理解您现在的担心。功效产品在建立耐受期出现轻微泛红是正常现象，但如果感觉不适，建议您先暂停使用。我们有专业的皮肤老师可以帮您分析情况，您可以告诉我：① 使用了多久？② 目前的具体表现是什么？我帮您对接专业老师～
+        </div>
       </div>
     </div>
   </div>
