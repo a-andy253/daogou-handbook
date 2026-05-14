@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>达人售后团队完整服务流程执行方案 v2.0</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #1a73e8;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #d93025;
+            --bg: #f5f6fa;
+            --text: #2d3436;
+            --light: #ffffff;
+            --border: #e0e0e0;
+        }
+        
+        body {
+            font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        
+        /* 顶部导航 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0 24px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(26,115,232,0.3);
+        }
+        .navbar-brand { font-weight: 700; font-size: 18px; }
+        .navbar-info { font-size: 13px; opacity: 0.85; }
+        
+        /* 侧边栏 */
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            width: 260px;
+            background: var(--light);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .sidebar-title {
+            padding: 0 20px 12px;
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 8px;
+        }
+        .sidebar-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .sidebar-item:hover {
+            background: #f0f4ff;
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+        .sidebar-item.active {
+            background: #e8f0fd;
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* 主内容区 */
+        .main {
+            margin-left: 260px;
+            padding: 80px 48px 60px;
+            max-width: 1100px;
+        }
+        
+        /* 章节标题 */
+        .section { margin-bottom: 60px; }
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a2e;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .num {
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        /* 子标题 */
+        .subsection { margin-bottom: 20px; }
+        .subsection-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subsection-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 流程块 */
+        .flow-box {
+            background: #f0f4ff;
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--primary);
+        }
+        .flow-box strong { color: var(--primary); }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        tr:nth-child(even) { background: #f9fafb; }
+        tr:hover { background: #f0f4ff; }
+        
+        /* 话术引用块 */
+        .script-box {
+            background: linear-gradient(135deg, #fff8e6, #fff3cd);
+            border-left: 4px solid var(--warning);
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin: 12px 0;
+            font-size: 14px;
+            color: #5d4a00;
+        }
+        
+        /* 原则块 */
+        .principle-box {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .principle {
+            flex: 1;
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--primary);
+        }
+        .principle .icon { font-size: 28px; margin-bottom: 8px; }
+        .principle .title { font-weight: 700; font-size: 15px; color: #333; margin-bottom: 8px; }
+        .principle .desc { font-size: 13px; color: #666; }
+        
+        /* 警告块 */
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .alert-box.danger { background: #ffeaea; border-color: #f5c6cb; }
+        .alert-box.success { background: #d4edda; border-color: #c3e6cb; }
+        .alert-icon { font-size: 18px; }
+        
+        /* 标签 */
+        .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .tag-p1 { background: #ffeaea; color: var(--danger); }
+        .tag-p2 { background: #fff3cd; color: #856404; }
+        .tag-p3 { background: #e8f4fd; color: var(--primary); }
+        .tag-p4 { background: #e8e8e8; color: #666; }
+        
+        /* 禁止项 */
+        .no-list { margin: 8px 0; }
+        .no-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--danger);
+        }
+        
+        /* 编号列表 */
+        .num-list { padding-left: 24px; }
+        .num-list li { margin-bottom: 8px; font-size: 14px; }
+        
+        /* 响应模板 */
+        .response-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+        }
+        .response-card .label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .response-card .content {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.8;
+        }
+        
+        /* 分类卡片 */
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .type-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .type-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .type-card .type-num {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        .type-card .type-name { font-weight: 700; font-size: 15px; color: #333; margin-bottom: 8px; }
+        .type-card .type-desc { font-size: 13px; color: #666; margin-bottom: 10px; }
+        .type-card .type-script {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #555;
+            border-left: 3px solid var(--primary);
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 48px;
+            color: #999;
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+        
+        /* 回到顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(26,115,232,0.4);
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .back-to-top.show { opacity: 1; }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 80px 20px 40px; }
+            .type-grid { grid-template-columns: 1fr; }
+            .principle-box { flex-direction: column; }
+        }
+        
+        /* 打印样式 */
+        @media print {
+            .navbar, .sidebar, .back-to-top { display: none; }
+            .main { margin: 0; padding: 20px; max-width: 100%; }
+            .card { box-shadow: none; border: 1px solid #ccc; }
+            .section { page-break-inside: avoid; }
+        }
+        
+        /* KPI指标块 */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .kpi-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .kpi-card .value { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .kpi-card .unit { font-size: 14px; color: #666; }
+        .kpi-card .name { font-size: 13px; color: #999; margin-top: 6px; }
+        
+        /* 升级流程 */
+        .upgrade-flow {
+            background: linear-gradient(135deg, #ffeaea, #fff3cd);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .upgrade-flow h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 12px;
+        }
+        .upgrade-steps {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .upgrade-step {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .upgrade-arrow { color: #999; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="navbar">
+    <div>
+        <span class="navbar-brand">📋 达人售后团队服务流程</span>
+    </div>
+    <div class="navbar-info">v2.0 · 8人团队执行手册</div>
+</div>
+
+<!-- 侧边栏 -->
+<nav class="sidebar">
+    <div class="sidebar-title">快速导航</div>
+    <a class="sidebar-item" href="#sec1">一、团队定位与角色定义</a>
+    <a class="sidebar-item" href="#sec2">二、服务标准动作（SOP）</a>
+    <a class="sidebar-item" href="#sec3">三、CARP处理模型</a>
+    <a class="sidebar-item" href="#sec4">四、10种难缠客户应对</a>
+    <a class="sidebar-item" href="#sec5">五、退换货专项流程</a>
+    <a class="sidebar-item" href="#sec6">六、宠粉边界规则</a>
+    <a class="sidebar-item" href="#sec7">七、内部协作与升级</a>
+    <a class="sidebar-item" href="#sec8">八、情绪管理与自我保护</a>
+    <a class="sidebar-item" href="#sec9">九、绩效考核与质检</a>
+    <a class="sidebar-item" href="#sec10">十、话术模板速查表</a>
+    <div class="sidebar-title" style="margin-top:20px;">核心原则</div>
+    <a class="sidebar-item" href="#principle1">🚫 不承诺</a>
+    <a class="sidebar-item" href="#principle2">📋 不传话</a>
+    <a class="sidebar-item" href="#principle3">🧊 不让情绪升级</a>
+    <a class="sidebar-item" href="#principle4">🛡️ 保护自己</a>
+</nav>
+
+<!-- 主内容 -->
+<div class="main">
+
+    <!-- 封面区 -->
+    <div style="text-align:center; padding: 40px 0 50px;">
+        <div style="font-size:13px; color:#999; letter-spacing:2px; margin-bottom:12px;">达人直播电商售后执行手册</div>
+        <h1 style="font-size:32px; font-weight:800; color:#1a1a2e; margin-bottom:8px;">达人售后团队完整服务流程执行方案</h1>
+        <div style="font-size:18px; color:#666; margin-bottom:24px;">v2.0</div>
+        <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <span class="tag tag-p1">🔥 融合全球顶级客服体系</span>
+            <span class="tag tag-p2">📊 CARP四步法</span>
+            <span class="tag tag-p3">🎯 10类难缠客户应对</span>
+            <span class="tag tag-p4">💬 美妆护肤话术定制</span>
+        </div>
+        <div style="margin-top:24px; font-size:13px; color:#999;">
+            制定人：Andy &nbsp;|&nbsp; 适用团队：8人 &nbsp;|&nbsp; 每月更新
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第一章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec1">
+        <div class="section-title"><span class="num">一</span>团队定位与角色定义</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">1.1 核心定位</div>
+            <div class="alert-box">
+                <span class="alert-icon">⚠️</span>
+                <div><strong>我们是"粉丝与品牌之间的中间协调方"，不是客服，不是品牌方，也不是客服。</strong><br>我们是连接达人与粉丝、品牌与粉丝的桥梁，起到转达、协调、跟进的桥梁作用。</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">🔗 团队定位关系图</div>
+            <div class="flow-box">
+粉丝（有问题/投诉）→ 【达人售后团队：我们】→ 品牌方（授权处理）
+                                        ↑ 反馈 + 安抚 + 执行
+                                        ↓ 转达 + 协调 + 跟进
+                                  达人与品牌信任背书
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">1.2 团队架构与分工</div>
+            <table>
+                <tr><th>角色</th><th>人数</th><th>核心职责</th></tr>
+                <tr><td><strong>组长（Andy）</strong></td><td>1人</td><td>对外品牌对接、内部调度、特殊case决策</td></tr>
+                <tr><td>售后专员 A/B/C</td><td>3人</td><td>日常咨询/投诉处理（按品牌分组）</td></tr>
+                <tr><td>售后专员 D/E/F/G</td><td>4人</td><td>复杂case跟进、退换货协调、客情维护</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">1.3 四大黄金原则（所有成员必须背诵）</div>
+            <div class="alert-box danger">
+                <span class="alert-icon">⚠️</span>
+                <div><strong>这四条是底线，违反即追责，无例外。</strong></div>
+            </div>
+            <div class="principle-box">
+                <div class="principle" id="principle1">
+                    <div class="icon">🚫</div>
+                    <div class="title">原则一：不承诺</div>
+                    <div class="desc">未经品牌方确认，不对粉丝做实质性承诺（退款/退换/补偿金额）</div>
+                </div>
+                <div class="principle" id="principle2">
+                    <div class="icon">📋</div>
+                    <div class="title">原则二：不传话</div>
+                    <div class="desc">传话必须有记录，口头承诺不算数，截图存档是标准动作</div>
+                </div>
+                <div class="principle" id="principle3">
+                    <div class="icon">🧊</div>
+                    <div class="title">原则三：不让情绪升级</div>
+                    <div class="desc">客户情绪上来时，你永远是降温的那一方，不对骂、不冷处理</div>
+                </div>
+                <div class="principle" id="principle4">
+                    <div class="icon">🛡️</div>
+                    <div class="title">原则四：保护自己</div>
+                    <div class="desc">恶意攻击截图留证，情绪激动时等冷静再处理，不单独扛</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第二章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec2">
+        <div class="section-title"><span class="num">二</span>服务标准动作（基础 SOP）</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">2.1 接收消息标准流程（3分钟内必须响应）</div>
+            <div class="card">
+                <div class="flow-box">
+<strong>收到消息</strong> → 30秒内快速分类 → 3分钟首次响应 → 归档处理
+
+<strong>📌 分类标签：</strong>
+ [P1] 紧急投诉 / 威胁曝光 / 产品质量安全 → 🚨 立即上报组长
+ [P2] 退换货申请 / 产品质疑 → ⏱️ 2小时内处理
+ [P3] 使用咨询 / 肤质建议 → ⏱️ 24小时内回复
+ [P4] 表扬 / 常规咨询 → ⏱️ 下一个工作日
+                </div>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">2.2 首次响应话术模板（必须包含3要素：称呼 + 态度 + 动作）</div>
+            
+            <div class="response-card">
+                <div class="label">模板 A - 正常咨询</div>
+                <div class="content">"亲爱的[粉丝名字]，感谢您的留言～我是[达人名]直播间的售后小助手，很高兴为您服务！您的问题我已经收到了，我这边帮您查询一下，稍后给您准确回复哦 ☺️"</div>
+            </div>
+            
+            <div class="response-card" style="border-left-color: var(--warning);">
+                <div class="label" style="color: var(--warning);">模板 B - 投诉/情绪类</div>
+                <div class="content">"[粉丝名字]，我非常理解您现在的心情，换作是我也会着急。您的情况我已经记录下来了，我会第一时间帮您跟进处理，有任何进展我都会及时告知您。请您放心，这件事我一定会认真对待的 🙏"</div>
+            </div>
+            
+            <div class="response-card" style="border-left-color: var(--danger);">
+                <div class="label" style="color: var(--danger);">模板 C - 威胁类（不卑不亢）</div>
+                <div class="content">"您好，我完全理解您希望问题得到解决的心情。我这边会认真记录您反馈的情况，并协助品牌方尽快给您一个处理方案。您的诉求我们会如实转达，同时也希望您能给我们一点处理时间，好吗？"</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第三章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec3">
+        <div class="section-title"><span class="num">三</span>CARP 标准处理模型（所有投诉必走）</div>
+        
+        <div class="alert-box success">
+            <span class="alert-icon">💡</span>
+            <div><strong>CARP 是处理所有投诉的通用框架</strong>，无论客户类型、问题大小，必须走完四步再结束。</div>
+        </div>
+        
+        <div class="card">
+            <div class="flow-box">
+<strong style="color:var(--primary);">C — Control 掌控节奏</strong>
+  • 不被客户的情绪带着走
+  • 语速放慢，回复间隔适当（不要秒回显得敷衍，也不要太久不回应）
+  • 对方发语音不要急着回复，先听完再判断情绪等级
+
+<strong style="color:var(--success);">A — Acknowledge 认可情绪</strong>
+  必须说出口的三句话（至少选一句）：
+  "我完全理解您的感受" / "换作是我也会着急" / "您的心情我非常理解"
+  ❌ 禁止说："您不要这么激动" / "这有什么可生气的" / "您先冷静一下"
+
+<strong style="color:#2196f3;">R — Refocus 转向解决</strong>
+  • 把话题从"谁对谁错"拉回到"怎么解决"
+  • 话术："您的心情我理解，现在最重要的是把这个问题处理好，我们一起来看看怎么解决好吗？"
+
+<strong style="color:#e91e63;">P — Problem Solve 着手解决</strong>
+  • 有方案 → 立即给出，明确时间节点
+  • 无方案 → 告知已记录，承诺跟进时间，绝不不了了之
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第四章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec4">
+        <div class="section-title"><span class="num">四</span>10种难缠客户分类应对标准（完整版）</div>
+        
+        <div class="type-grid">
+            
+            <!-- 类型1 -->
+            <div class="type-card" id="type1">
+                <div class="type-name"><span class="type-num">1</span>愤怒投诉型 <span class="tag tag-p1" style="margin-left:6px;">P1/P2</span></div>
+                <div class="type-desc">语气强硬，用感叹号，语音轰炸，要求立即处理</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>标准流程：</strong>立即回复安抚（30秒内）→ 告知已记录 → 2小时内给出初步方案 → 跟进到解决
+                </div>
+                <div class="type-script">"我理解您的感受，请您相信我们非常重视您的反馈。我这就帮您协调处理，预计[时间]内给您回复，请保持手机畅通～"</div>
+                <div style="margin-top:10px; font-size:12px; color:#d93025;">
+                    ❌ 不要争论对错 ❌ 不要说"不归我们管" ❌ 不要用规定压客户
+                </div>
+            </div>
+            
+            <!-- 类型2 -->
+            <div class="type-card" id="type2">
+                <div class="type-name"><span class="type-num">2</span>威胁曝光型 <span class="tag tag-p1" style="margin-left:6px;">P1</span></div>
+                <div class="type-desc">"我要发帖曝光"、"投诉平台"、"告你们"</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>核心原则：</strong>不因威胁让步 + 不激化 + 立即上报组长
+                </div>
+                <div class="upgrade-flow" style="margin-bottom:0;">
+                    <h4>🚨 升级机制</h4>
+                    <div class="upgrade-steps">
+                        <div class="upgrade-step">截图保存证据</div>
+                        <span class="upgrade-arrow">→</span>
+                        <div class="upgrade-step">2小时内上报组长</div>
+                        <span class="upgrade-arrow">→</span>
+                        <div class="upgrade-step">组长判断是否提前联系品牌方</div>
+                        <span class="upgrade-arrow">→</span>
+                        <div class="upgrade-step">必要时与品牌方沟通预案</div>
+                    </div>
+                </div>
+                <div class="type-script" style="margin-top:10px;">"我理解您希望问题得到重视的心情，每一位顾客的声音对我们都很重要。请问您方便提供一下订单信息，方便我快速跟进吗？"</div>
+            </div>
+            
+            <!-- 类型3 -->
+            <div class="type-card" id="type3">
+                <div class="type-name"><span class="type-num">3</span>无理取闹型</div>
+                <div class="type-desc">提出超出品牌政策范围的要求（开封后退/过期后退/赠品）</div>
+                <div class="flow-box" style="padding:10px 14px; margin-bottom:10px;">
+                    第一步：先肯定对方，让对方愿意听下去<br>
+                    第二步：说明实际政策（用"品牌方规定"而非"我们规定"）<br>
+                    第三步：给出替代方案（优惠券/积分/小样）<br>
+                    第四步：表明立场，但不对抗
+                </div>
+                <div style="font-size:12px; font-weight:600; color:#666; margin-bottom:6px;">替代方案库：</div>
+                <div style="font-size:12px; color:#555;">
+                    • 专属优惠券（面值10-50元）<br>
+                    • 积分补偿 / 下次优先发货<br>
+                    • 小样/赠品补发（需申请）<br>
+                    • 客服专属安抚礼品（需组长审批）
+                </div>
+            </div>
+            
+            <!-- 类型4 -->
+            <div class="type-card" id="type4">
+                <div class="type-name"><span class="type-num">4</span>反复纠缠型</div>
+                <div class="type-desc">同一问题投诉多次，每次都说没解决</div>
+                <div style="font-size:13px; color:#555; margin-bottom:10px;">
+                    <strong>处理步骤：</strong><br>
+                    1. 调出历史记录，确认之前处理到哪一步<br>
+                    2. 明确告知已处理的部分和当前进度<br>
+                    3. 给出本次回复的明确截止时间节点
+                </div>
+                <div class="type-script">"亲爱的，我查了一下您的记录，您之前[已做处理]。目前情况是[现状]，我这边会在[时间]前给您最终回复，请您再给我一次机会，谢谢~"</div>
+            </div>
+            
+            <!-- 类型5 -->
+            <div class="type-card" id="type5">
+                <div class="type-name"><span class="type-num">5</span>情感脆弱/哭诉委屈型</div>
+                <div class="type-desc">带情绪哭诉、表达委屈、强调自己的不幸遭遇</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>处理原则：</strong>给足情感宣泄时间 → 表达真诚同情 → 不急于讲道理
+                </div>
+                <div class="type-script">"亲爱的，我能感受到您真的受了委屈，您的心情我非常理解。我会认真记录您说的情况，也会向品牌方如实反馈，争取帮您解决这个问题。请您先别着急，我们一起来想办法好吗？"</div>
+                <div style="margin-top:8px; font-size:12px; color:#d93025;">
+                    ❌ 不要打断 ❌ 不要说"您想太多了" ❌ 不要说"情况不严重"
+                </div>
+            </div>
+            
+            <!-- 类型6 -->
+            <div class="type-card" id="type6">
+                <div class="type-name"><span class="type-num">6</span>专业质问型（美妆成分党）</div>
+                <div class="type-desc">用专业术语质疑产品质量、成分、效果（烟酰胺/A醇/玻尿酸等）</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>处理原则：</strong>认可对方专业度 + 承认个体差异 + 不懂就说"帮您查"
+                </div>
+                <div class="type-script">"您对成分真的很专业！您提到的[成分名]，我也有了解，确实有些肤质需要建立耐受。请给我[时间]，我查清楚后第一时间回复您，好吗？"</div>
+            </div>
+            
+            <!-- 类型7 -->
+            <div class="type-card" id="type7">
+                <div class="type-name"><span class="type-num">7</span>要求找主管/找老板型</div>
+                <div class="type-desc">"让你们领导来"、"我要找你们负责人"</div>
+                <div class="type-script">"我完全理解您希望得到更多支持的心情。我是今天负责跟进您这个case的售后专员，请相信我和我的团队会尽全力帮您处理。方便先告诉我您方便接听电话的时间吗？我这边安排组长直接联系您~"</div>
+                <div style="margin-top:8px; font-size:12px; color:#666;">
+                    <strong>升级标准：</strong>连续3次投诉同一问题 / 涉及金额超过[X元] / 品牌方核心政策冲突
+                </div>
+            </div>
+            
+            <!-- 类型8 -->
+            <div class="type-card" id="type8">
+                <div class="type-name"><span class="type-num">8</span>故意找茬/恶意索赔型</div>
+                <div class="type-desc">明显恶意、多次索赔、要求超额赔偿、故意破坏后索赔</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>处理原则：</strong>态度保持友好但底线清晰 + 所有沟通截图/录音备份
+                </div>
+                <div class="type-script">"亲爱的，我理解您有您的诉求。我会如实记录并向品牌方反馈。不过根据售后政策，[说明边界]，希望您能理解。我会持续跟进，有任何进展第一时间通知您。"</div>
+                <div style="margin-top:8px; font-size:12px; color:#d93025;">
+                    ❌ 不得私下答应超额赔偿 ❌ 必要时联系组长走法务路径
+                </div>
+            </div>
+            
+            <!-- 类型9 -->
+            <div class="type-card" id="type9">
+                <div class="type-name"><span class="type-num">9</span>多人串联/集体投诉型 <span class="tag tag-p1" style="margin-left:6px;">⚠️ 舆情高危</span></div>
+                <div class="type-desc">同一问题多人集中反馈，可能演变成粉丝集体爆发、达人信任崩塌</div>
+                
+                <div style="font-size:13px; font-weight:700; color:var(--danger); margin:12px 0 8px;">🚨 内部预警机制（团队内部用，不让粉丝知道）</div>
+                <div class="flow-box" style="padding:12px 16px;">
+<strong style="color:var(--danger);">收到第1个投诉时，团队内部立即做两件事：</strong>
+① 打开内部统计表，记录问题类型+时间（不公开给粉丝）
+② 判断是否涉及产品核心问题/是否可能扩散
+
+<br><strong style="color:var(--success);">🟢 低风险（1-5人/非核心问题）</strong>：内部正常处理，不对外声张
+<br><strong style="color:var(--warning);">🟡 中风险（5人以上/同一问题集中出现）</strong>：内部升级，组长开始与品牌方提前沟通预案
+<br><strong style="color:var(--danger);">🔴 高风险（有人开始@达人/话题发酵/媒体介入）</strong>：组长+达人团队同步启动危机预案，48小时内必须出官方口径
+                </div>
+                
+                <div style="font-size:13px; font-weight:700; color:#333; margin:14px 0 8px;">✅ 单个粉丝的标准回复（每个粉丝都当作唯一的case来处理）</div>
+                
+                <div class="alert-box danger" style="margin-bottom:12px; padding:10px 14px;">
+                    <span class="alert-icon">⚠️</span>
+                    <div><strong>顶级公关的核心原则：永远不要告诉一个粉丝"别人也有这个问题"。</strong><br>
+                    告诉他"别人也有" = 告诉他：①这个问题是客观真实存在的 ②品牌早就知道但没解决 ③我投诉是有道理的<br>
+                    这三件事叠加在一起，会让一个普通投诉直接升级成集体维权。
+                    </div>
+                </div>
+                
+                <div class="response-card" style="border-left-color: var(--primary);">
+                    <div class="label">标准回复模板（适用于任何投诉，不提"多人"）</div>
+                    <div class="content">"亲爱的，感谢您的反馈，我这边已经详细记录了您的情况。产品出现这样的问题确实不应该，我这边会第一时间向品牌方反馈核实，争取尽快给您一个满意的处理方案。请您放心，您的这个问题我一定会认真跟进到底的 💕"</div>
+                </div>
+                
+                <div class="response-card" style="border-left-color: var(--warning);">
+                    <div class="label">粉丝追问"是不是很多人都遇到这个问题"时的回复</div>
+                    <div class="content">"亲爱的，我这边每天都会收到很多不同粉丝的咨询，每个人遇到的情况都不太一样，所以我会认真对待每一位粉丝的问题。您的情况我已经完整记录了，我会把您的具体反馈转达给品牌方，争取给您一个满意的处理结果 🙏"</div>
+                    <div style="margin-top:8px; font-size:12px; color:#555; font-style:italic;">
+                        关键：不承认多人，也不否认多人，把话题拉回到"认真处理你的问题"
+                    </div>
+                </div>
+                
+                <div style="font-size:13px; font-weight:700; color:#333; margin:14px 0 8px;">🛡️ 防止舆情扩散的关键动作</div>
+                <div class="flow-box" style="padding:12px 16px;">
+<strong style="color:var(--primary);">① 每个粉丝都当作唯一的case处理</strong>
+  → 顶级公关的原则：客户不关心"别人怎么样"，只关心"我的问题能不能解决"
+  → 你的回复里永远不要出现"也有粉丝"、"很多人"这样的字眼
+
+<strong style="color:var(--primary);">② 主动出击，而不是被动等待</strong>
+  → 内部发现同一问题超过3例时，主动联系品牌方要处理方案
+  → 不等粉丝来问，就提前准备好答案（主动解决比被动灭火容易十倍）
+
+<strong style="color:var(--primary);">③ 达人的存在感（关键！）</strong>
+  → 如果确认是产品问题，达人本人（或小助理）发一条：
+  "看到一些朋友的反馈了，我和团队正在了解情况，会尽快给大家一个负责任的答复"
+  → 重点：达人说"我看到了"比任何话术都管用
+
+<strong style="color:var(--primary);">④ 统一出口，一致口径</strong>
+  → 品牌方出方案后，所有人用同一模板回复
+  → 禁止：A说"可以退"、B说"只能换"、C说"要自己出运费"
+
+<strong style="color:var(--primary);">⑤ 解决后主动公示</strong>
+  → 问题处理完后，在粉丝群/评论区发公告：
+  "关于XX问题，我们已经和品牌方沟通完毕，处理方案如下……"
+  → 让没发言的粉丝也知道"这个问题真的被解决了"，而不是不了了之
+                </div>
+                
+                <div style="font-size:13px; font-weight:700; color:#333; margin:14px 0 8px;">🚫 顶级公关绝对禁止的话术</div>
+                <div class="alert-box danger" style="padding:10px 14px;">
+                    <span class="alert-icon">❌</span>
+                    <div>
+                        • "其实近期也有其他朋友反映过这个问题"<br>
+                        • "这种情况我们之前也有收到"<br>
+                        • "不是只有你一个人"<br>
+                        • "很多粉丝都在问这个"<br><br>
+                        <strong>→ 以上每一句都是舆情爆发的导火索。永远不要主动提"多人"。</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 类型10 -->
+            <div class="type-card" id="type10">
+                <div class="type-name"><span class="type-num">10</span>沉默抗拒型</div>
+                <div class="type-desc">回复很慢、态度冷淡、"随便"、"无所谓"</div>
+                <div style="font-size:12px; color:#666; margin-bottom:10px;">
+                    <strong>处理原则：</strong>不要追问太紧 → 发总结性消息说明处理方案 → 告知可随时联系
+                </div>
+                <div class="type-script">"亲爱的，您的问题我这边已经了解了。目前的处理方案是[方案]。我会持续关注，有任何进展都会第一时间通知您。祝您生活愉快 🌸"</div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第五章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec5">
+        <div class="section-title"><span class="num">五</span>退换货专项处理流程</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">5.1 标准退换货申请流程</div>
+            <div class="card">
+                <div class="flow-box">
+<strong>粉丝申请退换货</strong>
+     ↓
+<strong>售后团队确认</strong>：订单信息 + 产品状态 + 购买渠道
+     ↓
+<strong>判断是否属于品牌方支持范围</strong>
+     ↓
+<strong>在品牌群申请</strong>（组长操作，必须含证据+订单号+处理建议）
+     ↓
+<strong>等待品牌方审批</strong>（⏱️ 24-48小时）
+     ↓
+<strong>反馈粉丝处理结果</strong>
+     ↓
+<strong>跟进执行</strong>：寄回 / 补发 / 退款 → ✅ 归档记录
+                </div>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">5.2 退换货判断标准（提前与品牌方约定）</div>
+            <table>
+                <tr><th>情况</th><th>是否支持退换</th><th>备注</th></tr>
+                <tr><td>未开封 + 7天内</td><td><span style="color:var(--success); font-weight:700;">✅ 支持</span></td><td>品牌方承担运费</td></tr>
+                <tr><td>未开封 + 7-15天</td><td><span style="color:var(--warning); font-weight:700;">⚠️ 视情况</span></td><td>需品牌方审批</td></tr>
+                <tr><td>已开封 + 有质量问题</td><td><span style="color:var(--success); font-weight:700;">✅ 支持</span></td><td>需拍照/视频证据</td></tr>
+                <tr><td>已开封 + 无质量问题</td><td><span style="color:var(--danger); font-weight:700;">❌ 不支持</span></td><td>可申请补偿方案</td></tr>
+                <tr><td>已过期</td><td><span style="color:var(--danger); font-weight:700;">❌ 不支持</span></td><td>可申请人情补偿</td></tr>
+                <tr><td>直播特殊说明款</td><td><span style="color:var(--warning); font-weight:700;">⚠️ 特殊处理</span></td><td>以当时直播说明为准</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">5.3 品牌群申请话术模板</div>
+            <div class="script-box">
+@品牌方 您好，这边有一位粉丝需要协助处理，情况如下：<br><br>
+订单号：[订单号]<br>
+产品：[产品名称+规格]<br>
+问题描述：[具体描述]<br>
+产品状态：[未开封/已开封/已使用/已过期]<br>
+粉丝诉求：[退货/换货/退款/补偿]<br>
+申请处理方式：[请品牌方指示]<br>
+附件证据：[截图/照片链接]<br><br>
+<span style="color:var(--danger); font-weight:700;">⚠️ 要求：所有品牌群申请必须包含「证据 + 订单号 + 处理建议」，缺一不可。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第六章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec6">
+        <div class="section-title"><span class="num">六</span>特殊处理边界规则（宠粉也得有底线）</div>
+        
+        <div class="card">
+            <div class="card-title">✅ 6.1 可以自主决定的宠粉行为（无需上报）</div>
+            <ul class="num-list">
+                <li>语气上额外温暖/送表情包/主动多给一次回复机会</li>
+                <li>延迟48小时回复的，额外赠送小样（价值不超过30元）</li>
+                <li>客户说"谢谢"时主动多给一个优惠券码</li>
+                <li>为皮肤敏感的客户推荐更温和的产品搭配方案（体现专业度）</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">🔶 6.2 需要组长审批的（不可自主决定）</div>
+            <ul class="num-list">
+                <li>补偿金额超过100元</li>
+                <li>退换货超出品牌政策范围</li>
+                <li>承诺品牌方尚未确认的处理方式</li>
+                <li>粉丝要求"下次直播帮我备注/加赠品"</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-top: 3px solid var(--danger);">
+            <div class="card-title">🚫 6.3 绝对不能突破的底线</div>
+            <div class="no-list">
+                <div class="no-item">🚫 不得自行承诺退款金额（必须品牌方确认）</div>
+                <div class="no-item">🚫 不得泄露粉丝个人信息给品牌方（或反之）</div>
+                <div class="no-item">🚫 不得以"我是帮你"为由做超出权限的承诺</div>
+                <div class="no-item">🚫 不得在情绪激动时做决定（等冷静下来）</div>
+                <div class="no-item">🚫 不得私下答应任何超额赔偿方案</div>
+                <div class="no-item">🚫 永远不要用工作账号发表任何个人情绪言论</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第七章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec7">
+        <div class="section-title"><span class="num">七</span>内部协作与升级机制</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">7.1 每日例会机制</div>
+            <table>
+                <tr><th>时间</th><th>内容</th><th>主持人</th></tr>
+                <tr><td>早上 9:00</td><td>昨日遗留case跟进 + 今日重点</td><td>各组员</td></tr>
+                <tr><td>下午 16:00</td><td>今日新case汇总 + 品牌方反馈同步</td><td>Andy/组长</td></tr>
+                <tr><td>不定期</td><td>难缠case复盘讨论（存档形成话术库）</td><td>Andy</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">7.2 升级触发条件（满足任一即升级）</div>
+            <div class="card" style="border-top:3px solid var(--danger);">
+                <div class="flow-box">
+<strong style="color:var(--danger);">🚨 升级条件（满足任一即触发）：</strong>
+
+  • 同一问题被投诉 2次 以上
+  • 粉丝威胁曝光 / 投诉平台 / 报警
+  • 处理时间超过 48小时 未解决
+  • 涉及金额超过 500元
+  • 涉及产品质量安全问题（可能涉及舆情）
+  • 品牌方 72小时 内未回应
+
+<strong style="color:var(--primary);">升级流程：</strong>
+满足条件 → 立即上报组长 → 组长与品牌方沟通
+→ 给出处理方案 → 24小时内联系粉丝
+→ 确认满意度 → ✅ 归档复盘
+                </div>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">7.3 记录留档规范</div>
+            <div class="card">
+                <div style="font-size:13px; font-weight:700; color:#333; margin-bottom:10px;">📁 必须存档的内容：</div>
+                <ul class="num-list">
+                    <li>所有投诉的完整对话截图（保存6个月）</li>
+                    <li>品牌方群内的申请和回复截图</li>
+                    <li>升级决策的审批记录（哪怕是微信群内的"同意"）</li>
+                    <li>补偿/退款的操作记录</li>
+                </ul>
+                <div style="margin-top:14px; font-size:13px; font-weight:700; color:#333;">📋 存档命名格式：</div>
+                <div class="flow-box" style="margin-top:6px; padding:10px 16px;">
+[日期]_[品牌名]_[粉丝ID]_[问题类型]_[处理结果]<br>
+<strong>例：</strong>20260315_某品牌_粉丝A_开封退货_处理：补偿50元券
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第八章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec8">
+        <div class="section-title"><span class="num">八</span>情绪管理与自我保护</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">8.1 团队情绪管理（组长负责）</div>
+            <ul class="num-list">
+                <li>每天设立"吐槽时间"（15分钟，可选参与）</li>
+                <li>遇到恶意人身攻击可申请暂时离开工位</li>
+                <li>每月一次心理疏导或团建</li>
+            </ul>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">8.2 员工自我保护指南</div>
+            <table>
+                <tr><th>陷阱场景</th><th>正确做法</th></tr>
+                <tr><td>客户语言攻击</td><td>客户骂的是事不是人，做好情绪隔离</td></tr>
+                <tr><td>威胁/恐吓</td><td>截图留证 → 上报组长 → 公司层面处理</td></tr>
+                <tr><td>感到委屈</td><td>找组长或同事倾诉，不要闷在心里</td></tr>
+                <tr><td>工作账号发情绪</td><td>❌ 永远不要</td></tr>
+                <tr><td>深夜消息</td><td>正常响应时间内处理，不需要立即回复</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">8.3 常见话术陷阱规避（美妆护肤场景）</div>
+            <table>
+                <tr><th>粉丝说</th><th>❌ 错误回应</th><th>✅ 正确回应</th></tr>
+                <tr><td>"别的品牌都给我退了"</td><td>"那是他们的规定"</td><td>"我理解，每个品牌政策不同，但我会帮您尽力申请"</td></tr>
+                <tr><td>"我用完过敏了"</td><td>"那是你皮肤问题"</td><td>"亲爱的皮肤出现不适一定要重视，先停用观察，我这边会反馈给品牌方看怎么处理"</td></tr>
+                <tr><td>"你家的产品是假货"</td><td>"不可能，我们是正品"</td><td>"如果您对产品真伪有疑虑，我可以帮您提供正品查验方式，同时把反馈给品牌方核实"</td></tr>
+                <tr><td>"我录屏了/截图了"</td><td>"随便你"</td><td>"好的，您保留证据是您的权利，我们也会认真对待您的问题"</td></tr>
+                <tr><td>"你们达人不管吗"</td><td>"这不关达人的事"</td><td>"我会把您的反馈转达给团队，我们一起来解决"</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第九章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec9">
+        <div class="section-title"><span class="num">九</span>绩效考核与质量检查</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">9.1 KPI 指标体系（含行业参考值）</div>
+            <div style="margin-bottom:16px; font-size:13px; color:#888;">
+                📊 说明：以下"行业参考值"为电商售后行业平均水平；请在运行1个月后填入<strong>实际数据</strong>，对比调整目标值。
+            </div>
+            <table>
+                <tr><th>指标</th><th>行业参考值</th><th>目标值（第1-3月）</th><th>目标值（第4-6月）</th><th>实际数据（待填）</th></tr>
+                <tr><td><strong>首次响应时间</strong></td><td>≤5分钟</td><td>≤3分钟</td><td>≤2分钟</td><td><span style="color:#ccc;">______分钟</span></td></tr>
+                <tr><td><strong>问题解决率</strong></td><td>75-85%</td><td>≥80%</td><td>≥85%</td><td><span style="color:#ccc;">______%</span></td></tr>
+                <tr><td><strong>平均处理时长</strong></td><td>≤48小时</td><td>≤24小时</td><td>≤12小时</td><td><span style="color:#ccc;">______小时</span></td></tr>
+                <tr><td><strong>客户满意度</strong></td><td>80-90%</td><td>≥85%</td><td>≥90%</td><td><span style="color:#ccc;">______%</span></td></tr>
+                <tr><td><strong>品牌方投诉率</strong></td><td>—</td><td>0次</td><td>0次</td><td><span style="color:#ccc;">______次</span></td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">9.2 每周质检机制</div>
+            <ul class="num-list">
+                <li>随机抽查每位员工10条对话</li>
+                <li>重点检查：情绪管理 / 话术规范 / 流程合规</li>
+                <li>优秀案例归档到话术库，分享学习</li>
+                <li>每月召开一次服务质量复盘会</li>
+            </ul>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">9.3 奖励与改进</div>
+            <table>
+                <tr><th>奖励</th><th>标准</th><th>频率</th></tr>
+                <tr><td><strong>🌟 服务之星</strong></td><td>客户好评最多者</td><td>每月</td></tr>
+                <tr><td><strong>📝 最佳案例分享</strong></td><td>被选入话术库的案例作者</td><td>每季度</td></tr>
+                <tr><td><strong>🏆 特殊贡献奖</strong></td><td>成功处理重大投诉/舆情事件</td><td>不定期</td></tr>
+                <tr><td><strong>🎓 品牌方参观学习</strong></td><td>连续3个月KPI达标</td><td>每季度</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 第十章 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="section" id="sec10">
+        <div class="section-title"><span class="num">十</span>话术模板速查表（美妆护肤版）</div>
+        
+        <div class="subsection">
+            <div class="subsection-title">情绪安抚类</div>
+            <table>
+                <tr><th>场景</th><th>话术（美妆护肤关怀版）</th></tr>
+                <tr><td>客户很生气</td><td>"我完全理解您现在着急的心情，尤其是护肤品用在脸上，您一定特别担心。我保证会把这件事作为最高优先级处理。"</td></tr>
+                <tr><td>客户皮肤过敏</td><td>"亲爱的皮肤出现不适一定要重视！我先把您的情况记录下来，建议您先停用观察，同时我这边会联系品牌方的专业顾问给您反馈处理方案。"</td></tr>
+                <tr><td>客户质疑品牌</td><td>"您说得有道理，每个人的肤质不同确实会有不同感受。我这边会如实记录并反馈给品牌方，争取给您一个满意的处理结果。"</td></tr>
+                <tr><td>客户多次投诉</td><td>"感谢您再次联系我们，我知道您还没有得到满意的解决方案，这次我会亲自跟进，请您放心。"</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">政策说明类（美妆护肤场景）</div>
+            <table>
+                <tr><th>场景</th><th>话术</th></tr>
+                <tr><td>超出退换期限</td><td>"根据品牌方的售后政策，已开封产品不在常规退换范围内（涉及二次使用安全），我理解这个结果可能不是您期望的，但我会帮您申请其他补偿方案，比如[优惠券/积分/小样]，您看可以吗？"</td></tr>
+                <tr><td>皮肤问题想退货</td><td>"亲爱的我特别理解您的心情，皮肤出现不适真的很让人担心。虽然已开封产品无法直接退换，但我可以帮您申请[品牌方专业肤质顾问一对一跟进/专属补偿]，同时会把这个情况反馈给品牌方优化产品说明。"</td></tr>
+                <tr><td>对效果不满意</td><td>"亲爱的我理解您对效果的期待，每个人的肤质和生活习惯不同，效果也会不一样。我这边可以帮您记录使用感受，反馈给品牌方，看看是否适合您的肤质搭配建议，您看方便吗？"</td></tr>
+                <tr><td>价格差异投诉</td><td>"我理解您发现价格有差异的心情，直播间的价格受限时活动等因素影响。我会把您的反馈记录，反馈给品牌方，看看是否有适当的补偿方案，感谢您的理解。"</td></tr>
+            </table>
+        </div>
+        
+        <div class="subsection">
+            <div class="subsection-title">结束语类</div>
+            <table>
+                <tr><th>场景</th><th>话术</th></tr>
+                <tr><td>问题已解决</td><td>"问题已处理完成，感谢您的耐心等待~祝您皮肤越来越好 🌸 如有其他问题随时联系我。"</td></tr>
+                <tr><td>问题暂时无法解决</td><td>"您的情况我已经记录在案，预计[时间]内会有进一步回复，我们会持续关注，请放心。期间有任何问题随时联系我哦~"</td></tr>
+                <tr><td>客户坚持要升级</td><td>"我理解您希望得到更多支持，我会把您的问题转达给组长，[时间]内会有人直接联系您，感谢您的理解和支持 💕"</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>达人售后团队完整服务流程执行方案 v2.0</p>
+        <p>制定人：Andy &nbsp;|&nbsp; 适用团队：达人售后团队 8人 &nbsp;|&nbsp; 每月更新</p>
+        <p style="margin-top:8px;">融合 Zendesk 全球客服体系 · CARP 四步法 · 10类难缠客户分类模型 · 直播电商售后实战经验</p>
+        <p style="margin-top:12px; font-size:12px; color:#bbb;">核心原则：粉丝的合理诉求全力以赴，超越规则的人情关怀需要审批，突破底线的恶意行为保存证据、逐级处理。</p>
+    </div>
+
+</div>
+
+<!-- 回到顶部 -->
+<a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+
+<script>
+    // 侧边栏高亮
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.sidebar-item');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === '#' + current) {
+                item.classList.add('active');
+            }
+        });
+        
+        // 回到顶部按钮显示
+        const backToTop = document.querySelector('.back-to-top');
+        if (window.scrollY > 400) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
